@@ -3,56 +3,80 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smart File Organiser | OmniTools</title>
-<meta name="description" content="Automatically organize messy folders and sort files by type instantly. Secure, client-side file sorting.">
-<meta name="keywords" content="file organizer, sort files, folder organizer, automatic file sorting, bulk file mover">
-<meta property="og:title" content="Smart File Organiser | OmniTools">
-<meta property="og:description" content="Automatically organize your messy folders and sort files by type instantly.">
-<meta property="og:url" content="https://misbah-37.github.io/omnitools-web/file-organiser.html">
+<title>Desktop File Organiser | OmniTools</title>
+<meta name="description" content="Standalone verified desktop app to organize messy folders on your PC into clean categories instantly and securely.">
 <style>
   body, html {
     margin: 0;
     padding: 0;
+    height: 100%;
+    overflow: hidden;
     background-color: #0e1117;
-    color: #e6e6e6;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    display: flex;
+    flex-direction: column;
   }
-  .seo-text {
-    max-width: 800px;
-    margin: 24px auto 8px auto;
-    padding: 0 16px;
+  
+  .premium-banner {
+    background: linear-gradient(to bottom, #064e3b, #0e1117);
+    padding: 24px 24px 30px 24px;
+    text-align: center;
+    flex-shrink: 0;
   }
-  .seo-text h1 {
-    font-size: 1.6rem;
-    margin-bottom: 8px;
+  
+  .banner-content {
+    max-width: 750px;
+    margin: 0 auto;
   }
-  .seo-text p {
+
+  .premium-banner h1 {
+    margin: 0 0 6px 0;
+    font-size: 1.8rem;
+    font-weight: 800;
+    /* Teal/Mint text gradient */
+    background: linear-gradient(135deg, #6ee7b7, #34d399);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.02em;
+  }
+  
+  .premium-banner p {
+    margin: 0;
     font-size: 0.95rem;
-    line-height: 1.5;
-    color: #c9c9c9;
+    line-height: 1.4;
+    color: #94a3b8;
   }
+  
   .tool-wrapper {
     width: 100%;
-    height: 85vh;
+    flex-grow: 1;
+    background-color: #0e1117;
+    margin-top: -20px;
+    position: relative;
+    z-index: 90;
   }
+  
   iframe {
     border: none;
     width: 100%;
     height: 100%;
+    display: block;
   }
 </style>
 </head>
 <body>
 
-<div class="seo-text">
-  <h1>Smart File Organiser</h1>
-  <p>Automatically organize messy folders and sort files by type instantly. Point it at a
-  cluttered folder and let it group documents, images, videos, and more into tidy categories.
-  All sorting happens securely on the client side, so your files are never uploaded anywhere.</p>
+<div class="premium-banner">
+  <div class="banner-content">
+    <h1>Desktop File Organiser</h1>
+    <p>A standalone, verified Windows application designed to instantly organize messy folders on your PC into 12 clean categories. Completely secure, running entirely on your local machine.</p>
+  </div>
 </div>
 
 <div class="tool-wrapper">
-  <iframe src="https://omnitools.streamlit.app/File_Organiser?embed=true" allow="clipboard-read; clipboard-write;"></iframe>
+  <iframe src="https://omnitools.streamlit.app/File_Organiser?embed=true" allow="clipboard-read; clipboard-write;">
+    <p>Your browser does not support iframes. Please visit our tool directly.</p>
+  </iframe>
 </div>
 
 </body>
