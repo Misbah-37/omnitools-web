@@ -9,75 +9,110 @@
   body, html {
     margin: 0;
     padding: 0;
-    height: 100%;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+    min-height: 100vh;
     background-color: #0e1117;
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
   }
   
-  /* The upgraded aesthetic banner */
+  /* The Retracting Banner */
   .premium-banner {
     background: linear-gradient(to bottom, #111827, #0e1117);
     border-bottom: 1px solid #1e293b;
-    padding: 32px 24px;
+    padding: 36px 24px;
     text-align: center;
-    flex-shrink: 0;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
-    z-index: 50;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    transition: padding 0.2s ease, box-shadow 0.2s ease;
   }
   
+  .banner-content {
+    max-width: 750px;
+    margin: 0 auto;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
   .premium-banner h1 {
-    margin: 0 0 12px 0;
+    margin: 0 0 8px 0;
     font-size: 2.2rem;
     font-weight: 800;
-    /* Cyan to Indigo gradient matching your glowing icon */
     background: linear-gradient(135deg, #38bdf8, #818cf8);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: -0.02em;
+    transition: font-size 0.2s ease;
   }
   
   .premium-banner p {
-    margin: 0 auto;
+    margin: 0;
     font-size: 1rem;
-    line-height: 1.6;
+    line-height: 1.5;
     color: #94a3b8;
-    max-width: 750px;
-    font-weight: 400;
+    transition: opacity 0.2s ease, max-height 0.2s ease;
+    overflow: hidden;
   }
   
+  /* The Tool Container holding the Streamlit iframe */
   .tool-wrapper {
     width: 100%;
-    flex-grow: 1;
-    position: relative;
+    height: calc(100vh - 140px); /* Dynamically fills the rest of the screen */
+    min-height: 700px;
+    background-color: #0e1117;
   }
   
   iframe {
     border: none;
     width: 100%;
     height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
+    display: block;
+  }
+
+  /* Utility class applied via JS when scrolling down */
+  .scrolled .premium-banner {
+    padding: 12px 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  }
+  .scrolled .premium-banner h1 {
+    font-size: 1.3rem;
+    margin: 0;
+    display: inline-block;
+  }
+  .scrolled .premium-banner p {
+    opacity: 0;
+    max-height: 0;
+    margin: 0;
   }
 </style>
 </head>
 <body>
 
-<!-- High-end visible SEO header -->
-<div class="premium-banner">
-  <h1>Image & Photo Resizer</h1>
-  <p>Resize, compress, and convert images locally without uploading to any external servers. Choose your target dimensions or file size, and export instantly. Because processing happens in your browser, your photos stay 100% private and never leave your device.</p>
+<!-- Retracting SEO Header Banner -->
+<div id="banner" class="premium-banner">
+  <div class="banner-content">
+    <h1>Image & Photo Resizer</h1>
+    <p>Resize, compress, and convert images locally without uploading to any external servers. Your photos stay 100% private and never leave your device.</p>
+  </div>
 </div>
 
-<!-- The actual Streamlit App -->
+<!-- The Streamlit App Iframe -->
 <div class="tool-wrapper">
   <iframe src="https://omnitools.streamlit.app/Photo_Resizer?embed=true" allow="clipboard-read; clipboard-write;">
     <p>Your browser does not support iframes. Please visit our tool directly.</p>
   </iframe>
 </div>
+
+<script>
+  // JavaScript to trigger the smooth retraction effect on scroll
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 40) {
+      document.body.classList.add('scrolled');
+    } else {
+      document.body.classList.remove('scrolled');
+    }
+  });
+</script>
 
 </body>
 </html>
