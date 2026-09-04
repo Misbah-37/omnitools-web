@@ -1,10 +1,89 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>OmniTools | Ultimate Utility Suite</title>
-    <meta name="google-site-verification" content="zdHHgI0aPJvEIWgsPkQfuQ8wulFOMzsBJJR98AXgGTQ" />
-  </head>
-  <body style="margin:0; padding:0; overflow:hidden;">
-    <iframe src="https://omnitools.streamlit.app/?embed=true" style="width:100%; height:100vh; border:none;"></iframe>
-  </body>
-</html> 
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OmniTools | Free Privacy-First Digital Utilities</title>
+<meta name="description" content="A privacy-first suite of powerful web utilities. Process PDFs, resize images, generate QR codes, and organize files locally—all directly within your browser.">
+<style>
+  /* Locks the outer page to prevent scrolling and flickering */
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    background-color: #0e1117;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* The main Hero Banner with a deep cosmic blue gradient */
+  .hero-banner {
+    background: linear-gradient(to bottom, #0f172a, #0e1117);
+    padding: 48px 24px 50px 24px;
+    text-align: center;
+    flex-shrink: 0;
+    z-index: 100;
+  }
+  
+  .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .hero-banner h1 {
+    margin: 0 0 12px 0;
+    font-size: 2.8rem;
+    font-weight: 800;
+    /* Cyan to Indigo gradient for a flagship look */
+    background: linear-gradient(135deg, #38bdf8, #818cf8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.02em;
+  }
+  
+  .hero-banner p {
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #94a3b8;
+  }
+  
+  /* Tool container with negative margin to overlap the Streamlit iframe seam */
+  .tool-wrapper {
+    width: 100%;
+    flex-grow: 1;
+    background-color: #0e1117;
+    margin-top: -20px;
+    position: relative;
+    z-index: 90;
+  }
+  
+  iframe {
+    border: none;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+</style>
+</head>
+<body>
+
+<!-- Static Hero Banner -->
+<div class="hero-banner">
+  <div class="hero-content">
+    <h1>OmniTools</h1>
+    <p>A privacy-first suite of powerful web utilities. Process PDFs, resize images, generate QR codes, and organize files locally—all directly within your browser. 100% free and secure.</p>
+  </div>
+</div>
+
+<!-- Main Streamlit Homepage Iframe -->
+<div class="tool-wrapper">
+  <iframe src="https://omnitools.streamlit.app/?embed=true" allow="clipboard-read; clipboard-write;">
+    <p>Your browser does not support iframes. Please visit our application directly.</p>
+  </iframe>
+</div>
+
+</body>
+</html>
