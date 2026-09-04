@@ -3,57 +3,80 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free WPM Typing Speed Test | OmniTools</title>
-<meta name="description" content="Test your typing speed and accuracy in real-time with this free, ad-free WPM typing test.">
-<meta name="keywords" content="typing test, WPM test, typing speed, words per minute, free typing test, improve typing speed">
-<!-- Open Graph for social sharing -->
-<meta property="og:title" content="Free WPM Typing Speed Test | OmniTools">
-<meta property="og:description" content="Test your typing speed and accuracy in real-time.">
-<meta property="og:url" content="https://misbah-37.github.io/omnitools-web/typing-test.html">
+<title>Speed Typing Test | OmniTools</title>
+<meta name="description" content="Test your typing speed and accuracy in real-time. Track your WPM and improve your keyboard skills for free.">
 <style>
   body, html {
     margin: 0;
     padding: 0;
-    background-color: #0e1117; /* Matches Streamlit dark mode */
-    color: #e6e6e6;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    height: 100%;
+    overflow: hidden;
+    background-color: #0e1117;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    display: flex;
+    flex-direction: column;
   }
-  .seo-text {
-    max-width: 800px;
-    margin: 24px auto 8px auto;
-    padding: 0 16px;
+  
+  .premium-banner {
+    background: linear-gradient(to bottom, #312e81, #0e1117);
+    padding: 24px 24px 30px 24px;
+    text-align: center;
+    flex-shrink: 0;
   }
-  .seo-text h1 {
-    font-size: 1.6rem;
-    margin-bottom: 8px;
+  
+  .banner-content {
+    max-width: 750px;
+    margin: 0 auto;
   }
-  .seo-text p {
+
+  .premium-banner h1 {
+    margin: 0 0 6px 0;
+    font-size: 1.8rem;
+    font-weight: 800;
+    /* Indigo/Purple text gradient */
+    background: linear-gradient(135deg, #a5b4fc, #6366f1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.02em;
+  }
+  
+  .premium-banner p {
+    margin: 0;
     font-size: 0.95rem;
-    line-height: 1.5;
-    color: #c9c9c9;
+    line-height: 1.4;
+    color: #94a3b8;
   }
+  
   .tool-wrapper {
     width: 100%;
-    height: 85vh;
+    flex-grow: 1;
+    background-color: #0e1117;
+    margin-top: -20px;
+    position: relative;
+    z-index: 90;
   }
+  
   iframe {
     border: none;
     width: 100%;
     height: 100%;
+    display: block;
   }
 </style>
 </head>
 <body>
 
-<div class="seo-text">
-  <h1>Free WPM Typing Speed Test</h1>
-  <p>Test your typing speed and accuracy in real-time with this free, ad-free WPM typing test.
-  Type the given passage as quickly and accurately as you can, and see your words-per-minute
-  and accuracy score instantly. No sign-up required, and everything runs securely in your browser.</p>
+<div class="premium-banner">
+  <div class="banner-content">
+    <h1>Speed Typing Test</h1>
+    <p>Test your typing speed and accuracy in real-time. Track your Words Per Minute (WPM), monitor your error rate, and improve your keyboard skills instantly in your browser.</p>
+  </div>
 </div>
 
 <div class="tool-wrapper">
-  <iframe src="https://omnitools.streamlit.app/Typing_Test?embed=true" allow="clipboard-read; clipboard-write;"></iframe>
+  <iframe src="https://omnitools.streamlit.app/Typing_Test?embed=true" allow="clipboard-read; clipboard-write;">
+    <p>Your browser does not support iframes. Please visit our tool directly.</p>
+  </iframe>
 </div>
 
 </body>
