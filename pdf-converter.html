@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free PDF Converter & Editor | OmniTools</title>
-<meta name="description" content="Convert, merge, split, and manipulate PDF files securely and offline directly in your browser.">
-<meta name="keywords" content="PDF converter, merge PDF, split PDF, offline PDF tool, free PDF editor, secure PDF processing">
-<meta property="og:title" content="Free PDF Converter & Editor | OmniTools">
-<meta property="og:description" content="Convert and manage PDF files securely offline.">
-<meta property="og:url" content="https://misbah-37.github.io/omnitools-web/pdf-converter.html">
+<title>Free PDF Converter Suite | OmniTools</title>
+<meta name="description" content="Merge, split, extract pages, and convert documents to and from PDF seamlessly. 100% free and secure offline processing.">
 <style>
   body, html {
     margin: 0;
     padding: 0;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
     background-color: #0e1117;
     color: #e6e6e6;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -21,6 +21,7 @@
     max-width: 800px;
     margin: 24px auto 8px auto;
     padding: 0 16px;
+    flex-shrink: 0;
   }
   .seo-text h1 {
     font-size: 1.6rem;
@@ -33,7 +34,7 @@
   }
   .tool-wrapper {
     width: 100%;
-    height: 85vh;
+    flex-grow: 1;
   }
   iframe {
     border: none;
@@ -44,15 +45,17 @@
 </head>
 <body>
 
+<!-- Visible content for both humans and search engines -->
 <div class="seo-text">
-  <h1>Free PDF Converter & Editor</h1>
-  <p>Convert, merge, split, and manipulate PDF files securely and offline directly in your browser.
-  Combine multiple PDFs into one, pull specific pages out, or convert to and from other formats —
-  all without uploading your documents to any external server.</p>
+  <h1>Free PDF Converter Suite</h1>
+  <p>Welcome to the OmniTools PDF Converter. Seamlessly merge multiple PDFs, split large documents, extract specific pages, and convert files to and from PDF format. All document processing is done securely and quickly directly in your browser.</p>
 </div>
 
+<!-- The actual Streamlit App -->
 <div class="tool-wrapper">
-  <iframe src="https://omnitools.streamlit.app/PDF_Converter?embed=true" allow="clipboard-read; clipboard-write;"></iframe>
+  <iframe src="https://omnitools.streamlit.app/PDF_Converter?embed=true" allow="clipboard-read; clipboard-write;">
+    <p>Your browser does not support iframes. Please visit our tool directly.</p>
+  </iframe>
 </div>
 
 </body>
