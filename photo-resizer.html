@@ -15,13 +15,11 @@
     overflow-x: hidden;
   }
   
-  /* The Retracting Banner */
+  /* Retracting Banner with a seamless green-to-dark gradient and NO harsh borders */
   .premium-banner {
-    background: linear-gradient(to bottom, #111827, #0e1117);
-    border-bottom: 1px solid #1e293b;
-    padding: 36px 24px;
+    background: linear-gradient(to bottom, #064e3b, #0e1117);
+    padding: 36px 24px 44px 24px; /* Extra bottom padding helps blend the gradient transition */
     text-align: center;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -38,7 +36,8 @@
     margin: 0 0 8px 0;
     font-size: 2.2rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #38bdf8, #818cf8);
+    /* Soft green-to-cyan glow matching the banner tint */
+    background: linear-gradient(135deg, #34d399, #38bdf8);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: -0.02em;
@@ -57,7 +56,7 @@
   /* The Tool Container holding the Streamlit iframe */
   .tool-wrapper {
     width: 100%;
-    height: calc(100vh - 140px); /* Dynamically fills the rest of the screen */
+    height: calc(100vh - 140px);
     min-height: 700px;
     background-color: #0e1117;
   }
@@ -69,10 +68,9 @@
     display: block;
   }
 
-  /* Utility class applied via JS when scrolling down */
+  /* Compact state when scrolling down */
   .scrolled .premium-banner {
-    padding: 12px 24px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    padding: 12px 24px 16px 24px;
   }
   .scrolled .premium-banner h1 {
     font-size: 1.3rem;
@@ -104,7 +102,6 @@
 </div>
 
 <script>
-  // JavaScript to trigger the smooth retraction effect on scroll
   window.addEventListener('scroll', function() {
     if (window.scrollY > 40) {
       document.body.classList.add('scrolled');
