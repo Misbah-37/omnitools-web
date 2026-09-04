@@ -1,34 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free WPM Typing Speed Test | OmniTools</title>
-    <meta name="description" content="Test your typing speed and accuracy in real-time with this free, ad-free WPM typing test.">
-    <meta name="keywords" content="typing test, WPM test, typing speed, words per minute, free typing test, improve typing speed">
-    
-    <!-- Open Graph for social sharing -->
-    <meta property="og:title" content="Free WPM Typing Speed Test | OmniTools">
-    <meta property="og:description" content="Test your typing speed and accuracy in real-time.">
-    <meta property="og:url" content="https://misbah-37.github.io/omnitools-web/typing-test.html">
-    
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-            background-color: #0e1117; /* Matches Streamlit dark mode */
-        }
-        iframe {
-            border: none;
-            width: 100%;
-            height: 100%;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free WPM Typing Speed Test | OmniTools</title>
+<meta name="description" content="Test your typing speed and accuracy in real-time with this free, ad-free WPM typing test.">
+<meta name="keywords" content="typing test, WPM test, typing speed, words per minute, free typing test, improve typing speed">
+<!-- Open Graph for social sharing -->
+<meta property="og:title" content="Free WPM Typing Speed Test | OmniTools">
+<meta property="og:description" content="Test your typing speed and accuracy in real-time.">
+<meta property="og:url" content="https://misbah-37.github.io/omnitools-web/typing-test.html">
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    background-color: #0e1117; /* Matches Streamlit dark mode */
+    color: #e6e6e6;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  .seo-text {
+    max-width: 800px;
+    margin: 24px auto 8px auto;
+    padding: 0 16px;
+  }
+  .seo-text h1 {
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+  }
+  .seo-text p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #c9c9c9;
+  }
+  .tool-wrapper {
+    width: 100%;
+    height: 85vh;
+  }
+  iframe {
+    border: none;
+    width: 100%;
+    height: 100%;
+  }
+</style>
 </head>
 <body>
-    <!-- Points directly to the specific Streamlit page -->
-   <iframe src="https://omnitools.streamlit.app/Typing_Test?embed=true" allow="clipboard-read; clipboard-write;"></iframe>
+
+<div class="seo-text">
+  <h1>Free WPM Typing Speed Test</h1>
+  <p>Test your typing speed and accuracy in real-time with this free, ad-free WPM typing test.
+  Type the given passage as quickly and accurately as you can, and see your words-per-minute
+  and accuracy score instantly. No sign-up required, and everything runs securely in your browser.</p>
+</div>
+
+<div class="tool-wrapper">
+  <iframe src="https://omnitools.streamlit.app/Typing_Test?embed=true" allow="clipboard-read; clipboard-write;"></iframe>
+</div>
+
 </body>
 </html>
