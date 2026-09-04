@@ -5,12 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Free Custom QR Code Generator | OmniTools</title>
     <meta name="description" content="Generate, customize, and download QR codes instantly. 100% free and secure offline processing.">
+    
     <style>
         body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #0e1117; }
-        iframe { border: none; width: 100%; height: 100%; }
+        iframe { border: none; width: 100%; height: 100%; position: relative; z-index: 2; }
+        
+        /* This hides the text from humans but lets Google index it */
+        .seo-text { 
+            position: absolute; 
+            width: 1px; 
+            height: 1px; 
+            padding: 0; 
+            margin: -1px; 
+            overflow: hidden; 
+            clip: rect(0, 0, 0, 0); 
+            white-space: nowrap; 
+            border: 0; 
+        }
     </style>
 </head>
 <body>
-    <iframe src="https://omnitools.streamlit.app/QR_Generator?embed=true" allow="clipboard-read; clipboard-write;"></iframe>
+    
+    <!-- SEO Content for Googlebot -->
+    <div class="seo-text">
+        <h1>Free Custom QR Code Generator</h1>
+        <p>Welcome to the OmniTools QR Code Generator. Create, customize, and download QR codes instantly. 
+        Enter any URL or text, select your custom foreground and background colors, and export your high-quality 
+        PNG image securely. This tool is 100% free, fast, and processes everything efficiently.</p>
+    </div>
+
+    <!-- The actual Streamlit App -->
+    <iframe src="https://omnitools.streamlit.app/QR_Generator?embed=true" allow="clipboard-read; clipboard-write;">
+        <p>Your browser does not support iframes. Please visit our tool directly.</p>
+    </iframe>
 </body>
 </html>
