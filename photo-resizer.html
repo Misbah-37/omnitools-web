@@ -6,61 +6,53 @@
 <title>Free Image & Photo Resizer | OmniTools</title>
 <meta name="description" content="Resize, compress, and convert images locally without uploading to any external servers. Secure in-browser processing.">
 <style>
+  /* Lock the outer page so it never scrolls, eliminating all flickering */
   body, html {
     margin: 0;
     padding: 0;
-    min-height: 100vh;
+    height: 100%;
+    overflow: hidden;
     background-color: #0e1117;
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
   }
   
-  /* Retracting Banner with a seamless green-to-dark gradient */
+  /* Fixed, beautiful gradient header that stays put */
   .premium-banner {
     background: linear-gradient(to bottom, #064e3b, #0e1117);
-    padding: 36px 24px 50px 24px;
+    padding: 24px 24px 30px 24px;
     text-align: center;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    transition: padding 0.2s ease, box-shadow 0.2s ease;
+    flex-shrink: 0;
   }
   
   .banner-content {
     max-width: 750px;
     margin: 0 auto;
-    transition: transform 0.2s ease, opacity 0.2s ease;
   }
 
   .premium-banner h1 {
-    margin: 0 0 8px 0;
-    font-size: 2.2rem;
+    margin: 0 0 6px 0;
+    font-size: 1.8rem;
     font-weight: 800;
     background: linear-gradient(135deg, #34d399, #38bdf8);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: -0.02em;
-    transition: font-size 0.2s ease;
   }
   
   .premium-banner p {
     margin: 0;
-    font-size: 1rem;
-    line-height: 1.5;
+    font-size: 0.95rem;
+    line-height: 1.4;
     color: #94a3b8;
-    transition: opacity 0.2s ease, max-height 0.2s ease;
-    overflow: hidden;
   }
   
-  /* Pulls the tool container up slightly to overlap and swallow any dividing lines */
+  /* Container that cleanly fills the rest of the screen */
   .tool-wrapper {
     width: 100%;
-    height: calc(100vh - 120px);
-    min-height: 700px;
+    flex-grow: 1;
     background-color: #0e1117;
-    margin-top: -20px; 
-    position: relative;
-    z-index: 90;
   }
   
   iframe {
@@ -69,49 +61,24 @@
     height: 100%;
     display: block;
   }
-
-  /* Compact state when scrolling down */
-  .scrolled .premium-banner {
-    padding: 12px 24px 20px 24px;
-  }
-  .scrolled .premium-banner h1 {
-    font-size: 1.3rem;
-    margin: 0;
-    display: inline-block;
-  }
-  .scrolled .premium-banner p {
-    opacity: 0;
-    max-height: 0;
-    margin: 0;
-  }
 </style>
 </head>
 <body>
 
-<!-- Retracting SEO Header Banner -->
-<div id="banner" class="premium-banner">
+<!-- Clean, non-flickering fixed banner -->
+<div class="premium-banner">
   <div class="banner-content">
     <h1>Image & Photo Resizer</h1>
     <p>Resize, compress, and convert images locally without uploading to any external servers. Your photos stay 100% private and never leave your device.</p>
   </div>
 </div>
 
-<!-- The Streamlit App Iframe with negative overlap margin -->
+<!-- The Streamlit App Iframe handles its own internal scrolling smoothly -->
 <div class="tool-wrapper">
   <iframe src="https://omnitools.streamlit.app/Photo_Resizer?embed=true" allow="clipboard-read; clipboard-write;">
     <p>Your browser does not support iframes. Please visit our tool directly.</p>
   </iframe>
 </div>
-
-<script>
-  window.addEventListener('scroll', function() {
-    if (window.scrollY > 40) {
-      document.body.classList.add('scrolled');
-    } else {
-      document.body.classList.remove('scrolled');
-    }
-  });
-</script>
 
 </body>
 </html>
