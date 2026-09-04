@@ -4,56 +4,75 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Free Custom QR Code Generator | OmniTools</title>
-<meta name="description" content="Generate, customize, and download QR codes instantly. 100% free and secure offline processing.">
+<meta name="description" content="Create, customize, and securely download high-quality QR codes from any URL or text. 100% free and fast.">
 <style>
   body, html {
     margin: 0;
     padding: 0;
     height: 100%;
-    overflow: hidden; /* Prevents the ugly outer page scrollbar */
+    overflow: hidden;
+    background-color: #0e1117;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     display: flex;
     flex-direction: column;
-    background-color: #0e1117;
-    color: #e6e6e6;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
-  .seo-text {
-    max-width: 800px;
-    margin: 24px auto 8px auto;
-    padding: 0 16px;
-    flex-shrink: 0; /* Prevents the header from getting squished on small screens */
+  
+  .premium-banner {
+    background: linear-gradient(to bottom, #022c22, #0e1117);
+    padding: 24px 24px 30px 24px;
+    text-align: center;
+    flex-shrink: 0;
   }
-  .seo-text h1 {
-    font-size: 1.6rem;
-    margin-bottom: 8px;
+  
+  .banner-content {
+    max-width: 750px;
+    margin: 0 auto;
   }
-  .seo-text p {
+
+  .premium-banner h1 {
+    margin: 0 0 6px 0;
+    font-size: 1.8rem;
+    font-weight: 800;
+    /* Emerald Green text gradient */
+    background: linear-gradient(135deg, #34d399, #10b981);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.02em;
+  }
+  
+  .premium-banner p {
+    margin: 0;
     font-size: 0.95rem;
-    line-height: 1.5;
-    color: #c9c9c9;
+    line-height: 1.4;
+    color: #94a3b8;
   }
+  
   .tool-wrapper {
     width: 100%;
-    flex-grow: 1; /* Automatically calculates and fills the exact remaining space */
+    flex-grow: 1;
+    background-color: #0e1117;
+    margin-top: -20px;
+    position: relative;
+    z-index: 90;
   }
+  
   iframe {
     border: none;
     width: 100%;
     height: 100%;
+    display: block;
   }
 </style>
 </head>
 <body>
 
-<!-- Visible content for both humans and search engines -->
-<div class="seo-text">
-  <h1>Free Custom QR Code Generator</h1>
-  <p>Welcome to the OmniTools QR Code Generator. Create, customize, and download QR codes instantly.
-  Enter any URL or text, select your custom foreground and background colors, and export your high-quality
-  PNG image securely. This tool is 100% free, fast, and processes everything efficiently.</p>
+<div class="premium-banner">
+  <div class="banner-content">
+    <h1>Custom QR Code Generator</h1>
+    <p>Create, customize, and securely download high-quality QR codes from any URL or text. Select your custom foreground and background colors, and export high-resolution PNGs instantly.</p>
+  </div>
 </div>
 
-<!-- The actual Streamlit App -->
 <div class="tool-wrapper">
   <iframe src="https://omnitools.streamlit.app/QR_Generator?embed=true" allow="clipboard-read; clipboard-write;">
     <p>Your browser does not support iframes. Please visit our tool directly.</p>
