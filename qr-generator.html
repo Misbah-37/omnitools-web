@@ -9,6 +9,10 @@
   body, html {
     margin: 0;
     padding: 0;
+    height: 100%;
+    overflow: hidden; /* Prevents the ugly outer page scrollbar */
+    display: flex;
+    flex-direction: column;
     background-color: #0e1117;
     color: #e6e6e6;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -17,6 +21,7 @@
     max-width: 800px;
     margin: 24px auto 8px auto;
     padding: 0 16px;
+    flex-shrink: 0; /* Prevents the header from getting squished on small screens */
   }
   .seo-text h1 {
     font-size: 1.6rem;
@@ -29,7 +34,7 @@
   }
   .tool-wrapper {
     width: 100%;
-    height: 85vh;
+    flex-grow: 1; /* Automatically calculates and fills the exact remaining space */
   }
   iframe {
     border: none;
