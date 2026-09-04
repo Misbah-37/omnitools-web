@@ -3,87 +3,223 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OmniTools | Free Privacy-First Digital Utilities</title>
-<meta name="description" content="A privacy-first suite of powerful web utilities. Process PDFs, resize images, generate QR codes, and organize files locally—all directly within your browser.">
+<title>OmniTools | Ultimate Utility Suite</title>
+<meta name="description" content="High-performance, private, and lightweight utility tools for your daily workflows.">
 <style>
-  /* Locks the outer page to prevent scrolling and flickering */
   body, html {
     margin: 0;
     padding: 0;
-    height: 100%;
-    overflow: hidden;
+    min-height: 100vh;
     background-color: #0e1117;
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    display: flex;
-    flex-direction: column;
+    color: #f8fafc;
   }
   
-  /* The main Hero Banner with a deep cosmic blue gradient */
-  .hero-banner {
-    background: linear-gradient(to bottom, #0f172a, #0e1117);
-    padding: 48px 24px 50px 24px;
+  /* Hero Section */
+  .hero-section {
     text-align: center;
-    flex-shrink: 0;
-    z-index: 100;
+    padding: 60px 24px 30px 24px;
   }
-  
-  .hero-content {
-    max-width: 800px;
+  .hero-section h1 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin: 0 0 10px 0;
+    letter-spacing: -0.5px;
+  }
+  .hero-section p {
+    color: #94a3b8;
+    font-size: 1.15rem;
+    max-width: 600px;
     margin: 0 auto;
   }
 
-  .hero-banner h1 {
-    margin: 0 0 12px 0;
-    font-size: 2.8rem;
-    font-weight: 800;
-    /* Cyan to Indigo gradient for a flagship look */
-    background: linear-gradient(135deg, #38bdf8, #818cf8);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: -0.02em;
+  /* Trust Badges */
+  .trust-badge-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin: 20px 0 40px 0;
   }
-  
-  .hero-banner p {
+  .trust-badge {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(52, 211, 153, 0.4);
+    color: #34d399;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  /* Grid Layout for Cards */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px 60px 24px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 24px;
+  }
+
+  /* Tool Cards */
+  .card {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 24px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: #64748b;
+    box-shadow: 0 10px 20px -10px rgba(0,0,0,0.5);
+  }
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .card-icon {
+    font-size: 2.5rem;
+  }
+  .card-title-group h3 {
     margin: 0;
-    font-size: 1.1rem;
-    line-height: 1.6;
+    color: #f8fafc;
+    font-size: 1.3rem;
+  }
+  .card-subtitle {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 4px;
+  }
+  .card-desc {
     color: #94a3b8;
-  }
-  
-  /* Tool container with negative margin to overlap the Streamlit iframe seam */
-  .tool-wrapper {
-    width: 100%;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
     flex-grow: 1;
-    background-color: #0e1117;
-    margin-top: -20px;
-    position: relative;
-    z-index: 90;
   }
   
-  iframe {
-    border: none;
-    width: 100%;
-    height: 100%;
+  /* Action Button inside Card */
+  .card-btn {
     display: block;
+    width: 100%;
+    text-align: center;
+    background-color: #0f172a;
+    color: #f8fafc;
+    padding: 12px 0;
+    border-radius: 8px;
+    font-weight: 600;
+    border: 1px solid #334155;
+    transition: background-color 0.2s ease;
+  }
+  .card:hover .card-btn {
+    background-color: #334155;
+  }
+
+  /* Specific Card Colors */
+  .typing .card-subtitle { color: #ff3399; }
+  .photo .card-subtitle { color: #00d2ff; }
+  .file .card-subtitle { color: #34d399; }
+  .pdf .card-subtitle { color: #fb923c; }
+  .qr .card-subtitle { color: #10b981; }
+
+  /* Mobile responsiveness */
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
 
-<!-- Static Hero Banner -->
-<div class="hero-banner">
-  <div class="hero-content">
-    <h1>OmniTools</h1>
-    <p>A privacy-first suite of powerful web utilities. Process PDFs, resize images, generate QR codes, and organize files locally—all directly within your browser. 100% free and secure.</p>
+  <div class="hero-section">
+    <h1>OmniTools 🌌</h1>
+    <p>High-performance, private, and lightweight utility tools for your daily workflows.</p>
   </div>
-</div>
 
-<!-- Main Streamlit Homepage Iframe -->
-<div class="tool-wrapper">
-  <iframe src="https://omnitools.streamlit.app/?embed=true" allow="clipboard-read; clipboard-write;">
-    <p>Your browser does not support iframes. Please visit our application directly.</p>
-  </iframe>
-</div>
+  <div class="trust-badge-container">
+    <span class="trust-badge">⚡ Ultra Fast Execution</span>
+    <span class="trust-badge">🔒 100% Privacy Focused</span>
+    <span class="trust-badge">💻 Modern Dark Mode Suite</span>
+    <span class="trust-badge">🚀 Zero Installation Required</span>
+  </div>
+
+  <div class="container">
+    <div class="grid">
+      
+      <!-- Typing Test Card -->
+      <a href="https://misbah-37.github.io/omnitools-web/typing-test.html" class="card typing">
+        <div class="card-header">
+          <div class="card-icon">⌨️</div>
+          <div class="card-title-group">
+            <h3>Typing Speed Test</h3>
+            <div class="card-subtitle">SPEED & ACCURACY BENCHMARK</div>
+          </div>
+        </div>
+        <div class="card-desc">Measure keystroke speed and accuracy across 4 difficulty tiers including 30 curated paragraphs.</div>
+        <div class="card-btn">Launch Typing Test ➔</div>
+      </a>
+
+      <!-- Photo Resizer Card -->
+      <a href="https://misbah-37.github.io/omnitools-web/photo-resizer.html" class="card photo">
+        <div class="card-header">
+          <div class="card-icon">🖼️</div>
+          <div class="card-title-group">
+            <h3>Photo Resizer</h3>
+            <div class="card-subtitle">PRECISION CROP & COMPRESS</div>
+          </div>
+        </div>
+        <div class="card-desc">Interactive image cropper and compressor to hit exact pixel dimensions and strict KB limits.</div>
+        <div class="card-btn">Launch Photo Resizer ➔</div>
+      </a>
+
+      <!-- File Organiser Card -->
+      <a href="https://misbah-37.github.io/omnitools-web/file-organizer.html" class="card file">
+        <div class="card-header">
+          <div class="card-icon">🗂️</div>
+          <div class="card-title-group">
+            <h3>Desktop File Organiser</h3>
+            <div class="card-subtitle">STANDALONE WINDOWS APP</div>
+          </div>
+        </div>
+        <div class="card-desc">Standalone verified desktop app to organize messy folders on your PC into 12 clean categories.</div>
+        <div class="card-btn">Get File Organiser ➔</div>
+      </a>
+
+      <!-- PDF Converter Card -->
+      <a href="https://misbah-37.github.io/omnitools-web/pdf-converter.html" class="card pdf">
+        <div class="card-header">
+          <div class="card-icon">📄</div>
+          <div class="card-title-group">
+            <h3>PDF Converter Suite</h3>
+            <div class="card-subtitle">DOCUMENT TRANSFORMATION</div>
+          </div>
+        </div>
+        <div class="card-desc">Merge, split, extract pages, and convert documents to and from PDF seamlessly.</div>
+        <div class="card-btn">Open PDF Converter ➔</div>
+      </a>
+
+      <!-- QR Generator Card -->
+      <a href="https://misbah-37.github.io/omnitools-web/qr-generator.html" class="card qr">
+        <div class="card-header">
+          <div class="card-icon">🔳</div>
+          <div class="card-title-group">
+            <h3>QR Code Generator</h3>
+            <div class="card-subtitle">DATA ENCODING</div>
+          </div>
+        </div>
+        <div class="card-desc">Create, customize, and securely download high-quality QR codes from any URL or text.</div>
+        <div class="card-btn">Open QR Generator ➔</div>
+      </a>
+
+    </div>
+  </div>
 
 </body>
 </html>
