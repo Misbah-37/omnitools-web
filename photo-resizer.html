@@ -15,10 +15,10 @@
     overflow-x: hidden;
   }
   
-  /* Retracting Banner with a seamless green-to-dark gradient and NO harsh borders */
+  /* Retracting Banner with a seamless green-to-dark gradient */
   .premium-banner {
     background: linear-gradient(to bottom, #064e3b, #0e1117);
-    padding: 36px 24px 44px 24px; /* Extra bottom padding helps blend the gradient transition */
+    padding: 36px 24px 50px 24px;
     text-align: center;
     position: sticky;
     top: 0;
@@ -36,7 +36,6 @@
     margin: 0 0 8px 0;
     font-size: 2.2rem;
     font-weight: 800;
-    /* Soft green-to-cyan glow matching the banner tint */
     background: linear-gradient(135deg, #34d399, #38bdf8);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -53,12 +52,15 @@
     overflow: hidden;
   }
   
-  /* The Tool Container holding the Streamlit iframe */
+  /* Pulls the tool container up slightly to overlap and swallow any dividing lines */
   .tool-wrapper {
     width: 100%;
-    height: calc(100vh - 140px);
+    height: calc(100vh - 120px);
     min-height: 700px;
     background-color: #0e1117;
+    margin-top: -20px; 
+    position: relative;
+    z-index: 90;
   }
   
   iframe {
@@ -70,7 +72,7 @@
 
   /* Compact state when scrolling down */
   .scrolled .premium-banner {
-    padding: 12px 24px 16px 24px;
+    padding: 12px 24px 20px 24px;
   }
   .scrolled .premium-banner h1 {
     font-size: 1.3rem;
@@ -94,7 +96,7 @@
   </div>
 </div>
 
-<!-- The Streamlit App Iframe -->
+<!-- The Streamlit App Iframe with negative overlap margin -->
 <div class="tool-wrapper">
   <iframe src="https://omnitools.streamlit.app/Photo_Resizer?embed=true" allow="clipboard-read; clipboard-write;">
     <p>Your browser does not support iframes. Please visit our tool directly.</p>
