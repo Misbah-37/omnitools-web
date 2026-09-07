@@ -27,6 +27,7 @@
   top: 0;
   left: 0;
   z-index: 100;
+  
 }
 .home-btn:hover {
   color: #f8fafc;
@@ -89,6 +90,17 @@
     height: 100%;
     display: block;
   }
+/* Mobile Responsive Fix */
+@media (max-width: 768px) {
+  .home-btn {
+    margin: 12px 16px;
+    padding: 8px 14px;
+    font-size: 0.85rem;
+  }
+  .premium-banner {
+    padding-top: 70px; /* Pushes the title down below the floating button */
+  }
+}
 </style>
 </head>
 <body>
