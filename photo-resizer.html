@@ -6,44 +6,48 @@
 <title>Free Image & Photo Resizer | OmniTools</title>
   <link rel="icon" type="image/png" href="favicon.png">
 <meta name="description" content="Resize, compress, and convert images locally without uploading to any external servers. Secure in-browser processing.">
+
+<!-- CropperJS CSS (CDN) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" rel="stylesheet">
+
 <style>
-  /* Home Button */
-.home-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: #94a3b8;
-  text-decoration: none;
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  font-weight: 600;
-  padding: 10px 18px;
-  margin: 16px 24px;
-  background-color: #1e293b;
-  border: 1px solid #334155;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 100;
-}
-.home-btn:hover {
-  color: #f8fafc;
-  border-color: #64748b;
-  background-color: #334155;
-}
+  /* --- Global & Wrapper Styles --- */
+  .home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #94a3b8;
+    text-decoration: none;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-weight: 600;
+    padding: 10px 18px;
+    margin: 16px 24px;
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+  }
+  .home-btn:hover {
+    color: #f8fafc;
+    border-color: #64748b;
+    background-color: #334155;
+  }
+  
   body, html {
     margin: 0;
     padding: 0;
     height: 100%;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
     background-color: #0e1117;
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
   }
   
-  /* The upgraded aesthetic banner */
   .premium-banner {
     background: linear-gradient(to bottom, #111827, #0e1117);
     border-bottom: 1px solid #1e293b;
@@ -58,7 +62,6 @@
     margin: 0 0 12px 0;
     font-size: 2.2rem;
     font-weight: 800;
-    /* Cyan to Indigo gradient matching your glowing icon */
     background: linear-gradient(135deg, #38bdf8, #818cf8);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -78,44 +81,297 @@
     width: 100%;
     flex-grow: 1;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 24px 60px 24px;
+    box-sizing: border-box;
+    overflow-y: auto;
   }
-  
-  iframe {
-    border: none;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
+
+  /* --- Native App UI Styles (Migrated from Python) --- */
+  .tool-container { 
+    background: #111827; 
+    border: 1px solid #374151; 
+    padding: 32px; 
+    border-radius: 12px; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5); 
+    width: 100%; 
+    max-width: 550px; 
+    color: #f3f4f6;
   }
-/* Mobile Responsive Fix */
-@media (max-width: 768px) {
-  .home-btn {
-    margin: 12px 16px;
-    padding: 8px 14px;
-    font-size: 0.85rem;
+  .input-group { 
+    margin-bottom: 1.2rem; 
   }
-  .premium-banner {
-    padding-top: 70px; /* Pushes the title down below the floating button */
+  .input-group label { 
+    display: block; 
+    font-size: 0.9rem; 
+    font-weight: 600; 
+    margin-bottom: 0.4rem; 
+    color: #9ca3af; 
   }
-}
+  input[type="number"], input[type="file"] { 
+    width: 100%; 
+    padding: 10px; 
+    background: #1f2937; 
+    color: #fff; 
+    border: 1px solid #374151; 
+    border-radius: 6px; 
+    box-sizing: border-box; 
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+  }
+  input[type="number"]:focus, input[type="file"]:focus {
+    outline: none;
+    border-color: #38bdf8;
+  }
+  .dimension-row { 
+    display: flex; 
+    gap: 1rem; 
+  }
+  .img-container { 
+    width: 100%; 
+    max-height: 400px; 
+    margin-bottom: 1.2rem; 
+    display: none; 
+    background-color: #0f172a; 
+    border-radius: 8px; 
+    overflow: hidden; 
+  }
+  img { 
+    display: block; 
+    max-width: 100%; 
+  }
+  .action-btn { 
+    background: linear-gradient(135deg, #38bdf8, #818cf8); 
+    color: white; 
+    border: none; 
+    padding: 14px; 
+    width: 100%; 
+    border-radius: 8px; 
+    font-weight: bold; 
+    font-size: 1rem;
+    cursor: pointer; 
+    margin-top: 1rem; 
+    transition: transform 0.1s ease, opacity 0.2s ease;
+  }
+  .action-btn:hover { 
+    opacity: 0.9; 
+  }
+  .action-btn:active {
+    transform: scale(0.98);
+  }
+  #downloadBtn { 
+    display: none; 
+    background: #10b981; 
+    text-align: center; 
+    text-decoration: none; 
+    padding: 14px; 
+    border-radius: 8px; 
+    color: white; 
+    font-weight: bold; 
+    margin-top: 1rem; 
+    transition: background-color 0.2s ease;
+  }
+  #downloadBtn:hover {
+    background: #059669;
+  }
+  #status { 
+    text-align: center; 
+    margin-top: 1rem; 
+    font-size: 0.95rem; 
+    font-weight: 600; 
+    color: #9ca3af; 
+  }
+
+  /* Mobile Responsive Fixes */
+  @media (max-width: 768px) {
+    .home-btn { margin: 12px 16px; padding: 8px 14px; font-size: 0.85rem; }
+    .premium-banner { padding-top: 70px; }
+    .dimension-row { flex-direction: column; gap: 0; }
+  }
 </style>
 </head>
 <body>
   <a href="index.html" class="home-btn">← Back to Home</a>
 
-<!-- High-end visible SEO header -->
 <div class="premium-banner">
   <h1>Image & Photo Resizer</h1>
   <p>Resize, compress, and convert images locally without uploading to any external servers. Choose your target dimensions or file size, and export instantly. Because processing happens in your browser, your photos stay 100% private and never leave your device.</p>
 </div>
 
-<!-- The actual Streamlit App -->
 <div class="tool-wrapper">
-  <iframe src="https://omnitools.streamlit.app/Photo_Resizer?embed=true" allow="clipboard-read; clipboard-write;">
-    <p>Your browser does not support iframes. Please visit our tool directly.</p>
-  </iframe>
+  
+  <div class="tool-container">
+    <div class="input-group">
+        <label>Select Photo</label>
+        <input type="file" id="imageInput" accept="image/png, image/jpeg, image/jpg">
+    </div>
+    
+    <div class="img-container" id="cropContainer">
+        <img id="imageToCrop" src="">
+    </div>
+    
+    <div class="dimension-row">
+        <div class="input-group" style="flex: 1;">
+            <label>Target Width (px)</label>
+            <input type="number" id="widthInput" value="132" onchange="updateAspectRatio()">
+        </div>
+        <div class="input-group" style="flex: 1;">
+            <label>Target Height (px)</label>
+            <input type="number" id="heightInput" value="170" onchange="updateAspectRatio()">
+        </div>
+    </div>
+    
+    <div class="dimension-row">
+        <div class="input-group" style="flex: 1;">
+            <label>Minimum Size (KB)</label>
+            <input type="number" id="minKbInput" value="20">
+        </div>
+        <div class="input-group" style="flex: 1;">
+            <label>Maximum Size (KB)</label>
+            <input type="number" id="maxKbInput" value="50">
+        </div>
+    </div>
+    
+    <button class="action-btn" onclick="processAndCompress()" id="processBtn" style="display:none;">Crop & Compress Photo</button>
+    <div id="status"></div>
+    <a id="downloadBtn" download="OmniTools_Ready.jpg">Download Resized Photo</a>
+  </div>
+
 </div>
 
+<!-- CropperJS Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
+<script>
+    let cropper;
+    const imageToCrop = document.getElementById('imageToCrop');
+    const cropContainer = document.getElementById('cropContainer');
+    const processBtn = document.getElementById('processBtn');
+    const widthInput = document.getElementById('widthInput');
+    const heightInput = document.getElementById('heightInput');
+
+    document.getElementById('imageInput').addEventListener('change', function(e) {
+        const files = e.target.files;
+        if (files && files.length > 0) {
+            const file = files[0];
+            const url = URL.createObjectURL(file);
+            imageToCrop.src = url;
+            cropContainer.style.display = 'block';
+            processBtn.style.display = 'block';
+
+            if (cropper) cropper.destroy();
+
+            const targetRatio = parseInt(widthInput.value) / parseInt(heightInput.value);
+            cropper = new Cropper(imageToCrop, {
+                aspectRatio: targetRatio,
+                viewMode: 1,
+                autoCropArea: 0.8,
+            });
+            
+            document.getElementById('status').innerText = "";
+            document.getElementById('downloadBtn').style.display = "none";
+        }
+    });
+
+    function updateAspectRatio() {
+        if (cropper) {
+            const newRatio = parseInt(widthInput.value) / parseInt(heightInput.value);
+            cropper.setAspectRatio(newRatio);
+        }
+    }
+
+    const getBlob = (canvas, quality) => {
+        return new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', quality));
+    };
+
+    function showSuccess(blob, statusEl, downloadBtn) {
+        statusEl.innerText = `✅ Success! Final Size: ${(blob.size / 1024).toFixed(1)} KB`;
+        statusEl.style.color = "#34d399";
+        const url = URL.createObjectURL(blob);
+        downloadBtn.href = url;
+        downloadBtn.style.display = "block";
+    }
+
+    async function processAndCompress() {
+        if (!cropper) return;
+        const targetWidth = parseInt(widthInput.value);
+        const targetHeight = parseInt(heightInput.value);
+        const minBytes = parseFloat(document.getElementById('minKbInput').value) * 1024;
+        const maxBytes = parseFloat(document.getElementById('maxKbInput').value) * 1024;
+        const statusEl = document.getElementById('status');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        if (minBytes >= maxBytes) {
+            alert("Maximum KB must be greater than Minimum KB.");
+            return;
+        }
+
+        statusEl.innerText = "Calculating perfect compression...";
+        statusEl.style.color = "#94a3b8";
+        downloadBtn.style.display = "none";
+
+        // Extract cropped area
+        const croppedCanvas = cropper.getCroppedCanvas();
+        
+        // Create final canvas with exact target dimensions
+        const finalCanvas = document.createElement('canvas');
+        finalCanvas.width = targetWidth;
+        finalCanvas.height = targetHeight;
+        const ctx = finalCanvas.getContext('2d');
+        
+        // Fill white background (in case of PNG transparency)
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, targetWidth, targetHeight);
+        ctx.drawImage(croppedCanvas, 0, 0, targetWidth, targetHeight);
+
+        // 1. Check max quality (1.0)
+        let blob = await getBlob(finalCanvas, 1.0);
+        if (blob.size < minBytes) {
+            statusEl.innerText = `Error: Image is too small (${(blob.size/1024).toFixed(1)} KB) even at maximum quality. Upload a higher resolution photo.`;
+            statusEl.style.color = "#f87171";
+            return;
+        }
+        if (blob.size <= maxBytes) {
+            return showSuccess(blob, statusEl, downloadBtn);
+        }
+
+        // 2. Check min quality (0.01)
+        let minBlob = await getBlob(finalCanvas, 0.01);
+        if (minBlob.size > maxBytes) {
+            statusEl.innerText = `Error: Cannot compress enough. Minimum possible size is ${(minBlob.size/1024).toFixed(1)} KB.`;
+            statusEl.style.color = "#f87171";
+            return;
+        }
+
+        // 3. Binary Search for optimal quality
+        let min_q = 0.01, max_q = 1.0, best_blob = null;
+        for (let i = 0; i < 15; i++) {
+            let q = (min_q + max_q) / 2;
+            blob = await getBlob(finalCanvas, q);
+            
+            if (blob.size >= minBytes && blob.size <= maxBytes) {
+                return showSuccess(blob, statusEl, downloadBtn);
+            }
+            
+            if (blob.size > maxBytes) {
+                max_q = q;
+            } else {
+                min_q = q;
+                best_blob = blob;
+            }
+        }
+        
+        // 4. Fallback if exact range not hit (rare but possible)
+        if (best_blob) {
+            statusEl.innerText = `Warning: Settled on closest safe size: ${(best_blob.size / 1024).toFixed(1)} KB`;
+            statusEl.style.color = "#fbbf24";
+            const url = URL.createObjectURL(best_blob);
+            downloadBtn.href = url;
+            downloadBtn.style.display = "block";
+        }
+    }
+</script>
 </body>
 </html>
