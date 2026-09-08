@@ -7,72 +7,66 @@
   <link rel="icon" type="image/png" href="favicon.png">
 <meta name="description" content="Test your typing speed and accuracy in real-time. Track your WPM and improve your keyboard skills for free.">
 <style>
-  /* Home Button */
-.home-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: #94a3b8;
-  text-decoration: none;
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-  font-weight: 600;
-  padding: 10px 18px;
-  margin: 16px 24px;
-  background-color: #1e293b;
-  border: 1px solid #334155;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 100;
-}
-.home-btn:hover {
-  color: #f8fafc;
-  border-color: #64748b;
-  background-color: #334155;
-}
+  /* --- Original OmniTools Wrapper Styles --- */
+  .home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #94a3b8;
+    text-decoration: none;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-weight: 600;
+    padding: 10px 18px;
+    margin: 16px 24px;
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+  }
+  .home-btn:hover {
+    color: #f8fafc;
+    border-color: #64748b;
+    background-color: #334155;
+  }
   body, html {
     margin: 0;
     padding: 0;
     height: 100%;
-    overflow: hidden;
+    overflow-x: hidden;
     background-color: #0e1117;
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     display: flex;
     flex-direction: column;
   }
-  
   .premium-banner {
     background: linear-gradient(to bottom, #312e81, #0e1117);
     padding: 24px 24px 30px 24px;
     text-align: center;
     flex-shrink: 0;
   }
-  
   .banner-content {
     max-width: 750px;
     margin: 0 auto;
   }
-
   .premium-banner h1 {
     margin: 0 0 6px 0;
     font-size: 1.8rem;
     font-weight: 800;
-    /* Indigo/Purple text gradient */
     background: linear-gradient(135deg, #a5b4fc, #6366f1);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: -0.02em;
   }
-  
   .premium-banner p {
     margin: 0;
     font-size: 0.95rem;
     line-height: 1.4;
     color: #94a3b8;
   }
-  
   .tool-wrapper {
     width: 100%;
     flex-grow: 1;
@@ -80,67 +74,121 @@
     margin-top: -20px;
     position: relative;
     z-index: 90;
-  }
-  
-  iframe {
-    border: none;
-    width: 100%;
-    height: 100%;
-    display: block;
-    position: relative;
-    z-index: 2; /* Keeps iframe above the loader once loaded */
-  }
-
-  /* --- New Native Loading Spinner --- */
-  .loader-container {
-    position: absolute;
-    top: 45%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    padding: 20px 40px;
+    box-sizing: border-box;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* --- Replica of Streamlit & Python Script Styles --- */
+  .st-app-replica {
+    width: 100%;
+    max-width: 800px;
+    font-family: 'Inter', system-ui, sans-serif;
+    color: #e2e8f0;
+  }
+  .st-radio-group {
+    margin-bottom: 24px;
+  }
+  .st-radio-label {
+    font-size: 14px;
+    color: #fafafa;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .st-radio-option {
+    display: flex;
     align-items: center;
-    gap: 16px;
-    z-index: 1; /* Sits behind the iframe */
-  }
-
-  .spinner {
-    width: 48px;
-    height: 48px;
-    border: 4px solid #1e293b;
-    border-top: 4px solid #6366f1; /* Indigo Accent to match banner */
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-  }
-
-  .loader-text {
-    color: #94a3b8;
+    gap: 8px;
+    margin-bottom: 8px;
     font-size: 1rem;
-    font-weight: 600;
-    animation: pulse 1.5s ease-in-out infinite;
+    cursor: pointer;
+  }
+  .st-radio-option input {
+    accent-color: #ff4b4b; /* Streamlit default primary color */
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
+  .st-btn-primary {
+    background-color: #ff4b4b;
+    color: white;
+    border: 1px solid #ff4b4b;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  .st-btn-primary:hover {
+    background-color: #ff3333;
+  }
+  .st-btn-secondary {
+    background-color: #1e293b;
+    color: white;
+    border: 1px solid #334155;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: border-color 0.2s;
+  }
+  .st-btn-secondary:hover {
+    border-color: #ff4b4b;
+  }
+  .st-info-box {
+    background-color: rgba(61, 157, 243, 0.1);
+    border-left: 4px solid #3d9df3;
+    padding: 16px;
+    border-radius: 4px;
+    margin-bottom: 24px;
+    font-size: 15px;
   }
 
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+  /* Exact Python CSS Injection translated */
+  .sentence { 
+    font-size: 20px; 
+    line-height: 1.6; 
+    letter-spacing: 0.5px; 
+    margin-bottom: 20px; 
+    user-select: none; 
+    word-wrap: break-word; 
+  }
+  .correct { 
+    color: #00d2ff; 
+    font-weight: bold; 
+    text-shadow: 0 0 8px rgba(0,210,255,0.4); 
+  }
+  .current { 
+    text-decoration: underline; 
+    font-weight: bold; 
+    color: #ff3399; 
+    background-color: rgba(255, 51, 153, 0.2); 
+    border-radius: 3px; 
+    padding: 0 2px; 
+  }
+  #stats { 
+    font-size: 20px; 
+    font-weight: bold; 
+    color: #00d2ff; 
+    line-height: 1.6; 
+  }
+  #progress { 
+    font-size: 15px; 
+    color: #94a3b8; 
+    margin-bottom: 12px; 
+    font-weight: 600; 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
   }
 
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+  /* Mobile Responsive Fix */
+  @media (max-width: 768px) {
+    .home-btn { margin: 12px 16px; padding: 8px 14px; font-size: 0.85rem; }
+    .premium-banner { padding-top: 70px; }
+    .tool-wrapper { padding: 20px; }
   }
-
-/* Mobile Responsive Fix */
-@media (max-width: 768px) {
-  .home-btn {
-    margin: 12px 16px;
-    padding: 8px 14px;
-    font-size: 0.85rem;
-  }
-  .premium-banner {
-    padding-top: 70px; /* Pushes the title down below the floating button */
-  }
-}
 </style>
 </head>
 <body>
@@ -154,19 +202,212 @@
 </div>
 
 <div class="tool-wrapper">
-  
-  <!-- Loading Skeleton Animation -->
-  <div class="loader-container" id="loadingSkeleton">
-    <div class="spinner"></div>
-    <div class="loader-text">Waking up the server...</div>
-  </div>
+  <div class="st-app-replica">
+    
+    <!-- Setup Screen (Difficulty Selection) -->
+    <div id="setup-screen">
+      <div class="st-radio-group">
+        <span class="st-radio-label">Choose Difficulty:</span>
+        <label class="st-radio-option">
+          <input type="radio" name="difficulty" value="easy" checked> 1. Easy (30 Letters)
+        </label>
+        <label class="st-radio-option">
+          <input type="radio" name="difficulty" value="medium"> 2. Medium (15 Words)
+        </label>
+        <label class="st-radio-option">
+          <input type="radio" name="difficulty" value="hard"> 3. Hard (10 Sentences)
+        </label>
+        <label class="st-radio-option">
+          <input type="radio" name="difficulty" value="expert"> 4. Expert (1 Paragraph)
+        </label>
+      </div>
+      <button class="st-btn-primary" id="startBtn">Start Typing Test</button>
+    </div>
 
-  <!-- Original Streamlit Iframe with onload event -->
-  <iframe src="https://omnitools.streamlit.app/Typing_Test?embed=true" allow="clipboard-read; clipboard-write;" onload="document.getElementById('loadingSkeleton').style.display='none'">
-    <p>Your browser does not support iframes. Please visit our tool directly.</p>
-  </iframe>
-  
+    <!-- Active Test Screen -->
+    <div id="test-screen" style="display: none;">
+      <div class="st-info-box">
+        Click anywhere in the box below and start typing!
+      </div>
+      
+      <div id="progress">Loading...</div>
+      <div id="textDisplay" class="sentence"></div>
+      <div id="stats"></div>
+      
+      <button class="st-btn-secondary" id="endBtn">End Test / Change Difficulty</button>
+    </div>
+
+  </div>
 </div>
 
+<script>
+  // Exact data arrays from Python logic
+  const letters = ("abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;':,.<>/?`~ ").split("");
+  const words = [
+    "apple", "banana", "table", "chair", "mountain", "river", "ocean", "space", "rocket",
+    "planet", "orbit", "galaxy", "universe", "telescope", "computer", "keyboard", "mouse",
+    "screen", "window", "door", "house", "building", "street", "city", "country", "world",
+    "globe", "map", "compass", "north", "south", "east", "west", "up", "down", "left", "right",
+    "front", "back", "top", "bottom", "inside", "outside", "near", "far", "close", "open", "shut",
+    "lock", "key", "safe", "danger", "fast", "slow", "quick", "speedy", "rapid", "swift", "sudden",
+    "abrupt", "gradual", "steady", "constant", "changing", "dynamic", "static", "still", "quiet",
+    "loud", "noisy", "silent", "peaceful", "calm", "chaotic", "messy", "neat", "tidy", "clean", "dirty",
+    "filthy", "spotless", "bright", "dark", "light", "heavy", "soft", "hard", "rough", "smooth", "sharp",
+    "dull", "blunt", "pointed", "round", "square", "flat", "curved", "straight", "bent", "broken"
+  ];
+  const sentences = [
+    "The quick brown fox jumps over the lazy dog.",
+    "Pack my box with five dozen liquor jugs.",
+    "How vexingly quick daft zebras jump!",
+    "Sphinx of black quartz, judge my vow.",
+    "Two driven jocks help fax my big quiz.",
+    "Five quacking zephyrs jolt my wax bed.",
+    "The five boxing wizards jump quickly.",
+    "Bright vixens jump; dozy fowl quack.",
+    "A wizard's job is to vex chumps quickly in fog.",
+    "Watch Jeopardy, Alex Trebek's fun TV quiz game.",
+    "By Jove, my quick study of lexicography won a prize.",
+    "Programming is not about memorizing code; it is about solving problems.",
+    "Artificial Intelligence is changing the world very quickly.",
+    "The internet is a vast network that connects computers all over the world.",
+    "Cybersecurity is the practice of protecting systems, networks, and programs.",
+    "Software engineering is the systematic application of engineering approaches.",
+    "Cloud computing provides on-demand availability of computer system resources.",
+    "Python is an interpreted, high-level and general-purpose programming language."
+  ];
+  const paragraphs = [
+    "The morning sun cast a gentle golden glow across the quiet streets as the city slowly woke up. A cool breeze carried the sweet aroma of freshly brewed coffee from the corner bakery, welcoming early morning commuters on their way to work.",
+    "Consistency is the secret ingredient behind mastering any new skill in life. When you dedicate even ten minutes each day to focused practice, the compound effect over months and years produces remarkable results that talent alone cannot achieve.",
+    "Reading books is one of the most rewarding habits you can develop. It allows you to travel across different eras, explore distant worlds, and experience the thoughts of great minds throughout history, all from the comfort of your favorite armchair.",
+    "The ocean covers more than seventy percent of our planet and remains one of the least explored frontiers on Earth. Beneath its shimmering surface lie vast underwater mountain ranges, deep trenches, and countless mysterious creatures that have never seen sunlight.",
+    "In the modern digital era, learning how to type quickly and accurately is an essential superpower. It allows your thoughts to flow seamlessly onto the screen without interruption, boosting both your productivity and creative expression.",
+    "Clean code is like well-written prose; it is intuitive, easy to understand, and pleasant to maintain over time. Great software engineers do not just write code for machines to execute, but for fellow developers to read and improve.",
+    "Coding is equal parts logic and creativity. Whether building a simple calculator, designing an interactive game, or training a machine learning model, programming gives you the power to bring abstract ideas into tangible reality.",
+    "Master the art of finishing what you start. While starting new projects is exciting, the true satisfaction and growth come from pushing through the messy middle and bringing your work across the finish line."
+  ];
+
+  // DOM Elements
+  const setupScreen = document.getElementById("setup-screen");
+  const testScreen = document.getElementById("test-screen");
+  const startBtn = document.getElementById("startBtn");
+  const endBtn = document.getElementById("endBtn");
+  
+  const display = document.getElementById("textDisplay");
+  const stats = document.getElementById("stats");
+  const progress = document.getElementById("progress");
+
+  // State Variables
+  let pool = [];
+  let targetCount = 0;
+  let currentTarget = "";
+  let currentIndex = 0;
+  let roundsCompleted = 0;
+  let startTime = null;
+  let totalCharactersTyped = 0;
+  let errors = 0;
+  let isTestActive = false;
+
+  // Exact render logic from Python's injected JS
+  function render() {
+    progress.innerText = `Round: ${roundsCompleted + 1} / ${targetCount}`;
+    let html = "";
+    for (let i = 0; i < currentTarget.length; i++) {
+      if (i < currentIndex) {
+        html += `<span class="correct">${currentTarget[i]}</span>`;
+      } else if (i === currentIndex) {
+        html += `<span class="current">${currentTarget[i]}</span>`;
+      } else {
+        html += `<span>${currentTarget[i]}</span>`;
+      }
+    }
+    display.innerHTML = html;
+  }
+
+  // Exact Keydown listener logic from Python
+  function handleKeydown(e) {
+    if (!isTestActive) return;
+    if (roundsCompleted >= targetCount) return;
+    
+    // Ignore modifier keys that shouldn't register as typed characters
+    if (e.key === "Backspace") { e.preventDefault(); return; }
+    if (e.key.length > 1) return; 
+
+    // Prevent default scrolling when hitting Spacebar
+    if (e.key === " ") { e.preventDefault(); }
+
+    if (startTime === null) startTime = new Date().getTime();
+    
+    if (e.key === currentTarget[currentIndex]) {
+      currentIndex++;
+      totalCharactersTyped++;
+    } else {
+      errors++;
+    }
+    
+    if (currentIndex === currentTarget.length) {
+      roundsCompleted++;
+      if (roundsCompleted === targetCount) {
+        let endTime = new Date().getTime();
+        let elapsedSeconds = (endTime - startTime) / 1000;
+        let wpm = (totalCharactersTyped / 5) / (elapsedSeconds / 60);
+        let accuracy = (totalCharactersTyped / (totalCharactersTyped + errors)) * 100;
+        
+        progress.innerText = "✨ Test Complete!";
+        display.innerHTML = "";
+        stats.innerHTML = `🎉 Perfect! <br> 🚀 Speed: ${wpm.toFixed(2)} WPM <br> 🎯 Accuracy: ${accuracy.toFixed(2)}%`;
+        isTestActive = false;
+        return;
+      } else {
+        currentTarget = pool[Math.floor(Math.random() * pool.length)];
+        currentIndex = 0;
+      }
+    }
+    render();
+  }
+
+  // Event Listeners
+  startBtn.addEventListener("click", () => {
+    const selectedDiff = document.querySelector('input[name="difficulty"]:checked').value;
+    
+    if (selectedDiff === "easy") {
+      pool = letters;
+      targetCount = 30;
+    } else if (selectedDiff === "medium") {
+      pool = words;
+      targetCount = 15;
+    } else if (selectedDiff === "hard") {
+      pool = sentences;
+      targetCount = 10;
+    } else {
+      pool = paragraphs;
+      targetCount = 1;
+    }
+
+    // Reset Test State
+    currentTarget = pool[Math.floor(Math.random() * pool.length)];
+    currentIndex = 0;
+    roundsCompleted = 0;
+    startTime = null;
+    totalCharactersTyped = 0;
+    errors = 0;
+    isTestActive = true;
+
+    stats.innerHTML = "";
+    setupScreen.style.display = "none";
+    testScreen.style.display = "block";
+    
+    render();
+    
+    // Attach listener to window
+    window.addEventListener("keydown", handleKeydown);
+  });
+
+  endBtn.addEventListener("click", () => {
+    isTestActive = false;
+    window.removeEventListener("keydown", handleKeydown);
+    testScreen.style.display = "none";
+    setupScreen.style.display = "block";
+  });
+</script>
 </body>
 </html>
