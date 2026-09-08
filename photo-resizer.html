@@ -11,6 +11,21 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" rel="stylesheet">
 
 <style>
+  .title-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+  
+  .app-icon {
+    width: 65px;
+    height: 65px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); /* Matches your indigo theme */
+    object-fit: cover;
+  }
   /* --- Global & Wrapper Styles --- */
   .home-btn {
     display: inline-flex;
@@ -197,6 +212,9 @@
   <a href="index.html" class="home-btn">← Back to Home</a>
 
 <div class="premium-banner">
+  <div class="banner-content">
+    <div class="title-wrapper">
+      <img src="photo_icon.png" alt="Photo Resizer" class="app-icon" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdib3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2VhNTgwYyIvPjwvc3ZnPg=='">
   <h1>Image & Photo Resizer</h1>
   <p>Resize, compress, and convert images locally without uploading to any external servers. Choose your target dimensions or file size, and export instantly. Because processing happens in your browser, your photos stay 100% private and never leave your device.</p>
 </div>
