@@ -7,35 +7,36 @@
   <link rel="icon" type="image/png" href="favicon.png">
 <meta name="description" content="Test your typing speed and accuracy in real-time. Track your WPM and improve your keyboard skills for free.">
 <style>
-  .home-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: #94a3b8;
-    text-decoration: none;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    font-weight: 600;
-    padding: 10px 18px;
-    margin: 16px 24px;
-    background-color: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 8px;
-    transition: all 0.2s ease;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 100;
-  }
-  .home-btn:hover {
-    color: #f8fafc;
-    border-color: #64748b;
-    background-color: #334155;
-  }
-  
+  /* Home Button */
+.home-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #94a3b8;
+  text-decoration: none;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-weight: 600;
+  padding: 10px 18px;
+  margin: 16px 24px;
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+.home-btn:hover {
+  color: #f8fafc;
+  border-color: #64748b;
+  background-color: #334155;
+}
   body, html {
     margin: 0;
     padding: 0;
     height: 100%;
+    overflow: hidden;
     background-color: #0e1117;
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     display: flex;
@@ -58,6 +59,7 @@
     margin: 0 0 6px 0;
     font-size: 1.8rem;
     font-weight: 800;
+    /* Indigo/Purple text gradient */
     background: linear-gradient(135deg, #a5b4fc, #6366f1);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -75,145 +77,70 @@
     width: 100%;
     flex-grow: 1;
     background-color: #0e1117;
+    margin-top: -20px;
     position: relative;
     z-index: 90;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 20px 24px 60px 24px;
-    overflow-y: auto;
-    box-sizing: border-box;
-  }
-
-  .typing-app-container {
-    background-color: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 12px;
-    padding: 32px;
-    width: 100%;
-    max-width: 700px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    box-shadow: 0 10px 20px -10px rgba(0,0,0,0.3);
-  }
-
-  .controls-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-  }
-
-  .controls-row label {
-    color: #94a3b8;
-    font-size: 0.95rem;
-    font-weight: 600;
-  }
-
-  .difficulty-select {
-    background-color: #0f172a;
-    color: #f8fafc;
-    border: 1px solid #334155;
-    padding: 10px 14px;
-    border-radius: 8px;
-    font-family: inherit;
-    font-size: 0.95rem;
-    cursor: pointer;
-    outline: none;
-    transition: border-color 0.2s ease;
-  }
-
-  .difficulty-select:focus {
-    border-color: #6366f1;
-  }
-
-  .stats-row {
-    display: flex;
-    justify-content: space-between;
-    background-color: #0f172a;
-    padding: 16px 24px;
-    border-radius: 8px;
-    border: 1px solid #334155;
-  }
-
-  .stat-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-  }
-
-  .stat-title {
-    font-size: 0.85rem;
-    color: #94a3b8;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-weight: 600;
-  }
-
-  .stat-value {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #f8fafc;
-  }
-
-  .text-display {
-    background-color: #0f172a;
-    border: 1px solid #334155;
-    border-radius: 8px;
-    padding: 20px;
-    font-size: 1.2rem;
-    line-height: 1.6;
-    color: #64748b;
-    min-height: 120px;
-    user-select: none;
   }
   
-  .text-display span.correct { color: #f8fafc; }
-  .text-display span.incorrect { color: #ef4444; background-color: rgba(239, 68, 68, 0.1); border-radius: 2px;}
-  .text-display span.active { border-bottom: 2px solid #6366f1; color: #f8fafc; }
-
-  textarea {
-    width: 100%;
-    padding: 16px;
-    border-radius: 8px;
-    background-color: #0f172a;
-    border: 1px solid #334155;
-    color: #f8fafc;
-    font-size: 1.1rem;
-    font-family: inherit;
-    resize: none;
-    box-sizing: border-box;
-    transition: border-color 0.2s ease;
-  }
-
-  textarea:focus { outline: none; border-color: #6366f1; }
-  textarea:disabled { opacity: 0.5; cursor: not-allowed; }
-
-  .action-btn {
-    background-color: #6366f1;
-    color: #ffffff;
-    padding: 14px 24px;
-    border-radius: 8px;
-    font-weight: 700;
+  iframe {
     border: none;
-    cursor: pointer;
-    font-size: 1rem;
     width: 100%;
-    transition: background-color 0.2s ease, transform 0.1s ease;
+    height: 100%;
+    display: block;
+    position: relative;
+    z-index: 2; /* Keeps iframe above the loader once loaded */
   }
 
-  .action-btn:hover { background-color: #4f46e5; }
-  .action-btn:active { transform: scale(0.98); }
-
-  @media (max-width: 768px) {
-    .home-btn { margin: 12px 16px; padding: 8px 14px; font-size: 0.85rem; }
-    .premium-banner { padding-top: 70px; }
-    .stats-row { padding: 12px; }
-    .stat-value { font-size: 1.2rem; }
-    .text-display, textarea { font-size: 1rem; }
+  /* --- New Native Loading Spinner --- */
+  .loader-container {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    z-index: 1; /* Sits behind the iframe */
   }
+
+  .spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid #1e293b;
+    border-top: 4px solid #6366f1; /* Indigo Accent to match banner */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  .loader-text {
+    color: #94a3b8;
+    font-size: 1rem;
+    font-weight: 600;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+/* Mobile Responsive Fix */
+@media (max-width: 768px) {
+  .home-btn {
+    margin: 12px 16px;
+    padding: 8px 14px;
+    font-size: 0.85rem;
+  }
+  .premium-banner {
+    padding-top: 70px; /* Pushes the title down below the floating button */
+  }
+}
 </style>
 </head>
 <body>
@@ -227,190 +154,19 @@
 </div>
 
 <div class="tool-wrapper">
-  <div class="typing-app-container">
-    
-    <div class="controls-row">
-      <label for="difficultySelect">Select Tier:</label>
-      <select id="difficultySelect" class="difficulty-select">
-        <option value="easy">Easy (Lowercase, No Punctuation)</option>
-        <option value="medium" selected>Medium (Standard Sentences)</option>
-        <option value="hard">Hard (Complex Words & Quotes)</option>
-        <option value="expert">Expert (Numbers & Symbols)</option>
-      </select>
-    </div>
-
-    <div class="stats-row">
-      <div class="stat-box"><span class="stat-title">Time</span><span class="stat-value" id="timeLeft">60s</span></div>
-      <div class="stat-box"><span class="stat-title">WPM</span><span class="stat-value" id="wpm">0</span></div>
-      <div class="stat-box"><span class="stat-title">Accuracy</span><span class="stat-value" id="accuracy">100%</span></div>
-    </div>
-
-    <div class="text-display" id="textDisplay">Click "Start Test" to begin...</div>
-    <textarea id="textInput" rows="3" placeholder="Start typing here..." disabled></textarea>
-    <button class="action-btn" id="startBtn">Start Test</button>
-    
+  
+  <!-- Loading Skeleton Animation -->
+  <div class="loader-container" id="loadingSkeleton">
+    <div class="spinner"></div>
+    <div class="loader-text">Waking up the server...</div>
   </div>
+
+  <!-- Original Streamlit Iframe with onload event -->
+  <iframe src="https://omnitools.streamlit.app/Typing_Test?embed=true" allow="clipboard-read; clipboard-write;" onload="document.getElementById('loadingSkeleton').style.display='none'">
+    <p>Your browser does not support iframes. Please visit our tool directly.</p>
+  </iframe>
+  
 </div>
 
-<script>
-  const textTiers = {
-    easy: [
-      "the sun is shining and the birds are singing in the trees",
-      "we went to the park to play a game of baseball with friends",
-      "she loves to read books about magic and far away places",
-      "my favorite color is blue and i like to paint pictures of the ocean"
-    ],
-    medium: [
-      "Technology is best when it brings people together.",
-      "In the middle of every difficulty lies opportunity.",
-      "The quick brown fox jumps over the lazy dog.",
-      "Consistent practice and muscle memory are the keys to improving."
-    ],
-    hard: [
-      "Success is not final, failure is not fatal: it is the courage to continue that counts.",
-      "The programmer's dilemma: \"To code, or not to code; that is the question!\"",
-      "Although the weather was unexpectedly-harsh, they proceeded with the cross-country trek.",
-      "It's widely acknowledged that semi-colons; when used correctly, enhance sentence flow."
-    ],
-    expert: [
-      "Contact support at admin@omnitools.com or call 1-800-555-0199 for assistance!",
-      "The revenue grew by 45.7% (approx. $12,400) in Q3 of 2025, exceeding expectations.",
-      "Run the command: `npm install --save-dev qrcode@1.0.0` to initialize the [build].",
-      "User #904-B requested a 50% refund for invoice #A-7734; please process within 48hrs."
-    ]
-  };
-
-  let timeLeft = 60;
-  let timer = null;
-  let isPlaying = false;
-  let charsTyped = 0;
-  let errors = 0;
-
-  const timeLeftDisplay = document.getElementById("timeLeft");
-  const wpmDisplay = document.getElementById("wpm");
-  const accuracyDisplay = document.getElementById("accuracy");
-  const textDisplay = document.getElementById("textDisplay");
-  const textInput = document.getElementById("textInput");
-  const startBtn = document.getElementById("startBtn");
-  const difficultySelect = document.getElementById("difficultySelect");
-
-  function loadText() {
-    textDisplay.innerHTML = "";
-    const selectedTier = difficultySelect.value;
-    const paragraphs = textTiers[selectedTier];
-    const currentText = paragraphs[Math.floor(Math.random() * paragraphs.length)];
-    
-    currentText.split("").forEach((char) => {
-      let span = document.createElement("span");
-      span.innerText = char;
-      textDisplay.appendChild(span);
-    });
-    textDisplay.querySelector("span").classList.add("active");
-  }
-
-  function startTest() {
-    loadText();
-    clearInterval(timer);
-    timeLeft = 60;
-    charsTyped = 0;
-    errors = 0;
-    isPlaying = true;
-    
-    textInput.disabled = false;
-    textInput.value = "";
-    textInput.focus();
-    
-    timeLeftDisplay.innerText = "60s";
-    wpmDisplay.innerText = "0";
-    accuracyDisplay.innerText = "100%";
-    startBtn.innerText = "Restart Test";
-    
-    timer = setInterval(updateTimer, 1000);
-  }
-
-  function updateTimer() {
-    if (timeLeft > 0) {
-      timeLeft--;
-      timeLeftDisplay.innerText = timeLeft + "s";
-      calculateStats();
-    } else {
-      endTest();
-    }
-  }
-
-  function calculateStats() {
-    let timeElapsed = 60 - timeLeft;
-    if (timeElapsed === 0) timeElapsed = 1; 
-    let wpm = Math.round(((charsTyped / 5) / timeElapsed) * 60);
-    if (wpm < 0 || !wpm || wpm === Infinity) wpm = 0;
-    let accuracy = charsTyped === 0 ? 100 : Math.round(((charsTyped - errors) / charsTyped) * 100);
-    if (accuracy < 0) accuracy = 0;
-    wpmDisplay.innerText = wpm;
-    accuracyDisplay.innerText = accuracy + "%";
-  }
-
-  function endTest() {
-    clearInterval(timer);
-    isPlaying = false;
-    textInput.disabled = true;
-    startBtn.innerText = "Start New Test";
-  }
-
-  textInput.addEventListener("input", () => {
-    if (!isPlaying) return;
-    let arrayQuote = textDisplay.querySelectorAll("span");
-    let arrayValue = textInput.value.split("");
-    charsTyped++;
-    errors = 0;
-    let allCorrect = true;
-
-    arrayQuote.forEach((characterSpan, index) => {
-      let character = arrayValue[index];
-      characterSpan.classList.remove("active");
-      if (character == null) {
-        characterSpan.classList.remove("correct");
-        characterSpan.classList.remove("incorrect");
-        allCorrect = false;
-      } else if (character === characterSpan.innerText) {
-        characterSpan.classList.add("correct");
-        characterSpan.classList.remove("incorrect");
-      } else {
-        characterSpan.classList.remove("correct");
-        characterSpan.classList.add("incorrect");
-        errors++;
-        allCorrect = false;
-      }
-    });
-
-    if (arrayValue.length < arrayQuote.length) {
-      arrayQuote[arrayValue.length].classList.add("active");
-    }
-
-    if (arrayValue.length === arrayQuote.length && allCorrect) {
-      endTest();
-      calculateStats(); 
-    }
-  });
-
-  startBtn.addEventListener("click", startTest);
-  
-  // Changing difficulty resets the test immediately to prevent cheating
-  difficultySelect.addEventListener("change", () => {
-    if (isPlaying) {
-      endTest();
-      timeLeftDisplay.innerText = "60s";
-      wpmDisplay.innerText = "0";
-      accuracyDisplay.innerText = "100%";
-      textInput.value = "";
-      loadText();
-      startBtn.innerText = "Start Test";
-    } else {
-      loadText();
-    }
-  });
-
-  // Load initial placeholder text based on default medium selection
-  loadText();
-</script>
 </body>
 </html>
