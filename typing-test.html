@@ -7,7 +7,6 @@
   <link rel="icon" type="image/png" href="favicon.png">
 <meta name="description" content="Test your typing speed and accuracy in real-time. Track your WPM and improve your keyboard skills for free.">
 <style>
-  /* Original Home Button */
   .home-btn {
     display: inline-flex;
     align-items: center;
@@ -33,7 +32,6 @@
     background-color: #334155;
   }
   
-  /* Layout adjustments to accommodate native UI instead of iframe */
   body, html {
     margin: 0;
     padding: 0;
@@ -60,7 +58,6 @@
     margin: 0 0 6px 0;
     font-size: 1.8rem;
     font-weight: 800;
-    /* Indigo/Purple text gradient */
     background: linear-gradient(135deg, #a5b4fc, #6366f1);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -88,7 +85,6 @@
     box-sizing: border-box;
   }
 
-  /* --- New Native Tool Styles --- */
   .typing-app-container {
     background-color: #1e293b;
     border: 1px solid #334155;
@@ -100,6 +96,36 @@
     flex-direction: column;
     gap: 20px;
     box-shadow: 0 10px 20px -10px rgba(0,0,0,0.3);
+  }
+
+  .controls-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .controls-row label {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  .difficulty-select {
+    background-color: #0f172a;
+    color: #f8fafc;
+    border: 1px solid #334155;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+
+  .difficulty-select:focus {
+    border-color: #6366f1;
   }
 
   .stats-row {
@@ -143,10 +169,6 @@
     min-height: 120px;
     user-select: none;
   }
-
-  .text-display span {
-    transition: color 0.1s ease;
-  }
   
   .text-display span.correct { color: #f8fafc; }
   .text-display span.incorrect { color: #ef4444; background-color: rgba(239, 68, 68, 0.1); border-radius: 2px;}
@@ -166,18 +188,11 @@
     transition: border-color 0.2s ease;
   }
 
-  textarea:focus {
-    outline: none;
-    border-color: #6366f1; /* Indigo Accent */
-  }
-
-  textarea:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
+  textarea:focus { outline: none; border-color: #6366f1; }
+  textarea:disabled { opacity: 0.5; cursor: not-allowed; }
 
   .action-btn {
-    background-color: #6366f1; /* Indigo Accent */
+    background-color: #6366f1;
     color: #ffffff;
     padding: 14px 24px;
     border-radius: 8px;
@@ -192,25 +207,12 @@
   .action-btn:hover { background-color: #4f46e5; }
   .action-btn:active { transform: scale(0.98); }
 
-  /* Mobile Responsive Fix */
   @media (max-width: 768px) {
-    .home-btn {
-      margin: 12px 16px;
-      padding: 8px 14px;
-      font-size: 0.85rem;
-    }
-    .premium-banner {
-      padding-top: 70px;
-    }
-    .stats-row {
-      padding: 12px;
-    }
-    .stat-value {
-      font-size: 1.2rem;
-    }
-    .text-display, textarea {
-      font-size: 1rem;
-    }
+    .home-btn { margin: 12px 16px; padding: 8px 14px; font-size: 0.85rem; }
+    .premium-banner { padding-top: 70px; }
+    .stats-row { padding: 12px; }
+    .stat-value { font-size: 1.2rem; }
+    .text-display, textarea { font-size: 1rem; }
   }
 </style>
 </head>
@@ -225,44 +227,62 @@
 </div>
 
 <div class="tool-wrapper">
-  
   <div class="typing-app-container">
+    
+    <div class="controls-row">
+      <label for="difficultySelect">Select Tier:</label>
+      <select id="difficultySelect" class="difficulty-select">
+        <option value="easy">Easy (Lowercase, No Punctuation)</option>
+        <option value="medium" selected>Medium (Standard Sentences)</option>
+        <option value="hard">Hard (Complex Words & Quotes)</option>
+        <option value="expert">Expert (Numbers & Symbols)</option>
+      </select>
+    </div>
+
     <div class="stats-row">
-      <div class="stat-box">
-        <span class="stat-title">Time</span>
-        <span class="stat-value" id="timeLeft">60s</span>
-      </div>
-      <div class="stat-box">
-        <span class="stat-title">WPM</span>
-        <span class="stat-value" id="wpm">0</span>
-      </div>
-      <div class="stat-box">
-        <span class="stat-title">Accuracy</span>
-        <span class="stat-value" id="accuracy">100%</span>
-      </div>
+      <div class="stat-box"><span class="stat-title">Time</span><span class="stat-value" id="timeLeft">60s</span></div>
+      <div class="stat-box"><span class="stat-title">WPM</span><span class="stat-value" id="wpm">0</span></div>
+      <div class="stat-box"><span class="stat-title">Accuracy</span><span class="stat-value" id="accuracy">100%</span></div>
     </div>
 
     <div class="text-display" id="textDisplay">Click "Start Test" to begin...</div>
-    
     <textarea id="textInput" rows="3" placeholder="Start typing here..." disabled></textarea>
-    
     <button class="action-btn" id="startBtn">Start Test</button>
+    
   </div>
-
 </div>
 
 <script>
-  const paragraphs = [
-    "Technology is best when it brings people together. Fast typing helps you communicate complex ideas instantly across the globe without hesitation.",
-    "In the middle of every difficulty lies opportunity. Consistent practice and muscle memory are the hidden keys to drastically improving your keyboard skills.",
-    "The quick brown fox jumps over the lazy dog. This classic sentence contains every letter of the English alphabet and is perfect for warming up your hands.",
-    "Success is not final, failure is not fatal: it is the courage to continue that counts. Keep pushing your limits and your typing speed will naturally increase."
-  ];
+  const textTiers = {
+    easy: [
+      "the sun is shining and the birds are singing in the trees",
+      "we went to the park to play a game of baseball with friends",
+      "she loves to read books about magic and far away places",
+      "my favorite color is blue and i like to paint pictures of the ocean"
+    ],
+    medium: [
+      "Technology is best when it brings people together.",
+      "In the middle of every difficulty lies opportunity.",
+      "The quick brown fox jumps over the lazy dog.",
+      "Consistent practice and muscle memory are the keys to improving."
+    ],
+    hard: [
+      "Success is not final, failure is not fatal: it is the courage to continue that counts.",
+      "The programmer's dilemma: \"To code, or not to code; that is the question!\"",
+      "Although the weather was unexpectedly-harsh, they proceeded with the cross-country trek.",
+      "It's widely acknowledged that semi-colons; when used correctly, enhance sentence flow."
+    ],
+    expert: [
+      "Contact support at admin@omnitools.com or call 1-800-555-0199 for assistance!",
+      "The revenue grew by 45.7% (approx. $12,400) in Q3 of 2025, exceeding expectations.",
+      "Run the command: `npm install --save-dev qrcode@1.0.0` to initialize the [build].",
+      "User #904-B requested a 50% refund for invoice #A-7734; please process within 48hrs."
+    ]
+  };
 
   let timeLeft = 60;
   let timer = null;
   let isPlaying = false;
-  let currentText = "";
   let charsTyped = 0;
   let errors = 0;
 
@@ -272,10 +292,14 @@
   const textDisplay = document.getElementById("textDisplay");
   const textInput = document.getElementById("textInput");
   const startBtn = document.getElementById("startBtn");
+  const difficultySelect = document.getElementById("difficultySelect");
 
   function loadText() {
     textDisplay.innerHTML = "";
-    currentText = paragraphs[Math.floor(Math.random() * paragraphs.length)];
+    const selectedTier = difficultySelect.value;
+    const paragraphs = textTiers[selectedTier];
+    const currentText = paragraphs[Math.floor(Math.random() * paragraphs.length)];
+    
     currentText.split("").forEach((char) => {
       let span = document.createElement("span");
       span.innerText = char;
@@ -316,16 +340,11 @@
 
   function calculateStats() {
     let timeElapsed = 60 - timeLeft;
-    if (timeElapsed === 0) timeElapsed = 1; // Prevent division by zero
-    
-    // WPM = (Total characters / 5) / time in minutes
+    if (timeElapsed === 0) timeElapsed = 1; 
     let wpm = Math.round(((charsTyped / 5) / timeElapsed) * 60);
     if (wpm < 0 || !wpm || wpm === Infinity) wpm = 0;
-    
-    // Accuracy = ((Total - Errors) / Total) * 100
     let accuracy = charsTyped === 0 ? 100 : Math.round(((charsTyped - errors) / charsTyped) * 100);
     if (accuracy < 0) accuracy = 0;
-
     wpmDisplay.innerText = wpm;
     accuracyDisplay.innerText = accuracy + "%";
   }
@@ -339,10 +358,8 @@
 
   textInput.addEventListener("input", () => {
     if (!isPlaying) return;
-
     let arrayQuote = textDisplay.querySelectorAll("span");
     let arrayValue = textInput.value.split("");
-    
     charsTyped++;
     errors = 0;
     let allCorrect = true;
@@ -350,7 +367,6 @@
     arrayQuote.forEach((characterSpan, index) => {
       let character = arrayValue[index];
       characterSpan.classList.remove("active");
-
       if (character == null) {
         characterSpan.classList.remove("correct");
         characterSpan.classList.remove("incorrect");
@@ -366,12 +382,10 @@
       }
     });
 
-    // Move active cursor indicator
     if (arrayValue.length < arrayQuote.length) {
       arrayQuote[arrayValue.length].classList.add("active");
     }
 
-    // Auto-end if finished typing
     if (arrayValue.length === arrayQuote.length && allCorrect) {
       endTest();
       calculateStats(); 
@@ -379,6 +393,24 @@
   });
 
   startBtn.addEventListener("click", startTest);
+  
+  // Changing difficulty resets the test immediately to prevent cheating
+  difficultySelect.addEventListener("change", () => {
+    if (isPlaying) {
+      endTest();
+      timeLeftDisplay.innerText = "60s";
+      wpmDisplay.innerText = "0";
+      accuracyDisplay.innerText = "100%";
+      textInput.value = "";
+      loadText();
+      startBtn.innerText = "Start Test";
+    } else {
+      loadText();
+    }
+  });
+
+  // Load initial placeholder text based on default medium selection
+  loadText();
 </script>
 </body>
 </html>
