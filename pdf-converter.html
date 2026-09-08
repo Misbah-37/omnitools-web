@@ -176,416 +176,416 @@
   <div class="banner-content">
     <div class="title-wrapper">
       <img src="pdf_icon.png" alt="PDF Tools" class="app-icon" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdib3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2VhNTgwYyIvPjwvc3ZnPg=='">
-      <h1>PDF Converter Suite</h1>
-    </div>
-    <div class="security-badge">🔒 100% SECURE CLIENT-SIDE PROCESSING</div>
-    <p>Seamlessly merge multiple PDFs, split large documents, extract specific pages, and convert files. Files are processed locally in your browser and never touch our servers.</p>
-  </div>
+  <h1>PDF Converter Suite</h1>
+</div>
+<div class="security-badge">🔒 100% SECURE CLIENT-SIDE PROCESSING</div>
+<p>Seamlessly merge multiple PDFs, split large documents, extract specific pages, and convert files. Files are processed locally in your browser and never touch our servers.</p>
+</div>
 </div>
 
 <div class="tool-wrapper">
-  
-  <!-- Tab Navigation -->
-  <div class="tabs-container">
-    <button class="tab-btn active" onclick="switchTab(event, 'tab-img2pdf')">🖼️ Images to PDF</button>
-    <button class="tab-btn" onclick="switchTab(event, 'tab-merge')">📑 Merge PDFs</button>
-    <button class="tab-btn" onclick="switchTab(event, 'tab-split')">✂️ Split / Extract</button>
-    <button class="tab-btn" onclick="switchTab(event, 'tab-extract')">📝 Extract Text</button>
-  </div>
 
-  <!-- TAB 1: IMAGES TO PDF -->
-  <div id="tab-img2pdf" class="tab-content active">
-    <div class="tool-container">
-        <h3 style="margin-top:0; color:#fff;">Images to Standardized PDF</h3>
-        <label>Select images (JPG, PNG, WebP) (Order matters):</label>
-        <p style="color: #9ca3af; font-size: 0.8rem; margin-top: -5px; margin-bottom: 10px;">
-            <em>Tip: Hold <strong>Ctrl</strong> or <strong>Cmd</strong> to select multiple images. Drag items below to reorder them.</em>
-        </p>
-        <input type="file" id="imgInput" accept="image/png, image/jpeg, image/jpg, image/webp" multiple>
-        <ul id="sortable-image-list" class="sortable-list"></ul>
-        
-        <div style="display: flex; gap: 10px; margin-bottom: 0.5rem;">
-            <div style="flex: 1;">
-                <label>Page Size</label>
-                <select id="pageSize">
-                    <option value="a4">A4 (Standard)</option>
-                    <option value="letter">US Letter</option>
-                    <option value="fit">Fit to Image</option>
-                </select>
-            </div>
-            <div style="flex: 1;">
-                <label>Orientation</label>
-                <select id="orientation">
-                    <option value="auto">Auto Detect</option>
-                    <option value="p">Portrait</option>
-                    <option value="l">Landscape</option>
-                </select>
-            </div>
-            <div style="flex: 1;">
-                <label>Margins</label>
-                <select id="margins">
-                    <option value="28">Small (10mm)</option>
-                    <option value="0">None (Bleed)</option>
-                    <option value="56">Medium (20mm)</option>
-                </select>
-            </div>
+<!-- Tab Navigation -->
+<div class="tabs-container">
+<button class="tab-btn active" onclick="switchTab(event, 'tab-img2pdf')">🖼️ Images to PDF</button>
+<button class="tab-btn" onclick="switchTab(event, 'tab-merge')">📑 Merge PDFs</button>
+<button class="tab-btn" onclick="switchTab(event, 'tab-split')">✂️ Split / Extract</button>
+<button class="tab-btn" onclick="switchTab(event, 'tab-extract')">📝 Extract Text</button>
+</div>
+
+<!-- TAB 1: IMAGES TO PDF -->
+<div id="tab-img2pdf" class="tab-content active">
+<div class="tool-container">
+    <h3 style="margin-top:0; color:#fff;">Images to Standardized PDF</h3>
+    <label>Select images (JPG, PNG, WebP) (Order matters):</label>
+    <p style="color: #9ca3af; font-size: 0.8rem; margin-top: -5px; margin-bottom: 10px;">
+        <em>Tip: Hold <strong>Ctrl</strong> or <strong>Cmd</strong> to select multiple images. Drag items below to reorder them.</em>
+    </p>
+    <input type="file" id="imgInput" accept="image/png, image/jpeg, image/jpg, image/webp" multiple>
+    <ul id="sortable-image-list" class="sortable-list"></ul>
+    
+    <div style="display: flex; gap: 10px; margin-bottom: 0.5rem;">
+        <div style="flex: 1;">
+            <label>Page Size</label>
+            <select id="pageSize">
+                <option value="a4">A4 (Standard)</option>
+                <option value="letter">US Letter</option>
+                <option value="fit">Fit to Image</option>
+            </select>
         </div>
-        
-        <button class="action-btn" onclick="convertImages()">🚀 Compile PDF</button>
-        <div id="status1" class="status-text"></div>
-        <a id="downloadBtn1" class="download-btn">⬇️ Download Compiled PDF</a>
+        <div style="flex: 1;">
+            <label>Orientation</label>
+            <select id="orientation">
+                <option value="auto">Auto Detect</option>
+                <option value="p">Portrait</option>
+                <option value="l">Landscape</option>
+            </select>
+        </div>
+        <div style="flex: 1;">
+            <label>Margins</label>
+            <select id="margins">
+                <option value="28">Small (10mm)</option>
+                <option value="0">None (Bleed)</option>
+                <option value="56">Medium (20mm)</option>
+            </select>
+        </div>
     </div>
-  </div>
+    
+    <button class="action-btn" onclick="convertImages()">🚀 Compile PDF</button>
+    <div id="status1" class="status-text"></div>
+    <a id="downloadBtn1" class="download-btn">⬇️ Download Compiled PDF</a>
+</div>
+</div>
 
-  <!-- TAB 2: MERGE PDFS -->
-  <div id="tab-merge" class="tab-content">
-    <div class="tool-container">
-        <h3 style="margin-top:0; color:#fff;">Merge Multiple PDFs</h3>
-        <label>Select 2 or more PDF files (Order matters):</label>
-        <p style="color: #9ca3af; font-size: 0.8rem; margin-top: -5px; margin-bottom: 10px;">
-            <em>Tip: Hold <strong>Ctrl</strong> or <strong>Cmd</strong> to select multiple files. Drag items below to reorder them.</em>
-        </p>
-        <input type="file" id="mergeInput" accept=".pdf" multiple>
-        <ul id="sortable-file-list" class="sortable-list"></ul>
-        
-        <button class="action-btn" onclick="mergePdfs()">🚀 Merge in Browser</button>
-        <div id="status2" class="status-text"></div>
-        <a id="downloadBtn2" class="download-btn">⬇️ Download Merged PDF</a>
-    </div>
-  </div>
+<!-- TAB 2: MERGE PDFS -->
+<div id="tab-merge" class="tab-content">
+<div class="tool-container">
+    <h3 style="margin-top:0; color:#fff;">Merge Multiple PDFs</h3>
+    <label>Select 2 or more PDF files (Order matters):</label>
+    <p style="color: #9ca3af; font-size: 0.8rem; margin-top: -5px; margin-bottom: 10px;">
+        <em>Tip: Hold <strong>Ctrl</strong> or <strong>Cmd</strong> to select multiple files. Drag items below to reorder them.</em>
+    </p>
+    <input type="file" id="mergeInput" accept=".pdf" multiple>
+    <ul id="sortable-file-list" class="sortable-list"></ul>
+    
+    <button class="action-btn" onclick="mergePdfs()">🚀 Merge in Browser</button>
+    <div id="status2" class="status-text"></div>
+    <a id="downloadBtn2" class="download-btn">⬇️ Download Merged PDF</a>
+</div>
+</div>
 
-  <!-- TAB 3: SPLIT PDF -->
-  <div id="tab-split" class="tab-content">
-    <div class="tool-container">
-        <h3 style="margin-top:0; color:#fff;">Extract Pages</h3>
-        <label>Select a PDF file:</label>
-        <input type="file" id="splitInput" accept=".pdf">
-        <label>Pages to extract (e.g., 1, 3-5, 8):</label>
-        <input type="text" id="rangeInput" placeholder="1-3">
-        <button class="action-btn" onclick="splitPdf()">✂️ Extract Pages</button>
-        <div id="status3" class="status-text"></div>
-        <a id="downloadBtn3" class="download-btn">⬇️ Download Extracted PDF</a>
-    </div>
-  </div>
+<!-- TAB 3: SPLIT PDF -->
+<div id="tab-split" class="tab-content">
+<div class="tool-container">
+    <h3 style="margin-top:0; color:#fff;">Extract Pages</h3>
+    <label>Select a PDF file:</label>
+    <input type="file" id="splitInput" accept=".pdf">
+    <label>Pages to extract (e.g., 1, 3-5, 8):</label>
+    <input type="text" id="rangeInput" placeholder="1-3">
+    <button class="action-btn" onclick="splitPdf()">✂️ Extract Pages</button>
+    <div id="status3" class="status-text"></div>
+    <a id="downloadBtn3" class="download-btn">⬇️ Download Extracted PDF</a>
+</div>
+</div>
 
-  <!-- TAB 4: EXTRACT TEXT -->
-  <div id="tab-extract" class="tab-content">
-    <div class="tool-container">
-        <h3 style="margin-top:0; color:#fff;">Extract Raw Text</h3>
-        <label>Select a PDF file to read:</label>
-        <input type="file" id="textInput" accept=".pdf">
-        <button class="action-btn" onclick="extractText()">📝 Read Text from PDF</button>
-        <div id="status4" class="status-text"></div>
-        <textarea id="outputArea" style="display:none; width:100%; height:150px; background:#1f2937; color:#fff; border:1px solid #374151; border-radius:6px; margin-top:1rem; padding:0.5rem; font-family:inherit;" readonly></textarea>
-        <a id="downloadBtn4" class="download-btn">⬇️ Download Text File (.txt)</a>
-    </div>
-  </div>
+<!-- TAB 4: EXTRACT TEXT -->
+<div id="tab-extract" class="tab-content">
+<div class="tool-container">
+    <h3 style="margin-top:0; color:#fff;">Extract Raw Text</h3>
+    <label>Select a PDF file to read:</label>
+    <input type="file" id="textInput" accept=".pdf">
+    <button class="action-btn" onclick="extractText()">📝 Read Text from PDF</button>
+    <div id="status4" class="status-text"></div>
+    <textarea id="outputArea" style="display:none; width:100%; height:150px; background:#1f2937; color:#fff; border:1px solid #374151; border-radius:6px; margin-top:1rem; padding:0.5rem; font-family:inherit;" readonly></textarea>
+    <a id="downloadBtn4" class="download-btn">⬇️ Download Text File (.txt)</a>
+</div>
+</div>
 
 </div>
 
 <script>
-    // --- Tab Switching Logic ---
-    function switchTab(evt, tabId) {
-        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-        document.getElementById(tabId).classList.add('active');
-        evt.currentTarget.classList.add('active');
-    }
+// --- Tab Switching Logic ---
+function switchTab(evt, tabId) {
+    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    evt.currentTarget.classList.add('active');
+}
 
-    // --- TAB 1: Images to PDF Logic ---
-    let imgSelectedFiles = [];
-    let imgDraggedStartIndex;
-    const imgUploader = document.getElementById('imgInput');
-    const imgListContainer = document.getElementById('sortable-image-list');
+// --- TAB 1: Images to PDF Logic ---
+let imgSelectedFiles = [];
+let imgDraggedStartIndex;
+const imgUploader = document.getElementById('imgInput');
+const imgListContainer = document.getElementById('sortable-image-list');
 
-    imgUploader.addEventListener('change', function(event) {
-        imgSelectedFiles = Array.from(event.target.files);
-        renderImgList();
-    });
+imgUploader.addEventListener('change', function(event) {
+    imgSelectedFiles = Array.from(event.target.files);
+    renderImgList();
+});
 
-    function renderImgList() {
-        imgListContainer.innerHTML = ''; 
-        imgSelectedFiles.forEach((file, index) => {
-            const li = document.createElement('li');
-            li.className = 'sortable-item';
-            li.draggable = true;
-            li.setAttribute('data-index', index);
-            li.innerHTML = `🖼️ ${file.name}`;
+function renderImgList() {
+    imgListContainer.innerHTML = ''; 
+    imgSelectedFiles.forEach((file, index) => {
+        const li = document.createElement('li');
+        li.className = 'sortable-item';
+        li.draggable = true;
+        li.setAttribute('data-index', index);
+        li.innerHTML = `🖼️ ${file.name}`;
 
-            li.addEventListener('dragstart', function(e) {
-                imgDraggedStartIndex = +this.getAttribute('data-index');
-                this.classList.add('dragging');
-            });
-            li.addEventListener('dragover', e => e.preventDefault());
-            li.addEventListener('drop', function(e) {
-                const dropIndex = +this.getAttribute('data-index');
-                const draggedFile = imgSelectedFiles.splice(imgDraggedStartIndex, 1)[0];
-                imgSelectedFiles.splice(dropIndex, 0, draggedFile);
-                renderImgList();
-            });
-            li.addEventListener('dragend', function() {
-                this.classList.remove('dragging');
-            });
-            imgListContainer.appendChild(li);
+        li.addEventListener('dragstart', function(e) {
+            imgDraggedStartIndex = +this.getAttribute('data-index');
+            this.classList.add('dragging');
         });
-    }
-
-    const loadImage = (file) => new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const img = new Image();
-            img.onload = () => resolve({ img, dataUrl: e.target.result, type: file.type });
-            img.onerror = reject;
-            img.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
+        li.addEventListener('dragover', e => e.preventDefault());
+        li.addEventListener('drop', function(e) {
+            const dropIndex = +this.getAttribute('data-index');
+            const draggedFile = imgSelectedFiles.splice(imgDraggedStartIndex, 1)[0];
+            imgSelectedFiles.splice(dropIndex, 0, draggedFile);
+            renderImgList();
+        });
+        li.addEventListener('dragend', function() {
+            this.classList.remove('dragging');
+        });
+        imgListContainer.appendChild(li);
     });
+}
 
-    async function convertImages() {
-        const files = imgSelectedFiles;
-        const status = document.getElementById('status1');
-        const btn = document.getElementById('downloadBtn1');
-        const pageSize = document.getElementById('pageSize').value;
-        const orientPref = document.getElementById('orientation').value;
-        const margin = parseInt(document.getElementById('margins').value);
+const loadImage = (file) => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => resolve({ img, dataUrl: e.target.result, type: file.type });
+        img.onerror = reject;
+        img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+});
+
+async function convertImages() {
+    const files = imgSelectedFiles;
+    const status = document.getElementById('status1');
+    const btn = document.getElementById('downloadBtn1');
+    const pageSize = document.getElementById('pageSize').value;
+    const orientPref = document.getElementById('orientation').value;
+    const margin = parseInt(document.getElementById('margins').value);
+    
+    if (files.length === 0) { alert('Please select at least one image.'); return; }
+    
+    status.innerText = "⏳ Processing images... Please wait.";
+    btn.style.display = "none";
+    
+    try {
+        const { jsPDF } = window.jspdf;
+        let pdf = null;
+        const sizes = { 'a4': [595.28, 841.89], 'letter': [612, 792] };
         
-        if (files.length === 0) { alert('Please select at least one image.'); return; }
-        
-        status.innerText = "⏳ Processing images... Please wait.";
-        btn.style.display = "none";
-        
-        try {
-            const { jsPDF } = window.jspdf;
-            let pdf = null;
-            const sizes = { 'a4': [595.28, 841.89], 'letter': [612, 792] };
+        for (let i = 0; i < files.length; i++) {
+            status.innerText = `⏳ Processing image ${i + 1} of ${files.length}...`;
+            const { img, dataUrl, type } = await loadImage(files[i]);
             
-            for (let i = 0; i < files.length; i++) {
-                status.innerText = `⏳ Processing image ${i + 1} of ${files.length}...`;
-                const { img, dataUrl, type } = await loadImage(files[i]);
+            let isLand = false;
+            if (orientPref === 'auto') isLand = img.width > img.height;
+            else if (orientPref === 'l') isLand = true;
+            
+            let format = sizes[pageSize];
+            let finalW, finalH;
+            
+            if (pageSize === 'fit') {
+                format = [img.width, img.height];
+                isLand = img.width > img.height;
+                finalW = img.width;
+                finalH = img.height;
+            } else {
+                const baseW = isLand ? format[1] : format[0];
+                const baseH = isLand ? format[0] : format[1];
+                format = [baseW, baseH];
                 
-                let isLand = false;
-                if (orientPref === 'auto') isLand = img.width > img.height;
-                else if (orientPref === 'l') isLand = true;
+                const availW = baseW - (margin * 2);
+                const availH = baseH - (margin * 2);
+                const imgAspect = img.width / img.height;
+                const targetAspect = availW / availH;
                 
-                let format = sizes[pageSize];
-                let finalW, finalH;
-                
-                if (pageSize === 'fit') {
-                    format = [img.width, img.height];
-                    isLand = img.width > img.height;
-                    finalW = img.width;
-                    finalH = img.height;
+                if (imgAspect > targetAspect) {
+                    finalW = availW;
+                    finalH = availW / imgAspect;
                 } else {
-                    const baseW = isLand ? format[1] : format[0];
-                    const baseH = isLand ? format[0] : format[1];
-                    format = [baseW, baseH];
-                    
-                    const availW = baseW - (margin * 2);
-                    const availH = baseH - (margin * 2);
-                    const imgAspect = img.width / img.height;
-                    const targetAspect = availW / availH;
-                    
-                    if (imgAspect > targetAspect) {
-                        finalW = availW;
-                        finalH = availW / imgAspect;
-                    } else {
-                        finalH = availH;
-                        finalW = availH * imgAspect;
-                    }
+                    finalH = availH;
+                    finalW = availH * imgAspect;
                 }
-                
-                const orientation = isLand ? 'l' : 'p';
-                if (i === 0) {
-                    pdf = new jsPDF({ orientation: orientation, unit: 'pt', format: format });
-                } else {
-                    pdf.addPage(format, orientation);
-                }
-                
-                let x = pageSize === 'fit' ? 0 : margin + ((format[0] - (margin * 2) - finalW) / 2);
-                let y = pageSize === 'fit' ? 0 : margin + ((format[1] - (margin * 2) - finalH) / 2);
-                
-                const imgType = type === 'image/png' ? 'PNG' : (type === 'image/webp' ? 'WEBP' : 'JPEG');
-                pdf.addImage(dataUrl, imgType, x, y, finalW, finalH);
             }
             
-            const pdfBlob = pdf.output('blob');
-            btn.href = URL.createObjectURL(pdfBlob);
-            btn.download = "OmniTools_Compiled_Images.pdf";
-            btn.style.display = "block";
-            status.innerText = "✅ Successfully compiled PDF!";
-            status.style.color = "#34d399";
-        } catch (e) {
-            status.innerText = "❌ Error: " + e.message;
-            status.style.color = "#f87171";
-        }
-    }
-
-    // --- TAB 2: Merge PDFs Logic ---
-    let mergeSelectedFiles = [];
-    let mergeDraggedStartIndex;
-    const mergeUploader = document.getElementById('mergeInput');
-    const mergeListContainer = document.getElementById('sortable-file-list');
-
-    mergeUploader.addEventListener('change', function(event) {
-        mergeSelectedFiles = Array.from(event.target.files);
-        renderMergeList();
-    });
-
-    function renderMergeList() {
-        mergeListContainer.innerHTML = ''; 
-        mergeSelectedFiles.forEach((file, index) => {
-            const li = document.createElement('li');
-            li.className = 'sortable-item';
-            li.draggable = true;
-            li.setAttribute('data-index', index);
-            li.innerHTML = `📄 ${file.name}`;
-
-            li.addEventListener('dragstart', function(e) {
-                mergeDraggedStartIndex = +this.getAttribute('data-index');
-                this.classList.add('dragging');
-            });
-            li.addEventListener('dragover', e => e.preventDefault());
-            li.addEventListener('drop', function(e) {
-                const dropIndex = +this.getAttribute('data-index');
-                const draggedFile = mergeSelectedFiles.splice(mergeDraggedStartIndex, 1)[0];
-                mergeSelectedFiles.splice(dropIndex, 0, draggedFile);
-                renderMergeList();
-            });
-            li.addEventListener('dragend', function() {
-                this.classList.remove('dragging');
-            });
-            mergeListContainer.appendChild(li);
-        });
-    }
-
-    async function mergePdfs() {
-        const status = document.getElementById('status2');
-        const btn = document.getElementById('downloadBtn2');
-        
-        if (mergeSelectedFiles.length < 2) { alert('Please select at least 2 PDF files.'); return; }
-        
-        status.innerText = "⏳ Merging files locally... Please wait.";
-        btn.style.display = "none";
-        
-        try {
-            const mergedPdf = await PDFLib.PDFDocument.create();
-            for (let i = 0; i < mergeSelectedFiles.length; i++) {
-                const arrayBuffer = await mergeSelectedFiles[i].arrayBuffer();
-                const pdf = await PDFLib.PDFDocument.load(arrayBuffer);
-                const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
-                copiedPages.forEach((page) => mergedPdf.addPage(page));
+            const orientation = isLand ? 'l' : 'p';
+            if (i === 0) {
+                pdf = new jsPDF({ orientation: orientation, unit: 'pt', format: format });
+            } else {
+                pdf.addPage(format, orientation);
             }
             
-            const pdfBytes = await mergedPdf.save();
-            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-            btn.href = URL.createObjectURL(blob);
-            btn.download = "OmniTools_Merged.pdf";
-            btn.style.display = "block";
-            status.innerText = "✅ Merged successfully!";
-            status.style.color = "#34d399";
-        } catch (e) {
-            status.innerText = "❌ Error: " + e.message;
-            status.style.color = "#f87171";
+            let x = pageSize === 'fit' ? 0 : margin + ((format[0] - (margin * 2) - finalW) / 2);
+            let y = pageSize === 'fit' ? 0 : margin + ((format[1] - (margin * 2) - finalH) / 2);
+            
+            const imgType = type === 'image/png' ? 'PNG' : (type === 'image/webp' ? 'WEBP' : 'JPEG');
+            pdf.addImage(dataUrl, imgType, x, y, finalW, finalH);
         }
+        
+        const pdfBlob = pdf.output('blob');
+        btn.href = URL.createObjectURL(pdfBlob);
+        btn.download = "OmniTools_Compiled_Images.pdf";
+        btn.style.display = "block";
+        status.innerText = "✅ Successfully compiled PDF!";
+        status.style.color = "#34d399";
+    } catch (e) {
+        status.innerText = "❌ Error: " + e.message;
+        status.style.color = "#f87171";
     }
+}
 
-    // --- TAB 3: Split PDF Logic ---
-    async function splitPdf() {
-        const file = document.getElementById('splitInput').files[0];
-        const rangeStr = document.getElementById('rangeInput').value;
-        const status = document.getElementById('status3');
-        const btn = document.getElementById('downloadBtn3');
-        
-        if (!file || !rangeStr) { alert('Please select a file and enter a page range.'); return; }
-        
-        status.innerText = "⏳ Extracting pages... Please wait.";
-        btn.style.display = "none";
-        
-        try {
-            const arrayBuffer = await file.arrayBuffer();
+// --- TAB 2: Merge PDFs Logic ---
+let mergeSelectedFiles = [];
+let mergeDraggedStartIndex;
+const mergeUploader = document.getElementById('mergeInput');
+const mergeListContainer = document.getElementById('sortable-file-list');
+
+mergeUploader.addEventListener('change', function(event) {
+    mergeSelectedFiles = Array.from(event.target.files);
+    renderMergeList();
+});
+
+function renderMergeList() {
+    mergeListContainer.innerHTML = ''; 
+    mergeSelectedFiles.forEach((file, index) => {
+        const li = document.createElement('li');
+        li.className = 'sortable-item';
+        li.draggable = true;
+        li.setAttribute('data-index', index);
+        li.innerHTML = `📄 ${file.name}`;
+
+        li.addEventListener('dragstart', function(e) {
+            mergeDraggedStartIndex = +this.getAttribute('data-index');
+            this.classList.add('dragging');
+        });
+        li.addEventListener('dragover', e => e.preventDefault());
+        li.addEventListener('drop', function(e) {
+            const dropIndex = +this.getAttribute('data-index');
+            const draggedFile = mergeSelectedFiles.splice(mergeDraggedStartIndex, 1)[0];
+            mergeSelectedFiles.splice(dropIndex, 0, draggedFile);
+            renderMergeList();
+        });
+        li.addEventListener('dragend', function() {
+            this.classList.remove('dragging');
+        });
+        mergeListContainer.appendChild(li);
+    });
+}
+
+async function mergePdfs() {
+    const status = document.getElementById('status2');
+    const btn = document.getElementById('downloadBtn2');
+    
+    if (mergeSelectedFiles.length < 2) { alert('Please select at least 2 PDF files.'); return; }
+    
+    status.innerText = "⏳ Merging files locally... Please wait.";
+    btn.style.display = "none";
+    
+    try {
+        const mergedPdf = await PDFLib.PDFDocument.create();
+        for (let i = 0; i < mergeSelectedFiles.length; i++) {
+            const arrayBuffer = await mergeSelectedFiles[i].arrayBuffer();
             const pdf = await PDFLib.PDFDocument.load(arrayBuffer);
-            const totalPages = pdf.getPageCount();
-            
-            let pagesToExtract = new Set();
-            const parts = rangeStr.split(',');
-            for (let part of parts) {
-                part = part.trim();
-                if (part.includes('-')) {
-                    let [start, end] = part.split('-');
-                    start = parseInt(start); end = parseInt(end);
-                    for (let p = start; p <= end; p++) {
-                        if (p >= 1 && p <= totalPages) pagesToExtract.add(p - 1);
-                    }
-                } else {
-                    let p = parseInt(part);
+            const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+            copiedPages.forEach((page) => mergedPdf.addPage(page));
+        }
+        
+        const pdfBytes = await mergedPdf.save();
+        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        btn.href = URL.createObjectURL(blob);
+        btn.download = "OmniTools_Merged.pdf";
+        btn.style.display = "block";
+        status.innerText = "✅ Merged successfully!";
+        status.style.color = "#34d399";
+    } catch (e) {
+        status.innerText = "❌ Error: " + e.message;
+        status.style.color = "#f87171";
+    }
+}
+
+// --- TAB 3: Split PDF Logic ---
+async function splitPdf() {
+    const file = document.getElementById('splitInput').files[0];
+    const rangeStr = document.getElementById('rangeInput').value;
+    const status = document.getElementById('status3');
+    const btn = document.getElementById('downloadBtn3');
+    
+    if (!file || !rangeStr) { alert('Please select a file and enter a page range.'); return; }
+    
+    status.innerText = "⏳ Extracting pages... Please wait.";
+    btn.style.display = "none";
+    
+    try {
+        const arrayBuffer = await file.arrayBuffer();
+        const pdf = await PDFLib.PDFDocument.load(arrayBuffer);
+        const totalPages = pdf.getPageCount();
+        
+        let pagesToExtract = new Set();
+        const parts = rangeStr.split(',');
+        for (let part of parts) {
+            part = part.trim();
+            if (part.includes('-')) {
+                let [start, end] = part.split('-');
+                start = parseInt(start); end = parseInt(end);
+                for (let p = start; p <= end; p++) {
                     if (p >= 1 && p <= totalPages) pagesToExtract.add(p - 1);
                 }
+            } else {
+                let p = parseInt(part);
+                if (p >= 1 && p <= totalPages) pagesToExtract.add(p - 1);
             }
-            
-            if (pagesToExtract.size === 0) throw new Error("No valid pages found in range.");
-            
-            const newPdf = await PDFLib.PDFDocument.create();
-            const indices = Array.from(pagesToExtract).sort((a,b) => a-b);
-            const copiedPages = await newPdf.copyPages(pdf, indices);
-            copiedPages.forEach((page) => newPdf.addPage(page));
-            
-            const pdfBytes = await newPdf.save();
-            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-            btn.href = URL.createObjectURL(blob);
-            btn.download = "Extracted_" + file.name;
-            btn.style.display = "block";
-            status.innerText = `✅ Extracted ${indices.length} page(s) successfully!`;
-            status.style.color = "#34d399";
-        } catch (e) {
-            status.innerText = "❌ Error: " + e.message;
-            status.style.color = "#f87171";
         }
+        
+        if (pagesToExtract.size === 0) throw new Error("No valid pages found in range.");
+        
+        const newPdf = await PDFLib.PDFDocument.create();
+        const indices = Array.from(pagesToExtract).sort((a,b) => a-b);
+        const copiedPages = await newPdf.copyPages(pdf, indices);
+        copiedPages.forEach((page) => newPdf.addPage(page));
+        
+        const pdfBytes = await newPdf.save();
+        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        btn.href = URL.createObjectURL(blob);
+        btn.download = "Extracted_" + file.name;
+        btn.style.display = "block";
+        status.innerText = `✅ Extracted ${indices.length} page(s) successfully!`;
+        status.style.color = "#34d399";
+    } catch (e) {
+        status.innerText = "❌ Error: " + e.message;
+        status.style.color = "#f87171";
     }
+}
 
-    // --- TAB 4: Extract Text Logic ---
-    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+// --- TAB 4: Extract Text Logic ---
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+
+async function extractText() {
+    const file = document.getElementById('textInput').files[0];
+    const status = document.getElementById('status4');
+    const textArea = document.getElementById('outputArea');
+    const btn = document.getElementById('downloadBtn4');
     
-    async function extractText() {
-        const file = document.getElementById('textInput').files[0];
-        const status = document.getElementById('status4');
-        const textArea = document.getElementById('outputArea');
-        const btn = document.getElementById('downloadBtn4');
+    if (!file) { alert('Please select a PDF file first.'); return; }
+    
+    status.innerText = "⏳ Reading document... (This might take a moment)";
+    textArea.style.display = "none";
+    btn.style.display = "none";
+    
+    try {
+        const arrayBuffer = await file.arrayBuffer();
+        const loadingTask = pdfjsLib.getDocument({data: new Uint8Array(arrayBuffer)});
+        const pdf = await loadingTask.promise;
+        let fullText = "";
         
-        if (!file) { alert('Please select a PDF file first.'); return; }
-        
-        status.innerText = "⏳ Reading document... (This might take a moment)";
-        textArea.style.display = "none";
-        btn.style.display = "none";
-        
-        try {
-            const arrayBuffer = await file.arrayBuffer();
-            const loadingTask = pdfjsLib.getDocument({data: new Uint8Array(arrayBuffer)});
-            const pdf = await loadingTask.promise;
-            let fullText = "";
-            
-            for (let i = 1; i <= pdf.numPages; i++) {
-                status.innerText = `⏳ Extracting page ${i} of ${pdf.numPages}...`;
-                const page = await pdf.getPage(i);
-                const textContent = await page.getTextContent();
-                const pageText = textContent.items.map(item => item.str).join(" ");
-                fullText += `=== PAGE ${i} ===\n${pageText}\n\n`;
-            }
-            
-            textArea.value = fullText;
-            textArea.style.display = "block";
-            
-            const blob = new Blob([fullText], { type: 'text/plain' });
-            btn.href = URL.createObjectURL(blob);
-            btn.download = file.name.replace('.pdf', '_extracted.txt');
-            btn.style.display = "block";
-            
-            status.innerText = "✅ Text extraction complete!";
-            status.style.color = "#34d399";
-        } catch (e) {
-            status.innerText = "❌ Error reading PDF: " + e.message;
-            status.style.color = "#f87171";
+        for (let i = 1; i <= pdf.numPages; i++) {
+            status.innerText = `⏳ Extracting page ${i} of ${pdf.numPages}...`;
+            const page = await pdf.getPage(i);
+            const textContent = await page.getTextContent();
+            const pageText = textContent.items.map(item => item.str).join(" ");
+            fullText += `=== PAGE ${i} ===\n${pageText}\n\n`;
         }
+        
+        textArea.value = fullText;
+        textArea.style.display = "block";
+        
+        const blob = new Blob([fullText], { type: 'text/plain' });
+        btn.href = URL.createObjectURL(blob);
+        btn.download = file.name.replace('.pdf', '_extracted.txt');
+        btn.style.display = "block";
+        
+        status.innerText = "✅ Text extraction complete!";
+        status.style.color = "#34d399";
+    } catch (e) {
+        status.innerText = "❌ Error reading PDF: " + e.message;
+        status.style.color = "#f87171";
     }
+}
 </script>
 </body>
 </html>
