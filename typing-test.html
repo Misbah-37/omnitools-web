@@ -7,31 +7,43 @@
   <link rel="icon" type="image/png" href="favicon.png">
 <meta name="description" content="Test your typing speed and accuracy in real-time. Track your WPM and improve your keyboard skills for free.">
 <style>
-  /* --- Core OmniTools Layout --- */
-  .home-btn {
-    display: inline-flex;
+  /* --- Global Navigation Bar --- */
+  .global-nav {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    height: 65px;
+    background-color: rgba(14, 17, 23, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid #1e293b;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 8px;
+    padding: 0 32px;
+    box-sizing: border-box;
+    z-index: 2000;
+  }
+  .nav-brand {
+    color: #f8fafc;
+    font-weight: 800;
+    text-decoration: none;
+    font-size: 1.25rem;
+    letter-spacing: -0.5px;
+  }
+  .nav-brand span { color: #6366f1; }
+  
+  .nav-links {
+    display: flex;
+    gap: 24px;
+  }
+  .nav-links a {
     color: #94a3b8;
     text-decoration: none;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 0.9rem;
     font-weight: 600;
-    padding: 10px 18px;
-    margin: 16px 24px;
-    background-color: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 8px;
-    transition: all 0.2s ease;
-    position: fixed; /* Keeps button pinned to top-left while scrolling */
-    top: 0;
-    left: 0;
-    z-index: 1000;
+    transition: color 0.2s;
   }
-  .home-btn:hover {
-    color: #f8fafc;
-    border-color: #64748b;
-    background-color: #334155;
-  }
+  .nav-links a:hover, .nav-links a.active { color: #f8fafc; }
 
   /* Restored native scrolling by removing height:100% and overflow constraints */
   body, html {
@@ -43,7 +55,7 @@
   
   .premium-banner {
     background: linear-gradient(to bottom, #312e81, #0e1117);
-    padding: 24px 24px 30px 24px;
+    padding: 90px 24px 30px 24px; /* Accommodates the fixed navbar */
     text-align: center;
     border-bottom: 1px solid #1e293b;
   }
@@ -254,10 +266,53 @@
     text-align: center;
   }
 
+  /* --- SEO & Educational Content Section --- */
+  .seo-article {
+    width: 100%;
+    max-width: 800px;
+    margin: 60px auto 20px auto;
+    color: #94a3b8;
+    line-height: 1.7;
+    font-size: 1rem;
+    border-top: 1px solid #1e293b;
+    padding-top: 40px;
+  }
+  .seo-article h2, .seo-article h3 {
+    color: #f8fafc;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .seo-article h2 { font-size: 1.5rem; }
+  .seo-article h3 { font-size: 1.2rem; }
+  .seo-article ul { padding-left: 20px; }
+  .seo-article li { margin-bottom: 10px; }
+  
+  .faq-box { margin-bottom: 16px; }
+  .faq-box details {
+    background-color: #111827;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 16px 20px;
+    cursor: pointer;
+  }
+  .faq-box summary {
+    font-weight: 600;
+    color: #f8fafc;
+    outline: none;
+    list-style: none;
+  }
+  .faq-box summary::-webkit-details-marker { display: none; }
+  .faq-box p {
+    margin: 12px 0 0 0;
+    font-size: 0.95rem;
+    color: #cbd5e1;
+  }
+
   /* Mobile Responsive Fix */
   @media (max-width: 768px) {
-    .home-btn { margin: 12px 16px; padding: 8px 14px; font-size: 0.85rem; }
-    .premium-banner { padding-top: 70px; }
+    .nav-links { display: none; }
+    .global-nav { padding: 0 20px; }
+    .premium-banner { padding-top: 90px; }
     .tool-wrapper { padding: 20px 16px; }
     .st-btn-primary, .st-btn-secondary { width: 100%; }
     .mobile-hint { display: block; }
@@ -265,7 +320,18 @@
 </style>
 </head>
 <body>
-  <a href="index.html" class="home-btn">← Back to Home</a>
+
+<!-- Global Navigation -->
+<nav class="global-nav">
+  <a href="index.html" class="nav-brand">Omni<span>Tools</span></a>
+  <div class="nav-links">
+    <a href="pdf-converter.html">PDF Suite</a>
+    <a href="file-organizer.html">File Organizer</a>
+    <a href="photo-resizer.html">Photo Resizer</a>
+    <a href="qr-generator.html">QR Generator</a>
+    <a href="typing-test.html" class="active">Typing Test</a>
+  </div>
+</nav>
 
 <div class="premium-banner">
   <div class="banner-content">
@@ -325,6 +391,36 @@
       
       <button class="st-btn-secondary" id="endBtn">End Test / Change Difficulty</button>
     </div>
+
+      <!-- SEO & Educational Content -->
+      <article class="seo-article">
+        <h2>How to Improve Your Typing Speed</h2>
+        <p>Whether you are coding, writing emails, or drafting essays, typing speed is a critical productivity multiplier. Our free typing speed test is designed to help you benchmark your current Words Per Minute (WPM) and track your progress over time.</p>
+        
+        <h3>Top Tips for Faster Typing</h3>
+        <ul>
+          <li><strong>Master the Home Row:</strong> Rest your fingers on the ASDF and JKL; keys. This minimizes finger travel distance and builds muscle memory.</li>
+          <li><strong>Accuracy Over Speed:</strong> Do not rush. Hitting backspace destroys your WPM. Focus on hitting the correct keys slowly, and speed will naturally follow.</li>
+          <li><strong>Look at the Screen, Not the Keyboard:</strong> Touch typing requires trusting your hands. If you look down, you break your flow and lose your place in the text.</li>
+        </ul>
+
+        <h2>Frequently Asked Questions</h2>
+        
+        <div class="faq-box">
+          <details>
+            <summary>What is a good typing speed?</summary>
+            <p>The average typing speed is around 40 WPM. A speed of 60 WPM is considered good and is often required for professional administrative jobs. Programmers and writers frequently average between 70 and 90 WPM.</p>
+          </details>
+        </div>
+
+        <div class="faq-box">
+          <details>
+            <summary>How is WPM calculated?</summary>
+            <p>Words Per Minute (WPM) is standardized based on characters typed, not literal words. One "word" is calculated as 5 keystrokes. We take your total keystrokes, divide by 5, and adjust for the time elapsed.</p>
+          </details>
+        </div>
+      </article>
+      
     </div>
   </div>
   
@@ -451,23 +547,6 @@
       render();
     }
 
-    // NOTE: character capture is handled entirely by the `beforeinput`
-    // listener below, for both desktop and mobile. An earlier version also
-    // had a window-level `keydown` listener for desktop, but keeping both
-    // meant every keystroke was processed twice on desktop (each listener
-    // counted it separately), which is what caused repeated letters to
-    // double up and the accuracy math to come out wrong. One listener, one
-    // code path, both platforms.
-
-    // Mobile path: instead of reading the field's `value` after the browser
-    // mutates it (which caused both the auto-capitalize bug AND a double-
-    // counting bug with repeated letters -- predictive keyboards can fire
-    // more than one input event per keystroke, especially around repeats),
-    // we intercept `beforeinput`, read the character the keyboard is ABOUT
-    // to insert from `e.data`, and cancel the insertion entirely with
-    // preventDefault(). The field's content never actually changes, so
-    // there's no state to desync and nothing for the keyboard to
-    // "reconsider" capitalization over.
     hiddenInput.addEventListener("beforeinput", (e) => {
       if (!isTestActive) {
         e.preventDefault();
@@ -538,5 +617,5 @@
       setupScreen.style.display = "block";
     });
   </script>
-  </body>
-  </html>
+</body>
+</html>
