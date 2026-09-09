@@ -7,6 +7,22 @@
   <link rel="icon" type="image/png" href="favicon.png">
 <meta name="description" content="A standalone, verified Windows application designed to instantly organize messy folders on your PC into 12 clean categories. Completely secure, running entirely on your local machine.">
 <style>
+/* Add smooth transition to the existing banner */
+  .premium-banner {
+    transition: max-height 0.4s ease, padding 0.4s ease, opacity 0.3s ease;
+    max-height: 300px; /* Arbitrary large number to allow transition */
+    overflow: hidden;
+  }
+
+  /* The class we will trigger with JavaScript */
+  .premium-banner.retracted {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
+    border-bottom: none;
+  }
+  
   /* Home Button */
   .home-btn {
     display: inline-flex;
@@ -373,6 +389,22 @@
 
   </div>
 </div>
+<script>
+  // Retracting Banner Logic
+  const toolWrapper = document.querySelector('.tool-wrapper');
+  const banner = document.querySelector('.premium-banner');
 
+  if (toolWrapper && banner) {
+    toolWrapper.addEventListener('scroll', () => {
+      // If the user scrolls down more than 40px, hide the banner
+      if (toolWrapper.scrollTop > 40) {
+        banner.classList.add('retracted');
+      } else {
+        // Bring it back if they scroll all the way to the top
+        banner.classList.remove('retracted');
+      }
+    });
+  }
+</script>
 </body>
 </html>
