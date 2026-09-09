@@ -67,11 +67,11 @@
   }
 
   .app-icon {
-    width: 65px;
+    width: 65px; 
     height: 65px;
-    border-radius: 12px;
-    box-shadow: 0 0 20px rgba(52, 211, 153, 0.4);
     object-fit: cover;
+    mix-blend-mode: screen; /* Drops the black background */
+    filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.4)); /* Replaces box-shadow for blended images */
   }
 
   .premium-banner h1 {
