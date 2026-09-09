@@ -132,7 +132,6 @@
     margin-bottom: 4px;
     font-size: 1rem;
     cursor: pointer;
-    /* Larger tap target: the whole row is tappable, not just the tiny circle */
     padding: 10px 8px;
     border-radius: 6px;
     min-height: 44px;
@@ -143,14 +142,14 @@
   }
   
   .st-radio-option input {
-    accent-color: #6366f1; /* Indigo accent */
+    accent-color: #6366f1;
     width: 20px;
     height: 20px;
     cursor: pointer;
     flex-shrink: 0;
   }
   .st-btn-primary {
-    background-color: #6366f1; /* Indigo accent */
+    background-color: #6366f1;
     color: white;
     border: 1px solid #6366f1;
     padding: 12px 20px;
@@ -163,7 +162,7 @@
     box-sizing: border-box;
   }
   .st-btn-primary:hover {
-    background-color: #4f46e5; /* Darker Indigo on hover */
+    background-color: #4f46e5;
   }
   .st-btn-secondary {
     background-color: #1e293b;
@@ -180,7 +179,7 @@
     box-sizing: border-box;
   }
   .st-btn-secondary:hover {
-    border-color: #6366f1; /* Indigo accent on hover */
+    border-color: #6366f1;
   }
   .st-info-box {
     background-color: rgba(61, 157, 243, 0.1);
@@ -198,13 +197,11 @@
     padding: 24px;
     margin-bottom: 24px;
     box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);
-    /* Needed so the invisible mobile input can be positioned over the whole box */
     position: relative;
     cursor: text;
   }
 
-  /* Invisible field that captures taps and opens the mobile keyboard.
-     font-size:16px stops iOS Safari from auto-zooming the page on focus. */
+  /* Invisible field that captures taps and opens the mobile keyboard. */
   #hiddenInput {
     position: absolute;
     inset: 0;
@@ -492,6 +489,7 @@
     let totalCharactersTyped = 0;
     let errors = 0;
     let isTestActive = false;
+    let lastComposition = ""; // ADDED: Tracks the current word state to prevent mobile double counting
   
     // Exact render logic from Python's injected JS
     function render() {
@@ -521,7 +519,7 @@
       isTestActive = false;
     }
 
-    // Handles one typed character, from either desktop keydown or mobile input event
+    // Handles one typed character
     function processChar(char) {
       if (!isTestActive) return;
       if (roundsCompleted >= targetCount) return;
@@ -558,12 +556,32 @@
       const insertingTypes = ["insertText", "insertCompositionText", "insertReplacementText"];
       if (!insertingTypes.includes(e.inputType)) return; // ignore deletes, line breaks, etc.
 
-      const data = e.data;
+      let data = e.data;
       if (!data) return;
-      // Normally a single character, but handle multi-char commits
-      // (e.g. predictive text) by processing each character in order.
+
+      // --- MOBILE FIX: Prevent Android/Predictive Double Counting ---
+      if (data.length > 1) {
+        if (lastComposition && data.startsWith(lastComposition)) {
+          // The keyboard is resending the whole composing word. Slice off what we already processed.
+          data = data.slice(lastComposition.length);
+        } else {
+          // The keyboard autocorrected/replaced the word completely. 
+          // We already graded their raw keystrokes, so we ignore the correction.
+          // However, if the autocorrect applied because they hit space, we must salvage the spacebar.
+          data = data.endsWith(" ") ? " " : "";
+          if (!data) return;
+        }
+      }
+
       for (const ch of data) {
         processChar(ch);
+      }
+
+      // Keep track of the composing word so we can slice it on the next keystroke
+      if (e.inputType === "insertCompositionText") {
+        lastComposition = e.data;
+      } else {
+        lastComposition = ""; // Reset on spacebar or completed words
       }
     });
 
@@ -598,6 +616,7 @@
       totalCharactersTyped = 0;
       errors = 0;
       isTestActive = true;
+      lastComposition = ""; // Reset tracker on new test
   
       stats.innerHTML = "";
       hiddenInput.value = "";
