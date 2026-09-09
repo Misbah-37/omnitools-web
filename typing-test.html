@@ -451,15 +451,13 @@
       render();
     }
 
-    // Desktop path: physical keyboard, works even if focus is outside the input
-    function handleKeydown(e) {
-      if (!isTestActive) return;
-      // Ignore modifier/navigation keys
-      if (e.key === "Backspace") { e.preventDefault(); return; }
-      if (e.key.length > 1) return;
-      if (e.key === " ") { e.preventDefault(); }
-      processChar(e.key);
-    }
+    // NOTE: character capture is handled entirely by the `beforeinput`
+    // listener below, for both desktop and mobile. An earlier version also
+    // had a window-level `keydown` listener for desktop, but keeping both
+    // meant every keystroke was processed twice on desktop (each listener
+    // counted it separately), which is what caused repeated letters to
+    // double up and the accuracy math to come out wrong. One listener, one
+    // code path, both platforms.
 
     // Mobile path: instead of reading the field's `value` after the browser
     // mutates it (which caused both the auto-capitalize bug AND a double-
@@ -529,15 +527,12 @@
       
       render();
       
-      // Attach desktop listener to window; mobile is handled by hiddenInput's own listener
-      window.addEventListener("keydown", handleKeydown);
-      // Auto-focus so mobile keyboards pop up immediately without an extra tap
+      // Auto-focus so the keyboard (mobile) or cursor (desktop) is ready immediately
       hiddenInput.focus();
     });
   
     endBtn.addEventListener("click", () => {
       isTestActive = false;
-      window.removeEventListener("keydown", handleKeydown);
       hiddenInput.blur();
       testScreen.style.display = "none";
       setupScreen.style.display = "block";
