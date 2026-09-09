@@ -7,27 +7,43 @@
   <link rel="icon" type="image/png" href="favicon.png">
 <meta name="description" content="A standalone, verified Windows application designed to instantly organize messy folders on your PC into 12 clean categories. Completely secure, running entirely on your local machine.">
 <style>
-  /* --- Core OmniTools Layout --- */
-  .home-btn {
-    display: inline-flex;
+  /* --- Global Navigation Bar --- */
+  .global-nav {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    height: 65px;
+    background-color: rgba(14, 17, 23, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid #1e293b;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 8px;
+    padding: 0 32px;
+    box-sizing: border-box;
+    z-index: 2000;
+  }
+  .nav-brand {
+    color: #f8fafc;
+    font-weight: 800;
+    text-decoration: none;
+    font-size: 1.25rem;
+    letter-spacing: -0.5px;
+  }
+  .nav-brand span { color: #6366f1; }
+  
+  .nav-links {
+    display: flex;
+    gap: 24px;
+  }
+  .nav-links a {
     color: #94a3b8;
     text-decoration: none;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 0.9rem;
     font-weight: 600;
-    padding: 10px 18px;
-    margin: 16px 24px;
-    background-color: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 8px;
-    transition: all 0.2s ease;
-    position: fixed; /* Keeps button pinned to top-left while scrolling */
-    top: 0;
-    left: 0;
-    z-index: 1000;
+    transition: color 0.2s;
   }
-  .home-btn:hover { color: #f8fafc; border-color: #64748b; background-color: #334155; }
+  .nav-links a:hover, .nav-links a.active { color: #f8fafc; }
   
   /* Restored native scrolling by removing height:100% and overflow:hidden */
   body, html {
@@ -39,7 +55,7 @@
   
   .premium-banner {
     background: linear-gradient(to bottom, #064e3b, #0e1117);
-    padding: 24px 24px 30px 24px;
+    padding: 90px 24px 30px 24px; /* Accommodates the fixed navbar */
     text-align: center;
     border-bottom: 1px solid #1e293b;
   }
@@ -75,14 +91,15 @@
 
   .premium-banner p { margin: 0; font-size: 0.95rem; line-height: 1.4; color: #94a3b8; }
 
-  /* Removed flex-grow and overflow constraints to allow natural page scroll */
+  /* Changed to flex-direction column so the SEO content stacks properly */
   .tool-wrapper {
     width: 100%; 
     background-color: #0e1117;
     padding: 30px 24px 60px 24px;
     box-sizing: border-box;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
   }
 
   /* Native App UI Container */
@@ -248,15 +265,69 @@
   .category-item strong { color: #f8fafc; }
   .category-item code { color: #34d399; background: #0f172a; padding: 2px 6px; border-radius: 4px; font-family: monospace; }
 
+  /* --- SEO & Educational Content Section --- */
+  .seo-article {
+    width: 100%;
+    max-width: 900px;
+    margin: 60px auto 20px auto;
+    color: #94a3b8;
+    line-height: 1.7;
+    font-size: 1rem;
+    border-top: 1px solid #1e293b;
+    padding-top: 40px;
+  }
+  .seo-article h2, .seo-article h3 {
+    color: #f8fafc;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .seo-article h2 { font-size: 1.5rem; }
+  .seo-article h3 { font-size: 1.2rem; }
+  .seo-article ul { padding-left: 20px; }
+  .seo-article li { margin-bottom: 10px; }
+  
+  .faq-box { margin-bottom: 16px; }
+  .faq-box details {
+    background-color: #111827;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 16px 20px;
+    cursor: pointer;
+  }
+  .faq-box summary {
+    font-weight: 600;
+    color: #f8fafc;
+    outline: none;
+    list-style: none;
+  }
+  .faq-box summary::-webkit-details-marker { display: none; }
+  .faq-box p {
+    margin: 12px 0 0 0;
+    font-size: 0.95rem;
+    color: #cbd5e1;
+  }
+
   @media (max-width: 768px) {
-    .home-btn { margin: 12px 16px; padding: 8px 14px; font-size: 0.85rem; }
-    .premium-banner { padding-top: 70px; }
+    .nav-links { display: none; }
+    .global-nav { padding: 0 20px; }
+    .premium-banner { padding-top: 90px; }
     .content-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
-  <a href="index.html" class="home-btn">← Back to Home</a>
+
+<!-- Global Navigation -->
+<nav class="global-nav">
+  <a href="index.html" class="nav-brand">Omni<span>Tools</span></a>
+  <div class="nav-links">
+    <a href="pdf-converter.html">PDF Suite</a>
+    <a href="file-organizer.html" class="active">File Organizer</a>
+    <a href="photo-resizer.html">Photo Resizer</a>
+    <a href="qr-generator.html">QR Generator</a>
+    <a href="typing-test.html">Typing Test</a>
+  </div>
+</nav>
 
 <div class="premium-banner">
   <div class="banner-content">
@@ -360,6 +431,36 @@
     </div>
 
   </div>
+
+  <!-- SEO & Educational Content -->
+  <article class="seo-article">
+    <h2>Why Use a Local Desktop File Organizer?</h2>
+    <p>A cluttered computer desktop can slow down your productivity and make finding important documents a nightmare. While many web-based tools offer to process individual files, managing entire messy folders safely requires a different approach. Our <strong>Desktop File Organizer</strong> is a compiled Windows application that runs entirely on your local machine, avoiding the limitations of web browser file sandboxes[cite: 3].</p>
+    
+    <h3>Best Practices for Digital Organization</h3>
+    <ul>
+      <li><strong>Sort Regularly:</strong> Don't wait until your <code>Downloads</code> or <code>Desktop</code> folder has thousands of files. Run the organizer weekly to maintain a clean workspace.</li>
+      <li><strong>Review Categories:</strong> The app automatically sorts files into 12 distinct folders (like <em>Documents</em>, <em>Images</em>, <em>Data & Spreadsheets</em>)[cite: 3]. Once sorted, quickly review these folders to delete old or unnecessary files.</li>
+      <li><strong>Keep System Files Safe:</strong> The organizer is designed for user directories (like Desktop or Downloads)[cite: 3]. Avoid running it in critical system folders (like <code>C:\Windows</code>) to prevent accidental reorganization of application dependencies.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    
+    <div class="faq-box">
+      <details>
+        <summary>Why can't this run directly in the web browser?</summary>
+        <p>Modern web browsers have strict security sandboxes that intentionally prevent websites from reading, moving, or modifying files directly on your hard drive[cite: 3]. To achieve instant, batch organization across your folders without uploading everything, a dedicated native desktop application is required[cite: 3].</p>
+      </details>
+    </div>
+
+    <div class="faq-box">
+      <details>
+        <summary>Is the executable file safe to run?</summary>
+        <p>Yes. The OmniTools File Organizer operates 100% locally with zero internet communication[cite: 3]. It has 0 bytes of outbound network access, meaning it physically cannot transmit your personal data anywhere[cite: 3]. If Windows SmartScreen flags it with a blue popup upon the first launch, it is simply because it is an independent open-source tool without a corporate publisher certificate[cite: 3].</p>
+      </details>
+    </div>
+  </article>
+
 </div>
 
 <script>
