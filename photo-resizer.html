@@ -11,12 +11,15 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" rel="stylesheet">
 
 <style>
+  .banner-content { max-width: 750px; margin: 0 auto; }
+
   .title-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 16px;
     margin-bottom: 8px;
+    flex-wrap: wrap; /* safety net so icon+title never overflow on very narrow screens */
   }
   
   .app-icon {
@@ -72,7 +75,7 @@
   
   .premium-banner h1 {
     margin: 0 0 12px 0;
-    font-size: 2.2rem;
+    font-size: clamp(1.4rem, 5.5vw, 2.2rem);
     font-weight: 800;
     background: linear-gradient(135deg, #38bdf8, #818cf8);
     -webkit-background-clip: text;
@@ -110,6 +113,7 @@
     width: 100%; 
     max-width: 550px; 
     color: #f3f4f6;
+    box-sizing: border-box;
   }
   .input-group { 
     margin-bottom: 1.2rem; 
@@ -166,6 +170,7 @@
     cursor: pointer; 
     margin-top: 1rem; 
     transition: transform 0.1s ease, opacity 0.2s ease;
+    touch-action: manipulation;
   }
   .action-btn:hover { 
     opacity: 0.9; 
@@ -202,6 +207,14 @@
     .premium-banner { padding-top: 70px; }
     .dimension-row { flex-direction: column; gap: 0; }
   }
+
+  /* On small phones, the cropper needs every pixel of width it can get --
+     the nested tool-wrapper + tool-container padding was eating ~110px
+     of horizontal space, leaving very little room to crop precisely. */
+  @media (max-width: 480px) {
+    .tool-wrapper { padding: 20px 12px 40px 12px; }
+    .tool-container { padding: 18px; }
+  }
 </style>
 </head>
 <body>
@@ -226,7 +239,7 @@
     </div>
     
     <div class="img-container" id="cropContainer">
-        <img id="imageToCrop" src="">
+        <img id="imageToCrop" alt="">
     </div>
     
     <div class="dimension-row">
