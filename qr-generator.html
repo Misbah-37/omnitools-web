@@ -7,11 +7,11 @@
   <link rel="icon" type="image/png" href="favicon.png">
 <meta name="description" content="Create, customize, and securely download high-quality QR codes from any URL or text. 100% free and fast.">
 
-<!-- Lightweight QR Code Library (CDN) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<!-- QRious Library for Client-Side QR Generation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 
 <style>
-  /* Home Button */
+  /* --- Core OmniTools Layout --- */
   .home-btn {
     display: inline-flex;
     align-items: center;
@@ -31,171 +31,178 @@
     left: 0;
     z-index: 100;
   }
-  .home-btn:hover {
-    color: #f8fafc;
-    border-color: #64748b;
-    background-color: #334155;
-  }
+  .home-btn:hover { color: #f8fafc; border-color: #64748b; background-color: #334155; }
   
   body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
+    margin: 0; padding: 0; height: 100%;
     background-color: #0e1117;
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    display: flex;
-    flex-direction: column;
+    display: flex; flex-direction: column;
+    overflow-x: hidden;
   }
   
   .premium-banner {
     background: linear-gradient(to bottom, #022c22, #0e1117);
     padding: 24px 24px 30px 24px;
-    text-align: center;
-    flex-shrink: 0;
+    text-align: center; flex-shrink: 0;
+    border-bottom: 1px solid #1e293b;
   }
   
-  .banner-content {
-    max-width: 750px;
-    margin: 0 auto;
+  .banner-content { max-width: 750px; margin: 0 auto; }
+
+  /* --- Integrated Icon & Header --- */
+  .title-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  
+  .app-icon {
+    width: 65px; height: 65px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.4); /* Emerald glow matching Python script */
+    object-fit: cover;
   }
 
   .premium-banner h1 {
-    margin: 0 0 6px 0;
-    font-size: 1.8rem;
+    margin: 0;
+    font-size: 2.2rem;
     font-weight: 800;
-    /* Emerald Green text gradient */
     background: linear-gradient(135deg, #34d399, #10b981);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: -0.02em;
   }
   
-  .premium-banner p {
-    margin: 0;
-    font-size: 0.95rem;
-    line-height: 1.4;
-    color: #94a3b8;
-  }
+  .premium-banner p { margin: 0; font-size: 0.95rem; line-height: 1.4; color: #94a3b8; }
   
   .tool-wrapper {
-    width: 100%;
-    flex-grow: 1;
+    width: 100%; flex-grow: 1;
     background-color: #0e1117;
-    position: relative;
-    z-index: 90;
-    /* Added flex properties to center the new JS tool */
+    padding: 40px 24px;
+    box-sizing: border-box;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 20px 24px 60px 24px;
-    overflow-y: auto; /* Allows scrolling if screen is small */
-    box-sizing: border-box;
+    overflow-y: auto;
   }
 
-  /* New Native Tool Styles */
-  .qr-app-container {
-    background-color: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 12px;
-    padding: 32px;
-    width: 100%;
-    max-width: 500px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
-    box-shadow: 0 10px 20px -10px rgba(0,0,0,0.3);
+  /* --- Native App UI Container --- */
+  .tool-container { 
+    background: #111827; 
+    border: 1px solid #374151; 
+    padding: 32px; 
+    border-radius: 12px; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5); 
+    width: 100%; 
+    max-width: 800px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 40px;
   }
 
-  .qr-app-container input[type="text"] {
+  /* Input Column */
+  label { 
+    display: block; font-size: 0.9rem; font-weight: 600; 
+    margin-bottom: 0.5rem; color: #9ca3af; 
+  }
+  
+  textarea {
     width: 100%;
-    padding: 14px 16px;
+    padding: 12px;
+    background: #1f2937;
+    color: #fff;
+    border: 1px solid #374151;
     border-radius: 8px;
-    background-color: #0f172a;
-    border: 1px solid #334155;
-    color: #f8fafc;
-    font-size: 1rem;
     box-sizing: border-box;
-    transition: border-color 0.2s ease;
+    font-family: inherit;
+    font-size: 1rem;
+    resize: vertical;
+    min-height: 100px;
+    margin-bottom: 20px;
+    transition: border-color 0.2s;
   }
-
-  .qr-app-container input[type="text"]:focus {
-    outline: none;
-    border-color: #34d399;
-  }
+  textarea:focus { outline: none; border-color: #10b981; }
 
   .color-controls {
     display: flex;
-    gap: 24px;
-    width: 100%;
-    justify-content: center;
-    color: #94a3b8;
-    font-size: 0.9rem;
-    font-weight: 600;
+    gap: 20px;
   }
-
-  .color-controls label {
+  
+  .color-group {
+    flex: 1;
     display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
+    flex-direction: column;
   }
-
-  .color-controls input[type="color"] {
-    background: none;
-    border: none;
-    cursor: pointer;
-    height: 32px;
-    width: 32px;
-    padding: 0;
-    border-radius: 4px;
-  }
-
-  .action-btn {
-    background-color: #10b981;
-    color: #0e1117;
-    padding: 14px 24px;
-    border-radius: 8px;
-    font-weight: 700;
-    border: none;
-    cursor: pointer;
-    font-size: 1rem;
+  
+  input[type="color"] {
     width: 100%;
-    transition: background-color 0.2s ease, transform 0.1s ease;
+    height: 45px;
+    padding: 2px;
+    background: #1f2937;
+    border: 1px solid #374151;
+    border-radius: 8px;
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+  input[type="color"]::-webkit-color-swatch-wrapper { padding: 2px; }
+  input[type="color"]::-webkit-color-swatch { border-radius: 4px; border: none; }
+
+  /* Output Column */
+  .output-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #0f172a;
+    border: 1px dashed #334155;
+    border-radius: 8px;
+    padding: 24px;
+    min-height: 250px;
   }
 
-  .action-btn:hover { background-color: #059669; }
+  .placeholder-info {
+    color: #64748b;
+    font-size: 0.95rem;
+    text-align: center;
+    line-height: 1.5;
+    padding: 20px;
+  }
+
+  canvas {
+    border-radius: 4px;
+    background: white;
+    padding: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    display: none;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .action-btn { 
+    background: linear-gradient(135deg, #34d399 0%, #10b981 100%); 
+    color: #064e3b; 
+    border: none; 
+    padding: 14px; 
+    width: 100%; 
+    border-radius: 8px; 
+    font-weight: 800; 
+    font-size: 1rem; 
+    cursor: pointer; 
+    margin-top: 24px; 
+    transition: transform 0.1s, opacity 0.2s; 
+    display: none;
+  }
+  .action-btn:hover { opacity: 0.9; }
   .action-btn:active { transform: scale(0.98); }
 
-  #downloadBtn {
-    background-color: #0f172a;
-    border: 1px solid #334155;
-    color: #f8fafc;
-    display: none; /* Hidden until generated */
-  }
-
-  #downloadBtn:hover {
-    border-color: #34d399;
-    background-color: #1e293b;
-  }
-
-  #qrcode-container {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    display: none; /* Hidden until generated */
-  }
-
-  /* Mobile Responsive Fix */
   @media (max-width: 768px) {
-    .home-btn {
-      margin: 12px 16px;
-      padding: 8px 14px;
-      font-size: 0.85rem;
-    }
-    .premium-banner {
-      padding-top: 70px;
-    }
+    .home-btn { margin: 12px 16px; padding: 8px 14px; font-size: 0.85rem; }
+    .premium-banner { padding-top: 70px; }
+    .tool-container { grid-template-columns: 1fr; gap: 24px; }
+    .color-controls { flex-direction: column; gap: 12px; }
   }
 </style>
 </head>
@@ -204,97 +211,102 @@
 
 <div class="premium-banner">
   <div class="banner-content">
-    <h1>Custom QR Code Generator</h1>
+    <div class="title-wrapper">
+      <img src="qr_icon.png" alt="QR Code Generator" class="app-icon" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdib3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzEwYjk4MSIvPjwvc3ZnPg=='">
+      <h1>Custom QR Code Generator</h1>
+    </div>
     <p>Create, customize, and securely download high-quality QR codes from any URL or text. Select your custom foreground and background colors, and export high-resolution PNGs instantly.</p>
   </div>
 </div>
 
 <div class="tool-wrapper">
   
-  <div class="qr-app-container">
-    <input type="text" id="qrText" placeholder="Enter URL or text here..." autocomplete="off">
+  <div class="tool-container">
     
-    <div class="color-controls">
-      <label>
-        Foreground: 
-        <input type="color" id="qrColorDark" value="#000000">
-      </label>
-      <label>
-        Background: 
-        <input type="color" id="qrColorLight" value="#ffffff">
-      </label>
+    <!-- Input Section -->
+    <div>
+        <label for="qrInput">URL or Text to encode:</label>
+        <textarea id="qrInput" placeholder="https://example.com"></textarea>
+        
+        <div class="color-controls">
+            <div class="color-group">
+                <label for="fgColor">QR Color</label>
+                <input type="color" id="fgColor" value="#000000">
+            </div>
+            <div class="color-group">
+                <label for="bgColor">Background</label>
+                <input type="color" id="bgColor" value="#FFFFFF">
+            </div>
+        </div>
     </div>
 
-    <button class="action-btn" id="generateBtn">Generate QR Code</button>
-    
-    <div id="qrcode-container"></div>
-    
-    <button class="action-btn" id="downloadBtn">Download High-Res PNG</button>
+    <!-- Output Section -->
+    <div class="output-col">
+        <div id="placeholder" class="placeholder-info">
+            Enter a URL or text on the left to generate your QR code.
+        </div>
+        <canvas id="qrCanvas"></canvas>
+        <button id="downloadBtn" class="action-btn">⬇️ Download (PNG)</button>
+    </div>
+
   </div>
 
 </div>
 
 <script>
-  const qrText = document.getElementById('qrText');
-  const qrColorDark = document.getElementById('qrColorDark');
-  const qrColorLight = document.getElementById('qrColorLight');
-  const generateBtn = document.getElementById('generateBtn');
-  const downloadBtn = document.getElementById('downloadBtn');
-  const qrcodeContainer = document.getElementById('qrcode-container');
-  
-  generateBtn.addEventListener('click', () => {
-    const text = qrText.value.trim();
-    
-    if (!text) {
-      qrText.style.borderColor = '#ef4444';
-      setTimeout(() => qrText.style.borderColor = '#334155', 1000);
-      return;
-    }
-    
-    // Reset previous QR code
-    qrcodeContainer.innerHTML = '';
-    qrcodeContainer.style.display = 'block';
-    downloadBtn.style.display = 'block';
-    
-    // Generate new QR code dynamically checking the color inputs
-    new QRCode(qrcodeContainer, {
-      text: text,
-      width: 250,
-      height: 250,
-      colorDark : qrColorDark.value,
-      colorLight : qrColorLight.value,
-      correctLevel : QRCode.CorrectLevel.H
+    const qrInput = document.getElementById('qrInput');
+    const fgColor = document.getElementById('fgColor');
+    const bgColor = document.getElementById('bgColor');
+    const qrCanvas = document.getElementById('qrCanvas');
+    const placeholder = document.getElementById('placeholder');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    // Initialize QRious instance
+    const qr = new QRious({
+        element: qrCanvas,
+        size: 300,
+        level: 'H' // High error correction
     });
-  });
 
-  // Handle Image Download
-  downloadBtn.addEventListener('click', () => {
-    const img = qrcodeContainer.querySelector('img');
-    const canvas = qrcodeContainer.querySelector('canvas');
-    let imageSrc = null;
-
-    if (img && img.src && img.src !== "") {
-      imageSrc = img.src;
-    } else if (canvas) {
-      imageSrc = canvas.toDataURL("image/png");
+    function generateQR() {
+        const text = qrInput.value.trim();
+        
+        if (text) {
+            // Hide placeholder, show canvas and button
+            placeholder.style.display = 'none';
+            qrCanvas.style.display = 'block';
+            downloadBtn.style.display = 'block';
+            
+            // Update QR code data and colors
+            qr.set({
+                value: text,
+                foreground: fgColor.value,
+                background: bgColor.value
+            });
+        } else {
+            // Revert to placeholder if input is empty
+            placeholder.style.display = 'block';
+            qrCanvas.style.display = 'none';
+            downloadBtn.style.display = 'none';
+        }
     }
 
-    if (imageSrc) {
-      const link = document.createElement('a');
-      link.href = imageSrc;
-      link.download = 'OmniTools-QR-Code.png';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+    function downloadQR() {
+        const link = document.createElement('a');
+        link.download = 'OmniTools_QRCode.png';
+        link.href = qrCanvas.toDataURL('image/png');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
-  });
-  
-  // Trigger generation on 'Enter' key
-  qrText.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      generateBtn.click();
-    }
-  });
+
+    // Event Listeners for real-time generation
+    qrInput.addEventListener('input', generateQR);
+    fgColor.addEventListener('input', generateQR);
+    bgColor.addEventListener('input', generateQR);
+    
+    // Download Listener
+    downloadBtn.addEventListener('click', downloadQR);
 </script>
 
 </body>
