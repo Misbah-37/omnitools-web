@@ -7,23 +7,7 @@
   <link rel="icon" type="image/png" href="favicon.png">
 <meta name="description" content="A standalone, verified Windows application designed to instantly organize messy folders on your PC into 12 clean categories. Completely secure, running entirely on your local machine.">
 <style>
-/* Add smooth transition to the existing banner */
-  .premium-banner {
-    transition: max-height 0.4s ease, padding 0.4s ease, opacity 0.3s ease;
-    max-height: 300px; /* Arbitrary large number to allow transition */
-    overflow: hidden;
-  }
-
-  /* The class we will trigger with JavaScript */
-  .premium-banner.retracted {
-    max-height: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    opacity: 0;
-    border-bottom: none;
-  }
-  
-  /* Home Button */
+  /* --- Core OmniTools Layout --- */
   .home-btn {
     display: inline-flex;
     align-items: center;
@@ -38,42 +22,31 @@
     border: 1px solid #334155;
     border-radius: 8px;
     transition: all 0.2s ease;
-    position: absolute;
+    position: fixed; /* Keeps button pinned to top-left while scrolling */
     top: 0;
     left: 0;
-    z-index: 100;
+    z-index: 1000;
   }
-  .home-btn:hover {
-    color: #f8fafc;
-    border-color: #64748b;
-    background-color: #334155;
-  }
-
+  .home-btn:hover { color: #f8fafc; border-color: #64748b; background-color: #334155; }
+  
+  /* Restored native scrolling by removing height:100% and overflow:hidden */
   body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
+    margin: 0; 
+    padding: 0; 
     background-color: #0e1117;
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    display: flex;
-    flex-direction: column;
-    overflow-x: hidden;
   }
-
+  
   .premium-banner {
     background: linear-gradient(to bottom, #064e3b, #0e1117);
     padding: 24px 24px 30px 24px;
     text-align: center;
-    flex-shrink: 0;
     border-bottom: 1px solid #1e293b;
   }
+  
+  .banner-content { max-width: 750px; margin: 0 auto; }
 
-  .banner-content {
-    max-width: 750px;
-    margin: 0 auto;
-  }
-
-  /* Integrated Icon & Header Layout */
+  /* --- Integrated Icon & Header Layout --- */
   .title-wrapper {
     display: flex;
     align-items: center;
@@ -86,8 +59,8 @@
     width: 65px; 
     height: 65px;
     object-fit: cover;
-    mix-blend-mode: screen; /* Drops the black background */
-    filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.4)); /* Replaces box-shadow for blended images */
+    mix-blend-mode: screen; 
+    filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.4));
   }
 
   .premium-banner h1 {
@@ -100,24 +73,16 @@
     letter-spacing: -0.02em;
   }
 
-  .premium-banner p {
-    margin: 0;
-    font-size: 0.95rem;
-    line-height: 1.4;
-    color: #94a3b8;
-  }
+  .premium-banner p { margin: 0; font-size: 0.95rem; line-height: 1.4; color: #94a3b8; }
 
+  /* Removed flex-grow and overflow constraints to allow natural page scroll */
   .tool-wrapper {
-    width: 100%;
-    flex-grow: 1;
+    width: 100%; 
     background-color: #0e1117;
-    position: relative;
-    z-index: 90;
     padding: 30px 24px 60px 24px;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
-    overflow-y: auto;
   }
 
   /* Native App UI Container */
@@ -164,11 +129,7 @@
     padding-bottom: 16px;
   }
 
-  .cert-title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #f8fafc;
-  }
+  .cert-title { font-size: 1.1rem; font-weight: 700; color: #f8fafc; }
 
   .cert-grid {
     display: grid;
@@ -192,11 +153,7 @@
     box-shadow: 0 10px 25px rgba(0,0,0,0.3);
   }
 
-  .card-panel h3 {
-    margin-top: 0;
-    color: #f8fafc;
-    font-size: 1.25rem;
-  }
+  .card-panel h3 { margin-top: 0; color: #f8fafc; font-size: 1.25rem; }
 
   .download-btn {
     display: inline-block;
@@ -228,22 +185,10 @@
   }
   .warning-box strong { color: #fef3c7; }
 
-  .steps-list {
-    margin: 0;
-    padding-left: 20px;
-    color: #94a3b8;
-    line-height: 1.6;
-    font-size: 0.95rem;
-  }
+  .steps-list { margin: 0; padding-left: 20px; color: #94a3b8; line-height: 1.6; font-size: 0.95rem; }
   .steps-list li { margin-bottom: 6px; }
 
-  .features-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    color: #94a3b8;
-    line-height: 1.8;
-  }
+  .features-list { list-style: none; padding: 0; margin: 0; color: #94a3b8; line-height: 1.8; }
 
   /* Accordion / Categories Section */
   .categories-box {
@@ -389,22 +334,5 @@
 
   </div>
 </div>
-<script>
-  // Retracting Banner Logic
-  const toolWrapper = document.querySelector('.tool-wrapper');
-  const banner = document.querySelector('.premium-banner');
-
-  if (toolWrapper && banner) {
-    toolWrapper.addEventListener('scroll', () => {
-      // If the user scrolls down more than 40px, hide the banner
-      if (toolWrapper.scrollTop > 40) {
-        banner.classList.add('retracted');
-      } else {
-        // Bring it back if they scroll all the way to the top
-        banner.classList.remove('retracted');
-      }
-    });
-  }
-</script>
 </body>
 </html>
