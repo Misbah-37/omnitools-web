@@ -26,6 +26,7 @@
     mix-blend-mode: screen; /* Drops the black background */
     filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.4)); /* Replaces box-shadow for blended images */
   }
+  
   /* --- Global & Wrapper Styles --- */
   .home-btn {
     display: inline-flex;
@@ -41,10 +42,10 @@
     border: 1px solid #334155;
     border-radius: 8px;
     transition: all 0.2s ease;
-    position: absolute;
+    position: fixed; /* Keeps button pinned to top-left while scrolling */
     top: 0;
     left: 0;
-    z-index: 100;
+    z-index: 1000;
   }
   .home-btn:hover {
     color: #f8fafc;
@@ -52,15 +53,12 @@
     background-color: #334155;
   }
   
+  /* Restored native scrolling by removing height:100% and overflow constraints */
   body, html {
     margin: 0;
     padding: 0;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
     background-color: #0e1117;
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    overflow-x: hidden;
   }
   
   .premium-banner {
@@ -68,7 +66,6 @@
     border-bottom: 1px solid #1e293b;
     padding: 32px 24px;
     text-align: center;
-    flex-shrink: 0;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
     z-index: 50;
   }
@@ -92,16 +89,15 @@
     font-weight: 400;
   }
   
+  /* Removed flex-grow and overflow-y to allow natural page scroll */
   .tool-wrapper {
     width: 100%;
-    flex-grow: 1;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: flex-start;
     padding: 40px 24px 60px 24px;
     box-sizing: border-box;
-    overflow-y: auto;
   }
 
   /* --- Native App UI Styles (Migrated from Python) --- */
