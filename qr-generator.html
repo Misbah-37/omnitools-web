@@ -11,27 +11,43 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 
 <style>
-  /* --- Core OmniTools Layout --- */
-  .home-btn {
-    display: inline-flex;
+  /* --- Global Navigation Bar --- */
+  .global-nav {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    height: 65px;
+    background-color: rgba(14, 17, 23, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid #1e293b;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 8px;
+    padding: 0 32px;
+    box-sizing: border-box;
+    z-index: 2000;
+  }
+  .nav-brand {
+    color: #f8fafc;
+    font-weight: 800;
+    text-decoration: none;
+    font-size: 1.25rem;
+    letter-spacing: -0.5px;
+  }
+  .nav-brand span { color: #6366f1; }
+  
+  .nav-links {
+    display: flex;
+    gap: 24px;
+  }
+  .nav-links a {
     color: #94a3b8;
     text-decoration: none;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 0.9rem;
     font-weight: 600;
-    padding: 10px 18px;
-    margin: 16px 24px;
-    background-color: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 8px;
-    transition: all 0.2s ease;
-    position: fixed; /* Keeps button pinned to top-left while scrolling */
-    top: 0;
-    left: 0;
-    z-index: 1000;
+    transition: color 0.2s;
   }
-  .home-btn:hover { color: #f8fafc; border-color: #64748b; background-color: #334155; }
+  .nav-links a:hover, .nav-links a.active { color: #f8fafc; }
   
   /* Restored native scrolling by removing height:100% and overflow constraints */
   body, html {
@@ -43,7 +59,7 @@
   
   .premium-banner {
     background: linear-gradient(to bottom, #022c22, #0e1117);
-    padding: 24px 24px 30px 24px;
+    padding: 90px 24px 30px 24px; /* Accommodates the fixed navbar */
     text-align: center;
     border-bottom: 1px solid #1e293b;
   }
@@ -79,15 +95,15 @@
   
   .premium-banner p { margin: 0; font-size: 0.95rem; line-height: 1.4; color: #94a3b8; }
   
-  /* Removed flex-grow and overflow-y to allow natural page scroll */
+  /* Switched to flex column to stack tool and SEO content cleanly */
   .tool-wrapper {
     width: 100%; 
     background-color: #0e1117;
-    padding: 40px 24px;
+    padding: 40px 24px 60px 24px;
     box-sizing: border-box;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
   }
 
   /* --- Native App UI Container --- */
@@ -199,16 +215,70 @@
   .action-btn:hover { opacity: 0.9; }
   .action-btn:active { transform: scale(0.98); }
 
+  /* --- SEO & Educational Content Section --- */
+  .seo-article {
+    width: 100%;
+    max-width: 800px;
+    margin: 60px auto 20px auto;
+    color: #94a3b8;
+    line-height: 1.7;
+    font-size: 1rem;
+    border-top: 1px solid #1e293b;
+    padding-top: 40px;
+  }
+  .seo-article h2, .seo-article h3 {
+    color: #f8fafc;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .seo-article h2 { font-size: 1.5rem; }
+  .seo-article h3 { font-size: 1.2rem; }
+  .seo-article ul { padding-left: 20px; }
+  .seo-article li { margin-bottom: 10px; }
+  
+  .faq-box { margin-bottom: 16px; }
+  .faq-box details {
+    background-color: #111827;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 16px 20px;
+    cursor: pointer;
+  }
+  .faq-box summary {
+    font-weight: 600;
+    color: #f8fafc;
+    outline: none;
+    list-style: none;
+  }
+  .faq-box summary::-webkit-details-marker { display: none; }
+  .faq-box p {
+    margin: 12px 0 0 0;
+    font-size: 0.95rem;
+    color: #cbd5e1;
+  }
+
   @media (max-width: 768px) {
-    .home-btn { margin: 12px 16px; padding: 8px 14px; font-size: 0.85rem; }
-    .premium-banner { padding-top: 70px; }
+    .nav-links { display: none; }
+    .global-nav { padding: 0 20px; }
+    .premium-banner { padding-top: 90px; }
     .tool-container { grid-template-columns: 1fr; gap: 24px; }
     .color-controls { flex-direction: column; gap: 12px; }
   }
 </style>
 </head>
 <body>
-  <a href="index.html" class="home-btn">← Back to Home</a>
+
+<!-- Global Navigation -->
+<nav class="global-nav">
+  <a href="index.html" class="nav-brand">Omni<span>Tools</span></a>
+  <div class="nav-links">
+    <a href="pdf-converter.html">PDF Suite</a>
+    <a href="file-organizer.html">File Organizer</a>
+    <a href="photo-resizer.html">Photo Resizer</a>
+    <a href="qr-generator.html" class="active">QR Generator</a>
+    <a href="typing-test.html">Typing Test</a>
+  </div>
+</nav>
 
 <div class="premium-banner">
   <div class="banner-content">
@@ -251,6 +321,35 @@
     </div>
 
   </div>
+
+  <!-- SEO & Educational Content -->
+  <article class="seo-article">
+    <h2>How to Create Effective Custom QR Codes</h2>
+    <p>QR codes (Quick Response codes) have become an essential tool for seamlessly connecting the physical world to digital experiences. Our free Custom QR Code Generator allows you to instantly create dynamic, high-resolution codes right in your browser without any tracking or sign-ups.</p>
+    
+    <h3>Tips for Better QR Code Scanning</h3>
+    <ul>
+      <li><strong>High Contrast is Key:</strong> Always ensure there is a strong contrast between your QR Color and Background. The classic black on white is universally readable. Avoid using two light colors (like yellow on white) as smartphone cameras will struggle to detect the pattern.</li>
+      <li><strong>Keep it Simple:</strong> The more text or data you pack into a QR code, the denser and more complex the pixel pattern becomes. For best results, use short URLs (or URL shorteners) to keep the pattern clean and easy to scan from a distance.</li>
+      <li><strong>Test Before Printing:</strong> Always scan your downloaded PNG file with your own smartphone camera before printing it on physical materials like business cards or flyers.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    
+    <div class="faq-box">
+      <details>
+        <summary>Do these QR codes expire?</summary>
+        <p>No, they never expire. The QR codes generated here are "static," meaning the text or URL you enter is permanently mathematically encoded into the image itself. As long as the destination URL remains active, the QR code will work forever.</p>
+      </details>
+    </div>
+
+    <div class="faq-box">
+      <details>
+        <summary>Is my data stored or tracked?</summary>
+        <p>No. This tool utilizes a client-side JavaScript library to generate the image directly on your device. We do not track what URLs you enter, and we do not insert intermediary tracking redirects into your codes.</p>
+      </details>
+    </div>
+  </article>
 
 </div>
 
