@@ -461,33 +461,33 @@
       processChar(e.key);
     }
 
-    // Mobile path: the invisible input's 'input' event fires reliably across
-    // virtual keyboards, autocorrect, and swipe-typing, unlike keydown.
-    //
-    // We keep a single placeholder character in the field at all times instead
-    // of draining it to "". Several mobile keyboards (Gboard, iOS) re-engage
-    // shift/auto-capitalize whenever a field becomes truly empty, especially
-    // right after a space -- resetting to "" every keystroke was triggering
-    // that. A non-empty field with the cursor pinned after the placeholder
-    // avoids the "empty field = new sentence" heuristic entirely.
-    const PLACEHOLDER = "\u200B"; // zero-width space, invisible either way
-    function resetHiddenInput() {
-      hiddenInput.value = PLACEHOLDER;
-      hiddenInput.setSelectionRange(1, 1); // keep cursor after the placeholder
-    }
-
-    hiddenInput.addEventListener("input", (e) => {
-      const value = hiddenInput.value;
-      if (value.length <= 1) {
-        // Placeholder got deleted (backspace) or field is otherwise empty --
-        // treat as a no-op backspace attempt, same as on desktop.
-        resetHiddenInput();
+    // Mobile path: instead of reading the field's `value` after the browser
+    // mutates it (which caused both the auto-capitalize bug AND a double-
+    // counting bug with repeated letters -- predictive keyboards can fire
+    // more than one input event per keystroke, especially around repeats),
+    // we intercept `beforeinput`, read the character the keyboard is ABOUT
+    // to insert from `e.data`, and cancel the insertion entirely with
+    // preventDefault(). The field's content never actually changes, so
+    // there's no state to desync and nothing for the keyboard to
+    // "reconsider" capitalization over.
+    hiddenInput.addEventListener("beforeinput", (e) => {
+      if (!isTestActive) {
+        e.preventDefault();
         return;
       }
-      // Whatever was typed landed after the placeholder; take the last char.
-      const typedChar = value[value.length - 1];
-      resetHiddenInput();
-      processChar(typedChar);
+      // Always cancel the native edit -- we handle everything ourselves.
+      e.preventDefault();
+
+      const insertingTypes = ["insertText", "insertCompositionText", "insertReplacementText"];
+      if (!insertingTypes.includes(e.inputType)) return; // ignore deletes, line breaks, etc.
+
+      const data = e.data;
+      if (!data) return;
+      // Normally a single character, but handle multi-char commits
+      // (e.g. predictive text) by processing each character in order.
+      for (const ch of data) {
+        processChar(ch);
+      }
     });
 
     // Tapping anywhere in the box focuses the invisible input, opening the keyboard
@@ -523,7 +523,7 @@
       isTestActive = true;
   
       stats.innerHTML = "";
-      resetHiddenInput();
+      hiddenInput.value = "";
       setupScreen.style.display = "none";
       testScreen.style.display = "block";
       
