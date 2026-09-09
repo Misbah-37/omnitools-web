@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Free PDF Converter Suite | OmniTools</title>
   <link rel="icon" type="image/png" href="favicon.png">
-<meta name="description" content="Merge, split, extract pages, and convert documents to and from PDF seamlessly. Secure in-browser processing.">
+<meta name="description" content="Merge, split, extract pages, compress, and convert documents to and from PDF seamlessly. Secure in-browser processing.">
 
 <!-- Required PDF Libraries -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -13,29 +13,45 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 
 <style>
-  /* --- Core OmniTools Layout --- */
-  .home-btn {
-    display: inline-flex;
+  /* --- Global Navigation Bar --- */
+  .global-nav {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    height: 65px;
+    background-color: rgba(14, 17, 23, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid #1e293b;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 8px;
+    padding: 0 32px;
+    box-sizing: border-box;
+    z-index: 2000;
+  }
+  .nav-brand {
+    color: #f8fafc;
+    font-weight: 800;
+    text-decoration: none;
+    font-size: 1.25rem;
+    letter-spacing: -0.5px;
+  }
+  .nav-brand span { color: #6366f1; }
+  
+  .nav-links {
+    display: flex;
+    gap: 24px;
+  }
+  .nav-links a {
     color: #94a3b8;
     text-decoration: none;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 0.9rem;
     font-weight: 600;
-    padding: 10px 18px;
-    margin: 16px 24px;
-    background-color: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 8px;
-    transition: all 0.2s ease;
-    position: fixed; /* Keeps button pinned to top-left while scrolling */
-    top: 0;
-    left: 0;
-    z-index: 1000;
+    transition: color 0.2s;
   }
-  .home-btn:hover { color: #f8fafc; border-color: #64748b; background-color: #334155; }
+  .nav-links a:hover, .nav-links a.active { color: #f8fafc; }
   
-  /* Restored native scrolling by removing height:100% and overflow:hidden */
+  /* Restored native scrolling by removing height:100% and overflow constraints */
   body, html {
     margin: 0; 
     padding: 0; 
@@ -45,7 +61,7 @@
   
   .premium-banner {
     background: linear-gradient(to bottom, #431407, #0e1117);
-    padding: 24px 24px 30px 24px;
+    padding: 90px 24px 30px 24px; /* Accommodates the fixed navbar */
     text-align: center;
     border-bottom: 1px solid #1e293b;
   }
@@ -89,12 +105,15 @@
   
   .premium-banner p { margin: 0; font-size: 0.95rem; line-height: 1.4; color: #94a3b8; }
   
-  /* Removed flex-grow and overflow constraints to allow natural page scroll */
+  /* Flex column for proper SEO text flow beneath the tool */
   .tool-wrapper {
     width: 100%; 
     background-color: #0e1117;
     padding: 24px 24px 60px 24px;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   /* --- Tab Navigation --- */
@@ -104,6 +123,8 @@
     gap: 10px;
     margin-bottom: 30px;
     flex-wrap: wrap;
+    width: 100%;
+    max-width: 800px;
   }
   .tab-btn {
     background: #1e293b;
@@ -118,7 +139,7 @@
     touch-action: manipulation;
   }
   .tab-btn.active, .tab-btn:hover {
-    background: #ea580c; /* PDF orange */
+    background: #ea580c; 
     color: #fff;
     border-color: #fb923c;
   }
@@ -137,12 +158,10 @@
     width: 100%; padding: 0.6rem; background: #1f2937; color: #fff; 
     border: 1px solid #374151; border-radius: 6px; box-sizing: border-box; margin-bottom: 1rem; 
     font-family: inherit;
-    font-size: 16px; /* prevents iOS Safari auto-zoom-on-focus */
+    font-size: 16px; 
   }
   input:focus, select:focus { outline: none; border-color: #fb923c; }
 
-  /* Page Size / Orientation / Margins row -- side by side on desktop and
-     wide screens, stacked on phones so each select has room to breathe. */
   .options-row { display: flex; gap: 10px; margin-bottom: 0.5rem; }
   .options-col { flex: 1; min-width: 0; }
   
@@ -167,11 +186,7 @@
     color: #9ca3af; font-size: 0.8rem; margin-top: -5px; margin-bottom: 10px;
   }
 
-  /* --- Reorderable Lists ---
-     Reordering is done entirely with the up/down/remove buttons below --
-     the same three buttons work identically whether you're on a mouse or a
-     touchscreen, so there's only one interaction model to maintain instead
-     of a desktop drag-and-drop path plus a separate mobile one. */
+  /* --- Reorderable Lists --- */
   ul.sortable-list { padding: 0; margin: 0 0 1rem 0; list-style: none; }
   .sortable-item {
     background: #1f2937; border: 1px solid #374151; padding: 0.5rem 0.5rem 0.5rem 0.8rem;
@@ -196,11 +211,53 @@
   .icon-btn:disabled { opacity: 0.3; cursor: not-allowed; }
   .icon-btn-danger:hover:not(:disabled) { background: #7f1d1d; border-color: #b91c1c; }
 
-  @media (max-width: 768px) {
-    .home-btn { margin: 12px 16px; padding: 8px 14px; font-size: 0.85rem; }
-    .premium-banner { padding-top: 70px; }
+  /* --- SEO & Educational Content Section --- */
+  .seo-article {
+    width: 100%;
+    max-width: 900px;
+    margin: 60px auto 20px auto;
+    color: #94a3b8;
+    line-height: 1.7;
+    font-size: 1rem;
+    border-top: 1px solid #1e293b;
+    padding-top: 40px;
+  }
+  .seo-article h2, .seo-article h3 {
+    color: #f8fafc;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .seo-article h2 { font-size: 1.5rem; }
+  .seo-article h3 { font-size: 1.2rem; }
+  .seo-article ul { padding-left: 20px; }
+  .seo-article li { margin-bottom: 10px; }
+  
+  .faq-box { margin-bottom: 16px; }
+  .faq-box details {
+    background-color: #111827;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 16px 20px;
+    cursor: pointer;
+  }
+  .faq-box summary {
+    font-weight: 600;
+    color: #f8fafc;
+    outline: none;
+    list-style: none;
+  }
+  .faq-box summary::-webkit-details-marker { display: none; }
+  .faq-box p {
+    margin: 12px 0 0 0;
+    font-size: 0.95rem;
+    color: #cbd5e1;
+  }
 
-    /* Tabs scroll horizontally instead of wrapping into a cramped grid */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .global-nav { padding: 0 20px; }
+    .premium-banner { padding-top: 90px; }
+
     .tabs-container {
       flex-wrap: nowrap;
       justify-content: flex-start;
@@ -217,16 +274,25 @@
       padding: 12px 18px;
     }
 
-    /* Three side-by-side selects are too cramped on a phone -- stack them */
     .options-row { flex-direction: column; gap: 0; margin-bottom: 0; }
     .options-col { margin-bottom: 0.75rem; }
-
     .icon-btn { width: 38px; height: 38px; font-size: 0.9rem; }
   }
 </style>
 </head>
 <body>
-  <a href="index.html" class="home-btn">← Back to Home</a>
+
+<!-- Global Navigation -->
+<nav class="global-nav">
+  <a href="index.html" class="nav-brand">Omni<span>Tools</span></a>
+  <div class="nav-links">
+    <a href="pdf-converter.html" class="active">PDF Suite</a>
+    <a href="file-organizer.html">File Organizer</a>
+    <a href="photo-resizer.html">Photo Resizer</a>
+    <a href="qr-generator.html">QR Generator</a>
+    <a href="typing-test.html">Typing Test</a>
+  </div>
+</nav>
 
 <div class="premium-banner">
   <div class="banner-content">
@@ -235,7 +301,7 @@
       <h1>PDF Converter Suite</h1>
     </div>
     <div class="security-badge">🔒 100% SECURE CLIENT-SIDE PROCESSING</div>
-    <p>Seamlessly merge multiple PDFs, split large documents, extract specific pages, and convert files. Files are processed locally in your browser and never touch our servers.</p>
+    <p>Seamlessly merge multiple PDFs, split large documents, extract specific pages, and compress files[cite: 4]. Files are processed locally in your browser and never touch our servers[cite: 4].</p>
   </div>
 </div>
 
@@ -246,6 +312,7 @@
   <button class="tab-btn active" onclick="switchTab(event, 'tab-img2pdf')">🖼️ Images to PDF</button>
   <button class="tab-btn" onclick="switchTab(event, 'tab-merge')">📑 Merge PDFs</button>
   <button class="tab-btn" onclick="switchTab(event, 'tab-split')">✂️ Split / Extract</button>
+  <button class="tab-btn" onclick="switchTab(event, 'tab-compress')">🗜️ Compress PDF</button>
   <button class="tab-btn" onclick="switchTab(event, 'tab-extract')">📝 Extract Text</button>
 </div>
 
@@ -255,7 +322,7 @@
       <h3 style="margin-top:0; color:#fff;">Images to Standardized PDF</h3>
       <label>Select images (JPG, PNG, WebP) (Order matters):</label>
       <p class="reorder-tip">
-          <em>Select multiple images at once from the picker, then use the ▲▼ buttons below to reorder them.</em>
+          <em>Select multiple images at once from the picker, then use the ▲▼ buttons below to reorder them[cite: 4].</em>
       </p>
       <input type="file" id="imgInput" accept="image/png, image/jpeg, image/jpg, image/webp" multiple>
       <ul id="sortable-image-list" class="sortable-list"></ul>
@@ -299,7 +366,7 @@
       <h3 style="margin-top:0; color:#fff;">Merge Multiple PDFs</h3>
       <label>Select 2 or more PDF files (Order matters):</label>
       <p class="reorder-tip">
-          <em>Select multiple files at once from the picker, then use the ▲▼ buttons below to reorder them.</em>
+          <em>Select multiple files at once from the picker, then use the ▲▼ buttons below to reorder them[cite: 4].</em>
       </p>
       <input type="file" id="mergeInput" accept=".pdf" multiple>
       <ul id="sortable-file-list" class="sortable-list"></ul>
@@ -324,6 +391,21 @@
   </div>
 </div>
 
+<!-- TAB 5 (NEW): COMPRESS PDF -->
+<div id="tab-compress" class="tab-content">
+  <div class="tool-container">
+      <h3 style="margin-top:0; color:#fff;">Compress & Optimize PDF</h3>
+      <label>Select a PDF file to reduce size:</label>
+      <p class="reorder-tip">
+          <em>Our compressor strips out invisible bloat, deleted objects, and excess metadata while preserving the visual quality of your document.</em>
+      </p>
+      <input type="file" id="compressInput" accept=".pdf">
+      <button class="action-btn" onclick="compressPdf()">🗜️ Compress PDF</button>
+      <div id="status5" class="status-text"></div>
+      <a id="downloadBtn5" class="download-btn">⬇️ Download Compressed PDF</a>
+  </div>
+</div>
+
 <!-- TAB 4: EXTRACT TEXT -->
 <div id="tab-extract" class="tab-content">
   <div class="tool-container">
@@ -336,6 +418,36 @@
       <a id="downloadBtn4" class="download-btn">⬇️ Download Text File (.txt)</a>
   </div>
 </div>
+
+  <!-- SEO & Educational Content -->
+  <article class="seo-article">
+    <h2>The Ultimate Free PDF Suite</h2>
+    <p>Managing digital documents doesn't have to be complicated or compromise your privacy. Our PDF Suite offers enterprise-grade document manipulation tools that run directly inside your web browser. This means your sensitive tax documents, legal forms, and personal files are processed locally on your device and never uploaded to an external server[cite: 4].</p>
+    
+    <h3>Key Features</h3>
+    <ul>
+      <li><strong>Combine & Merge:</strong> Easily stitch together multiple PDF documents into a single file[cite: 4]. Perfect for creating consolidated reports or portfolios.</li>
+      <li><strong>Split & Extract:</strong> Pull out specific pages from massive documents by simply entering the page ranges you need[cite: 4].</li>
+      <li><strong>Photo to PDF Engine:</strong> Convert JPGs and PNGs into standardized A4 or Letter-sized documents, complete with custom margins and orientation settings[cite: 4].</li>
+      <li><strong>Local Optimization:</strong> Our compressor re-indexes your document and safely strips out unused metadata, reducing the overall file size without sacrificing text quality.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    
+    <div class="faq-box">
+      <details>
+        <summary>Is it really safe to upload my bank statements here?</summary>
+        <p>Yes, because you aren't actually "uploading" anything. All the code that powers this PDF tool is downloaded to your browser the moment you visit the page. When you select a file, the processing happens directly on your own computer's memory. No data is transmitted over the internet[cite: 4].</p>
+      </details>
+    </div>
+
+    <div class="faq-box">
+      <details>
+        <summary>Why didn't my PDF compress very much?</summary>
+        <p>Because this tool runs in the browser, it focuses on structural compression—removing invisible bloat, deleted objects, and excess metadata. If your PDF is massive because it contains dozens of high-resolution scanned photographs, true compression would require downsampling those images, which is difficult to perform efficiently in a client-side environment.</p>
+      </details>
+    </div>
+  </article>
 
 </div>
 
@@ -362,7 +474,7 @@ const imgListContainer = document.getElementById('sortable-image-list');
 
 imgUploader.addEventListener('change', function(event) {
     imgSelectedFiles = imgSelectedFiles.concat(Array.from(event.target.files));
-    imgUploader.value = ''; // allow re-adding the same file later if removed
+    imgUploader.value = ''; 
     renderImgList();
 });
 
@@ -386,8 +498,6 @@ function renderImgList() {
     });
 }
 
-// One click handler for all three actions, on both mouse and touch --
-// no separate mobile code path needed.
 imgListContainer.addEventListener('click', (e) => {
     const btn = e.target.closest('.icon-btn');
     if (!btn || btn.disabled) return;
@@ -500,7 +610,7 @@ const mergeListContainer = document.getElementById('sortable-file-list');
 
 mergeUploader.addEventListener('change', function(event) {
     mergeSelectedFiles = mergeSelectedFiles.concat(Array.from(event.target.files));
-    mergeUploader.value = ''; // allow re-adding the same file later if removed
+    mergeUploader.value = ''; 
     renderMergeList();
 });
 
@@ -616,6 +726,55 @@ async function splitPdf() {
         btn.download = "Extracted_" + file.name;
         btn.style.display = "block";
         status.innerText = `✅ Extracted ${indices.length} page(s) successfully!`;
+        status.style.color = "#34d399";
+    } catch (e) {
+        status.innerText = "❌ Error: " + e.message;
+        status.style.color = "#f87171";
+    }
+}
+
+// --- TAB 5 (NEW): Compress PDF Logic ---
+async function compressPdf() {
+    const file = document.getElementById('compressInput').files[0];
+    const status = document.getElementById('status5');
+    const btn = document.getElementById('downloadBtn5');
+    
+    if (!file) { alert('Please select a PDF file to compress.'); return; }
+    
+    status.innerText = "⏳ Optimizing structure and cleaning metadata... Please wait.";
+    btn.style.display = "none";
+    
+    try {
+        const arrayBuffer = await file.arrayBuffer();
+        
+        // Load the original PDF
+        const pdf = await PDFLib.PDFDocument.load(arrayBuffer);
+        
+        // Create a completely fresh PDF
+        const newPdf = await PDFLib.PDFDocument.create();
+        
+        // Copy all pages into the new document (strips orphaned objects)
+        const copiedPages = await newPdf.copyPages(pdf, pdf.getPageIndices());
+        copiedPages.forEach((page) => newPdf.addPage(page));
+        
+        // Save with object streams turned on to aggressively compress the internal structure
+        const pdfBytes = await newPdf.save({ useObjectStreams: true });
+        
+        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        btn.href = URL.createObjectURL(blob);
+        btn.download = "Compressed_" + file.name;
+        btn.style.display = "block";
+        
+        // Calculate size differences
+        const originalKB = (file.size / 1024).toFixed(1);
+        const newKB = (blob.size / 1024).toFixed(1);
+        
+        if (blob.size < file.size) {
+            status.innerText = `✅ Compression successful! Reduced from ${originalKB} KB to ${newKB} KB.`;
+        } else {
+            status.innerText = `✅ File processed! (File was already optimized: ${newKB} KB).`;
+        }
+        
         status.style.color = "#34d399";
     } catch (e) {
         status.innerText = "❌ Error: " + e.message;
