@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://misbah-37.github.io/omnitools-web/sitemap.xml
