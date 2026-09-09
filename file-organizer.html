@@ -65,7 +65,7 @@
 
   .premium-banner h1 {
     margin: 0;
-    font-size: 2.2rem;
+    font-size: clamp(1.5rem, 5vw, 2.2rem);
     font-weight: 800;
     background: linear-gradient(135deg, #6ee7b7, #34d399);
     -webkit-background-clip: text;
@@ -112,6 +112,25 @@
     color: #34d399;
   }
 
+  /* Shown only to visitors detected as non-Windows, before they hit the
+     download button -- prevents phones/Mac/Linux users from burning data
+     on a .zip they can't actually run. */
+  .platform-warning {
+    display: none;
+    align-items: flex-start;
+    gap: 10px;
+    background-color: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    border-left: 4px solid #ef4444;
+    padding: 14px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #fca5a5;
+    line-height: 1.5;
+  }
+  .platform-warning strong { color: #fecaca; }
+  .platform-warning .icon { font-size: 1.2rem; flex: 0 0 auto; }
+
   .cert-box {
     background-color: #111827;
     border: 1px solid #374151;
@@ -151,6 +170,7 @@
     border-radius: 12px;
     padding: 24px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    box-sizing: border-box;
   }
 
   .card-panel h3 { margin-top: 0; color: #f8fafc; font-size: 1.25rem; }
@@ -169,6 +189,7 @@
     margin-top: 10px;
     margin-bottom: 16px;
     transition: opacity 0.2s, transform 0.1s;
+    touch-action: manipulation;
   }
   .download-btn:hover { opacity: 0.9; }
   .download-btn:active { transform: scale(0.98); }
@@ -196,6 +217,7 @@
     border: 1px solid #374151;
     border-radius: 12px;
     padding: 24px;
+    box-sizing: border-box;
   }
 
   details {
@@ -207,7 +229,7 @@
     color: #f8fafc;
     font-weight: 600;
   }
-  details summary { outline: none; }
+  details summary { outline: none; touch-action: manipulation; }
   .categories-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -256,6 +278,11 @@
         <span class="trust-badge">💻 Windows 10/11 Certified</span>
     </div>
 
+    <div id="platformWarning" class="platform-warning">
+        <span class="icon">💻</span>
+        <span id="platformWarningText"></span>
+    </div>
+
     <div class="cert-box">
         <div class="cert-header">
             <span style="font-size: 1.6rem;">🛡️</span>
@@ -282,7 +309,7 @@
               Because web browsers restrict direct file movement on user hard drives, this dedicated <strong>Windows Desktop Utility</strong> provides full native folder access safely.
           </p>
 
-          <a href="File_Organizer.zip" class="download-btn" download>⬇️ Download File Organizer (.zip)</a>
+          <a href="File_Organizer.zip" id="downloadBtn" class="download-btn" download>⬇️ Download File Organizer (.zip)</a>
 
           <div class="warning-box">
               <strong>First-time Windows Launch Note:</strong><br>
@@ -334,5 +361,41 @@
 
   </div>
 </div>
+
+<script>
+  // Best-effort platform detection to warn non-Windows visitors (mobile,
+  // Mac, Linux) before they download a Windows-only .exe. This is a UA
+  // sniff, not a security boundary -- it's just there to save people a
+  // pointless download, so it fails open (shows nothing) if detection
+  // is inconclusive.
+  (function warnNonWindowsVisitors() {
+    const ua = navigator.userAgent || '';
+    const isWindows = /Windows/i.test(ua);
+    if (isWindows) return; // no warning needed, most common case
+
+    const isiOS = /iPhone|iPad|iPod/i.test(ua);
+    const isAndroid = /Android/i.test(ua);
+    const isMac = /Macintosh|Mac OS X/i.test(ua) && !isiOS;
+    const isLinux = /Linux/i.test(ua) && !isAndroid;
+
+    let device = 'device';
+    if (isiOS) device = 'iPhone/iPad';
+    else if (isAndroid) device = 'Android device';
+    else if (isMac) device = 'Mac';
+    else if (isLinux) device = 'Linux computer';
+    else return; // unrecognized platform -- don't guess, just say nothing
+
+    const banner = document.getElementById('platformWarning');
+    const bannerText = document.getElementById('platformWarningText');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    bannerText.innerHTML = `<strong>Heads up:</strong> this is a Windows-only desktop app (.exe) and won't run on your ${device}. Only download it if you plan to move the file to a Windows PC.`;
+    banner.style.display = 'flex';
+
+    if (isiOS || isAndroid) {
+      downloadBtn.textContent = '⬇️ Download Anyway (Windows Only)';
+    }
+  })();
+</script>
 </body>
 </html>
