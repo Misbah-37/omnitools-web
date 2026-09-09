@@ -463,13 +463,30 @@
 
     // Mobile path: the invisible input's 'input' event fires reliably across
     // virtual keyboards, autocorrect, and swipe-typing, unlike keydown.
+    //
+    // We keep a single placeholder character in the field at all times instead
+    // of draining it to "". Several mobile keyboards (Gboard, iOS) re-engage
+    // shift/auto-capitalize whenever a field becomes truly empty, especially
+    // right after a space -- resetting to "" every keystroke was triggering
+    // that. A non-empty field with the cursor pinned after the placeholder
+    // avoids the "empty field = new sentence" heuristic entirely.
+    const PLACEHOLDER = "\u200B"; // zero-width space, invisible either way
+    function resetHiddenInput() {
+      hiddenInput.value = PLACEHOLDER;
+      hiddenInput.setSelectionRange(1, 1); // keep cursor after the placeholder
+    }
+
     hiddenInput.addEventListener("input", (e) => {
       const value = hiddenInput.value;
-      // Always drain the field back to empty so it never accumulates text
-      hiddenInput.value = "";
-      if (!value) return; // e.g. a backspace on an already-empty field
-      // Only react to the most recently typed character
+      if (value.length <= 1) {
+        // Placeholder got deleted (backspace) or field is otherwise empty --
+        // treat as a no-op backspace attempt, same as on desktop.
+        resetHiddenInput();
+        return;
+      }
+      // Whatever was typed landed after the placeholder; take the last char.
       const typedChar = value[value.length - 1];
+      resetHiddenInput();
       processChar(typedChar);
     });
 
@@ -506,7 +523,7 @@
       isTestActive = true;
   
       stats.innerHTML = "";
-      hiddenInput.value = "";
+      resetHiddenInput();
       setupScreen.style.display = "none";
       testScreen.style.display = "block";
       
