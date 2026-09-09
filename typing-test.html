@@ -116,27 +116,39 @@
   .st-radio-option {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 8px;
+    gap: 10px;
+    margin-bottom: 4px;
     font-size: 1rem;
     cursor: pointer;
+    /* Larger tap target: the whole row is tappable, not just the tiny circle */
+    padding: 10px 8px;
+    border-radius: 6px;
+    min-height: 44px;
+    box-sizing: border-box;
+  }
+  .st-radio-option:active {
+    background-color: rgba(99, 102, 241, 0.12);
   }
   
   .st-radio-option input {
     accent-color: #6366f1; /* Indigo accent */
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     cursor: pointer;
+    flex-shrink: 0;
   }
   .st-btn-primary {
     background-color: #6366f1; /* Indigo accent */
     color: white;
     border: 1px solid #6366f1;
-    padding: 8px 16px;
+    padding: 12px 20px;
     border-radius: 6px;
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.2s;
+    min-height: 44px;
+    width: 100%;
+    box-sizing: border-box;
   }
   .st-btn-primary:hover {
     background-color: #4f46e5; /* Darker Indigo on hover */
@@ -145,12 +157,15 @@
     background-color: #1e293b;
     color: white;
     border: 1px solid #334155;
-    padding: 8px 16px;
+    padding: 12px 20px;
     border-radius: 6px;
     font-size: 1rem;
     cursor: pointer;
     margin-top: 20px;
     transition: border-color 0.2s;
+    min-height: 44px;
+    width: 100%;
+    box-sizing: border-box;
   }
   .st-btn-secondary:hover {
     border-color: #6366f1; /* Indigo accent on hover */
@@ -171,16 +186,37 @@
     padding: 24px;
     margin-bottom: 24px;
     box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);
+    /* Needed so the invisible mobile input can be positioned over the whole box */
+    position: relative;
+    cursor: text;
+  }
+
+  /* Invisible field that captures taps and opens the mobile keyboard.
+     font-size:16px stops iOS Safari from auto-zooming the page on focus. */
+  #hiddenInput {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 16px;
+    caret-color: transparent;
+    padding: 0;
+    margin: 0;
   }
 
   /* Exact Python CSS Injection translated */
   .sentence { 
-    font-size: 20px; 
+    font-size: clamp(16px, 4.5vw, 20px); 
     line-height: 1.6; 
     letter-spacing: 0.5px; 
     margin-bottom: 20px; 
     user-select: none; 
     word-wrap: break-word; 
+    position: relative;
   }
   .correct { 
     color: #00d2ff; 
@@ -209,12 +245,22 @@
     text-transform: uppercase; 
     letter-spacing: 1px; 
   }
+  .mobile-hint {
+    display: none;
+    font-size: 13px;
+    color: #64748b;
+    margin-top: -12px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
 
   /* Mobile Responsive Fix */
   @media (max-width: 768px) {
     .home-btn { margin: 12px 16px; padding: 8px 14px; font-size: 0.85rem; }
     .premium-banner { padding-top: 70px; }
-    .tool-wrapper { padding: 20px; }
+    .tool-wrapper { padding: 20px 16px; }
+    .st-btn-primary, .st-btn-secondary { width: 100%; }
+    .mobile-hint { display: block; }
   }
 </style>
 </head>
@@ -257,14 +303,25 @@
       <!-- Active Test Screen -->
     <div id="test-screen" style="display: none;">
       <div class="st-info-box">
-        Click anywhere in the box below and start typing!
+        Tap anywhere in the box below and start typing!
       </div>
       
-      <div class="typing-box">
+      <div class="typing-box" id="typingBox">
+        <input
+          id="hiddenInput"
+          type="text"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+          inputmode="text"
+          aria-hidden="true"
+        />
         <div id="progress">Loading...</div>
         <div id="textDisplay" class="sentence"></div>
         <div id="stats"></div>
       </div>
+      <p class="mobile-hint">Using a phone? Tap the box above to bring up your keyboard.</p>
       
       <button class="st-btn-secondary" id="endBtn">End Test / Change Difficulty</button>
     </div>
@@ -322,6 +379,8 @@
     const testScreen = document.getElementById("test-screen");
     const startBtn = document.getElementById("startBtn");
     const endBtn = document.getElementById("endBtn");
+    const typingBox = document.getElementById("typingBox");
+    const hiddenInput = document.getElementById("hiddenInput");
     
     const display = document.getElementById("textDisplay");
     const stats = document.getElementById("stats");
@@ -353,40 +412,36 @@
       }
       display.innerHTML = html;
     }
-  
-    // Exact Keydown listener logic from Python
-    function handleKeydown(e) {
+
+    function finishTest() {
+      let endTime = new Date().getTime();
+      let elapsedSeconds = (endTime - startTime) / 1000;
+      let wpm = (totalCharactersTyped / 5) / (elapsedSeconds / 60);
+      let accuracy = (totalCharactersTyped / (totalCharactersTyped + errors)) * 100;
+
+      progress.innerText = "✨ Test Complete!";
+      display.innerHTML = "";
+      stats.innerHTML = `🎉 Perfect! <br> 🚀 Speed: ${wpm.toFixed(2)} WPM <br> 🎯 Accuracy: ${accuracy.toFixed(2)}%`;
+      isTestActive = false;
+    }
+
+    // Handles one typed character, from either desktop keydown or mobile input event
+    function processChar(char) {
       if (!isTestActive) return;
       if (roundsCompleted >= targetCount) return;
-      
-      // Ignore modifier keys that shouldn't register as typed characters
-      if (e.key === "Backspace") { e.preventDefault(); return; }
-      if (e.key.length > 1) return; 
-  
-      // Prevent default scrolling when hitting Spacebar
-      if (e.key === " ") { e.preventDefault(); }
-  
       if (startTime === null) startTime = new Date().getTime();
-      
-      if (e.key === currentTarget[currentIndex]) {
+
+      if (char === currentTarget[currentIndex]) {
         currentIndex++;
         totalCharactersTyped++;
       } else {
         errors++;
       }
-      
+
       if (currentIndex === currentTarget.length) {
         roundsCompleted++;
         if (roundsCompleted === targetCount) {
-          let endTime = new Date().getTime();
-          let elapsedSeconds = (endTime - startTime) / 1000;
-          let wpm = (totalCharactersTyped / 5) / (elapsedSeconds / 60);
-          let accuracy = (totalCharactersTyped / (totalCharactersTyped + errors)) * 100;
-          
-          progress.innerText = "✨ Test Complete!";
-          display.innerHTML = "";
-          stats.innerHTML = `🎉 Perfect! <br> 🚀 Speed: ${wpm.toFixed(2)} WPM <br> 🎯 Accuracy: ${accuracy.toFixed(2)}%`;
-          isTestActive = false;
+          finishTest();
           return;
         } else {
           currentTarget = pool[Math.floor(Math.random() * pool.length)];
@@ -395,6 +450,33 @@
       }
       render();
     }
+
+    // Desktop path: physical keyboard, works even if focus is outside the input
+    function handleKeydown(e) {
+      if (!isTestActive) return;
+      // Ignore modifier/navigation keys
+      if (e.key === "Backspace") { e.preventDefault(); return; }
+      if (e.key.length > 1) return;
+      if (e.key === " ") { e.preventDefault(); }
+      processChar(e.key);
+    }
+
+    // Mobile path: the invisible input's 'input' event fires reliably across
+    // virtual keyboards, autocorrect, and swipe-typing, unlike keydown.
+    hiddenInput.addEventListener("input", (e) => {
+      const value = hiddenInput.value;
+      // Always drain the field back to empty so it never accumulates text
+      hiddenInput.value = "";
+      if (!value) return; // e.g. a backspace on an already-empty field
+      // Only react to the most recently typed character
+      const typedChar = value[value.length - 1];
+      processChar(typedChar);
+    });
+
+    // Tapping anywhere in the box focuses the invisible input, opening the keyboard
+    typingBox.addEventListener("click", () => {
+      if (isTestActive) hiddenInput.focus();
+    });
   
     // Event Listeners
     startBtn.addEventListener("click", () => {
@@ -424,18 +506,22 @@
       isTestActive = true;
   
       stats.innerHTML = "";
+      hiddenInput.value = "";
       setupScreen.style.display = "none";
       testScreen.style.display = "block";
       
       render();
       
-      // Attach listener to window
+      // Attach desktop listener to window; mobile is handled by hiddenInput's own listener
       window.addEventListener("keydown", handleKeydown);
+      // Auto-focus so mobile keyboards pop up immediately without an extra tap
+      hiddenInput.focus();
     });
   
     endBtn.addEventListener("click", () => {
       isTestActive = false;
       window.removeEventListener("keydown", handleKeydown);
+      hiddenInput.blur();
       testScreen.style.display = "none";
       setupScreen.style.display = "block";
     });
