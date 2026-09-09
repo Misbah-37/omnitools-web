@@ -11,6 +11,44 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" rel="stylesheet">
 
 <style>
+  /* --- Global Navigation Bar --- */
+  .global-nav {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    height: 65px;
+    background-color: rgba(14, 17, 23, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid #1e293b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 32px;
+    box-sizing: border-box;
+    z-index: 2000;
+  }
+  .nav-brand {
+    color: #f8fafc;
+    font-weight: 800;
+    text-decoration: none;
+    font-size: 1.25rem;
+    letter-spacing: -0.5px;
+  }
+  .nav-brand span { color: #6366f1; }
+  
+  .nav-links {
+    display: flex;
+    gap: 24px;
+  }
+  .nav-links a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover, .nav-links a.active { color: #f8fafc; }
+
   .banner-content { max-width: 750px; margin: 0 auto; }
 
   .title-wrapper {
@@ -19,41 +57,15 @@
     justify-content: center;
     gap: 16px;
     margin-bottom: 8px;
-    flex-wrap: wrap; /* safety net so icon+title never overflow on very narrow screens */
+    flex-wrap: wrap;
   }
   
   .app-icon {
     width: 65px; 
     height: 65px;
     object-fit: cover;
-    mix-blend-mode: screen; /* Drops the black background */
-    filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.4)); /* Replaces box-shadow for blended images */
-  }
-  
-  /* --- Global & Wrapper Styles --- */
-  .home-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: #94a3b8;
-    text-decoration: none;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    font-weight: 600;
-    padding: 10px 18px;
-    margin: 16px 24px;
-    background-color: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 8px;
-    transition: all 0.2s ease;
-    position: fixed; /* Keeps button pinned to top-left while scrolling */
-    top: 0;
-    left: 0;
-    z-index: 1000;
-  }
-  .home-btn:hover {
-    color: #f8fafc;
-    border-color: #64748b;
-    background-color: #334155;
+    mix-blend-mode: screen; 
+    filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.4)); 
   }
   
   /* Restored native scrolling by removing height:100% and overflow constraints */
@@ -67,7 +79,7 @@
   .premium-banner {
     background: linear-gradient(to bottom, #111827, #0e1117);
     border-bottom: 1px solid #1e293b;
-    padding: 32px 24px;
+    padding: 90px 24px 30px 24px; /* Accommodates the fixed navbar */
     text-align: center;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
     z-index: 50;
@@ -92,18 +104,18 @@
     font-weight: 400;
   }
   
-  /* Removed flex-grow and overflow-y to allow natural page scroll */
+  /* Switched to flex-direction column so the SEO content stacks cleanly below the tool */
   .tool-wrapper {
     width: 100%;
     position: relative;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
     padding: 40px 24px 60px 24px;
     box-sizing: border-box;
   }
 
-  /* --- Native App UI Styles (Migrated from Python) --- */
+  /* --- Native App UI Styles --- */
   .tool-container { 
     background: #111827; 
     border: 1px solid #374151; 
@@ -201,16 +213,56 @@
     color: #9ca3af; 
   }
 
+  /* --- SEO & Educational Content Section --- */
+  .seo-article {
+    width: 100%;
+    max-width: 800px;
+    margin: 60px auto 20px auto;
+    color: #94a3b8;
+    line-height: 1.7;
+    font-size: 1rem;
+    border-top: 1px solid #1e293b;
+    padding-top: 40px;
+  }
+  .seo-article h2, .seo-article h3 {
+    color: #f8fafc;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .seo-article h2 { font-size: 1.5rem; }
+  .seo-article h3 { font-size: 1.2rem; }
+  .seo-article ul { padding-left: 20px; }
+  .seo-article li { margin-bottom: 10px; }
+  
+  .faq-box { margin-bottom: 16px; }
+  .faq-box details {
+    background-color: #111827;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 16px 20px;
+    cursor: pointer;
+  }
+  .faq-box summary {
+    font-weight: 600;
+    color: #f8fafc;
+    outline: none;
+    list-style: none;
+  }
+  .faq-box summary::-webkit-details-marker { display: none; }
+  .faq-box p {
+    margin: 12px 0 0 0;
+    font-size: 0.95rem;
+    color: #cbd5e1;
+  }
+
   /* Mobile Responsive Fixes */
   @media (max-width: 768px) {
-    .home-btn { margin: 12px 16px; padding: 8px 14px; font-size: 0.85rem; }
-    .premium-banner { padding-top: 70px; }
+    .nav-links { display: none; }
+    .global-nav { padding: 0 20px; }
+    .premium-banner { padding-top: 90px; }
     .dimension-row { flex-direction: column; gap: 0; }
   }
 
-  /* On small phones, the cropper needs every pixel of width it can get --
-     the nested tool-wrapper + tool-container padding was eating ~110px
-     of horizontal space, leaving very little room to crop precisely. */
   @media (max-width: 480px) {
     .tool-wrapper { padding: 20px 12px 40px 12px; }
     .tool-container { padding: 18px; }
@@ -218,7 +270,18 @@
 </style>
 </head>
 <body>
-  <a href="index.html" class="home-btn">← Back to Home</a>
+
+<!-- Global Navigation -->
+<nav class="global-nav">
+  <a href="index.html" class="nav-brand">Omni<span>Tools</span></a>
+  <div class="nav-links">
+    <a href="pdf-converter.html">PDF Suite</a>
+    <a href="file-organizer.html">File Organizer</a>
+    <a href="photo-resizer.html" class="active">Photo Resizer</a>
+    <a href="qr-generator.html">QR Generator</a>
+    <a href="typing-test.html">Typing Test</a>
+  </div>
+</nav>
 
 <div class="premium-banner">
   <div class="banner-content">
@@ -268,6 +331,35 @@
     <div id="status"></div>
     <a id="downloadBtn" download="OmniTools_Ready.jpg">Download Resized Photo</a>
   </div>
+
+  <!-- SEO & Educational Content -->
+  <article class="seo-article">
+    <h2>How to Resize and Compress Images Securely</h2>
+    <p>Whether you need to shrink a large photo for a website, meet a strict file size limit for a portal upload, or crop an image for social media, our Photo Cropper & Resizer handles it all locally[cite: 2]. Because the processing happens entirely in your browser, your files are never uploaded to any external servers, ensuring complete privacy[cite: 2].</p>
+    
+    <h3>Tips for Perfect Image Compression</h3>
+    <ul>
+      <li><strong>Lock Your Aspect Ratio:</strong> When changing dimensions, ensure your width and height remain proportional to avoid stretching or squishing the photo. Our tool calculates this automatically when you use the crop feature[cite: 2].</li>
+      <li><strong>Understand KB Limits:</strong> If a website requires a file under 50KB, compressing a massive 4K image might reduce the quality too much. Try reducing the target width (e.g., to 800px or 1200px) before compressing to maintain a sharper look at lower file sizes.</li>
+      <li><strong>JPEG vs PNG:</strong> If your image has a transparent background, you must use PNG. However, for standard photographs, exporting as a JPEG will yield a much smaller file size without a noticeable drop in visual quality.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    
+    <div class="faq-box">
+      <details>
+        <summary>Why does the image process in my browser instead of a server?</summary>
+        <p>Processing images locally (client-side) is significantly faster and 100% secure. You don't have to wait for large files to upload or download, and you never have to worry about your personal photos being stored on a third-party server.</p>
+      </details>
+    </div>
+
+    <div class="faq-box">
+      <details>
+        <summary>What does "Target Dimensions" do?</summary>
+        <p>It forces your final image to be exactly the width and height you specify in pixels. The Cropper tool lets you select exactly which part of your original image will fit into those new dimensions so nothing gets awkwardly stretched.</p>
+      </details>
+    </div>
+  </article>
 
 </div>
 
