@@ -7,31 +7,7 @@
   <link rel="icon" type="image/png" href="favicon.png">
 <meta name="description" content="Test your typing speed and accuracy in real-time. Track your WPM and improve your keyboard skills for free.">
 <style>
-.typing-box {
-    background-color: #111827;
-    border: 1px solid #334155;
-    border-radius: 8px;
-    padding: 24px;
-    margin-bottom: 24px;
-    box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);
-  }
-  
-  /* --- Original OmniTools Wrapper Styles --- */
-  .title-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    margin-bottom: 8px;
-  }
-  
-  .app-icon {
-    width: 65px; 
-    height: 65px;
-    object-fit: cover;
-    mix-blend-mode: screen; /* Drops the black background */
-    filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.4)); /* Replaces box-shadow for blended images */
-  }
+  /* --- Core OmniTools Layout --- */
   .home-btn {
     display: inline-flex;
     align-items: center;
@@ -46,36 +22,54 @@
     border: 1px solid #334155;
     border-radius: 8px;
     transition: all 0.2s ease;
-    position: absolute;
+    position: fixed; /* Keeps button pinned to top-left while scrolling */
     top: 0;
     left: 0;
-    z-index: 100;
+    z-index: 1000;
   }
   .home-btn:hover {
     color: #f8fafc;
     border-color: #64748b;
     background-color: #334155;
   }
+
+  /* Restored native scrolling by removing height:100% and overflow constraints */
   body, html {
     margin: 0;
     padding: 0;
-    height: 100%;
-    overflow-x: hidden;
     background-color: #0e1117;
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    display: flex;
-    flex-direction: column;
   }
+  
   .premium-banner {
     background: linear-gradient(to bottom, #312e81, #0e1117);
     padding: 24px 24px 30px 24px;
     text-align: center;
-    flex-shrink: 0;
+    border-bottom: 1px solid #1e293b;
   }
+  
   .banner-content {
     max-width: 750px;
     margin: 0 auto;
   }
+
+  /* --- Integrated Icon & Header --- */
+  .title-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+  
+  .app-icon {
+    width: 65px; 
+    height: 65px;
+    object-fit: cover;
+    mix-blend-mode: screen; 
+    filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.4)); 
+  }
+
   .premium-banner h1 {
     margin: 0 0 6px 0;
     font-size: 1.8rem;
@@ -85,20 +79,19 @@
     -webkit-text-fill-color: transparent;
     letter-spacing: -0.02em;
   }
+  
   .premium-banner p {
     margin: 0;
     font-size: 0.95rem;
     line-height: 1.4;
     color: #94a3b8;
   }
+  
+  /* Removed flex-grow and margin tweaks to allow natural page scroll */
   .tool-wrapper {
     width: 100%;
-    flex-grow: 1;
     background-color: #0e1117;
-    margin-top: -20px;
-    position: relative;
-    z-index: 90;
-    padding: 20px 40px;
+    padding: 20px 40px 60px 40px;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
@@ -169,6 +162,15 @@
     border-radius: 4px;
     margin-bottom: 24px;
     font-size: 15px;
+  }
+
+  .typing-box {
+    background-color: #111827;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);
   }
 
   /* Exact Python CSS Injection translated */
