@@ -7,6 +7,15 @@
   <link rel="icon" type="image/png" href="favicon.png">
 <meta name="description" content="Test your typing speed and accuracy in real-time. Track your WPM and improve your keyboard skills for free.">
 <style>
+.typing-box {
+    background-color: #111827;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);
+  }
+  
   /* --- Original OmniTools Wrapper Styles --- */
   .title-wrapper {
     display: flex;
@@ -248,6 +257,21 @@
         <div class="st-info-box">
           Click anywhere in the box below and start typing!
         </div>
+        <!-- Active Test Screen -->
+    <div id="test-screen" style="display: none;">
+      <div class="st-info-box">
+        Click anywhere in the box below and start typing!
+      </div>
+      
+      <!-- NEW WRAPPER ADDED HERE -->
+      <div class="typing-box">
+        <div id="progress">Loading...</div>
+        <div id="textDisplay" class="sentence"></div>
+        <div id="stats"></div>
+      </div>
+      
+      <button class="st-btn-secondary" id="endBtn">End Test / Change Difficulty</button>
+    </div>
         
         <div id="progress">Loading...</div>
         <div id="textDisplay" class="sentence"></div>
