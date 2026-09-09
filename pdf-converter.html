@@ -71,7 +71,7 @@
 
   .premium-banner h1 {
     margin: 0;
-    font-size: 2.2rem;
+    font-size: clamp(1.5rem, 5vw, 2.2rem);
     font-weight: 800;
     background: linear-gradient(135deg, #fbd38d, #fb923c);
     -webkit-background-clip: text;
@@ -115,6 +115,7 @@
     font-weight: 600;
     font-size: 0.95rem;
     transition: all 0.2s;
+    touch-action: manipulation;
   }
   .tab-btn.active, .tab-btn:hover {
     background: #ea580c; /* PDF orange */
@@ -129,20 +130,28 @@
   .tool-container { 
     background: #111827; border: 1px solid #374151; padding: 1.5rem; 
     border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+    box-sizing: border-box;
   }
   label { display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.4rem; color: #9ca3af; }
   input[type="file"], input[type="text"], select { 
     width: 100%; padding: 0.6rem; background: #1f2937; color: #fff; 
     border: 1px solid #374151; border-radius: 6px; box-sizing: border-box; margin-bottom: 1rem; 
     font-family: inherit;
+    font-size: 16px; /* prevents iOS Safari auto-zoom-on-focus */
   }
   input:focus, select:focus { outline: none; border-color: #fb923c; }
+
+  /* Page Size / Orientation / Margins row -- side by side on desktop and
+     wide screens, stacked on phones so each select has room to breathe. */
+  .options-row { display: flex; gap: 10px; margin-bottom: 0.5rem; }
+  .options-col { flex: 1; min-width: 0; }
   
   button.action-btn { 
     background: linear-gradient(135deg, #ea580c 0%, #fb923c 100%); 
     color: white; border: none; padding: 14px; width: 100%; 
     border-radius: 8px; font-weight: bold; font-size: 1rem; 
     cursor: pointer; transition: transform 0.1s, opacity 0.2s; 
+    touch-action: manipulation;
   }
   button.action-btn:hover { opacity: 0.9; }
   button.action-btn:active { transform: scale(0.98); }
@@ -154,19 +163,65 @@
   }
   .download-btn:hover { background: #059669; }
 
-  /* --- Sortable Lists --- */
-  .sortable-item {
-    background: #1f2937; border: 1px solid #374151; padding: 0.6rem; 
-    margin-top: 0.5rem; border-radius: 6px; color: #fff; cursor: grab; 
-    font-size: 0.9rem; list-style: none; display: flex; align-items: center;
+  .reorder-tip {
+    color: #9ca3af; font-size: 0.8rem; margin-top: -5px; margin-bottom: 10px;
   }
-  .sortable-item:active { cursor: grabbing; background: #374151; }
-  .sortable-item.dragging { opacity: 0.5; }
-  ul.sortable-list { padding: 0; margin: 0 0 1rem 0; }
+
+  /* --- Reorderable Lists ---
+     Reordering is done entirely with the up/down/remove buttons below --
+     the same three buttons work identically whether you're on a mouse or a
+     touchscreen, so there's only one interaction model to maintain instead
+     of a desktop drag-and-drop path plus a separate mobile one. */
+  ul.sortable-list { padding: 0; margin: 0 0 1rem 0; list-style: none; }
+  .sortable-item {
+    background: #1f2937; border: 1px solid #374151; padding: 0.5rem 0.5rem 0.5rem 0.8rem;
+    margin-top: 0.5rem; border-radius: 6px; color: #fff;
+    font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem;
+    box-sizing: border-box;
+  }
+  .item-icon { flex: 0 0 auto; }
+  .item-name {
+    flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .item-actions { flex: 0 0 auto; display: flex; gap: 4px; }
+  .icon-btn {
+    width: 34px; height: 34px; flex: 0 0 auto;
+    background: #374151; color: #fff; border: 1px solid #4b5563;
+    border-radius: 6px; cursor: pointer; font-size: 0.85rem;
+    display: flex; align-items: center; justify-content: center;
+    touch-action: manipulation; padding: 0;
+  }
+  .icon-btn:hover:not(:disabled) { background: #4b5563; border-color: #6b7280; }
+  .icon-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .icon-btn-danger:hover:not(:disabled) { background: #7f1d1d; border-color: #b91c1c; }
 
   @media (max-width: 768px) {
     .home-btn { margin: 12px 16px; padding: 8px 14px; font-size: 0.85rem; }
     .premium-banner { padding-top: 70px; }
+
+    /* Tabs scroll horizontally instead of wrapping into a cramped grid */
+    .tabs-container {
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x proximity;
+      margin: 0 -24px 24px -24px;
+      padding: 0 24px 6px 24px;
+    }
+    .tab-btn {
+      flex: 0 0 auto;
+      scroll-snap-align: start;
+      white-space: nowrap;
+      padding: 12px 18px;
+    }
+
+    /* Three side-by-side selects are too cramped on a phone -- stack them */
+    .options-row { flex-direction: column; gap: 0; margin-bottom: 0; }
+    .options-col { margin-bottom: 0.75rem; }
+
+    .icon-btn { width: 38px; height: 38px; font-size: 0.9rem; }
   }
 </style>
 </head>
@@ -199,14 +254,14 @@
   <div class="tool-container">
       <h3 style="margin-top:0; color:#fff;">Images to Standardized PDF</h3>
       <label>Select images (JPG, PNG, WebP) (Order matters):</label>
-      <p style="color: #9ca3af; font-size: 0.8rem; margin-top: -5px; margin-bottom: 10px;">
-          <em>Tip: Hold <strong>Ctrl</strong> or <strong>Cmd</strong> to select multiple images. Drag items below to reorder them.</em>
+      <p class="reorder-tip">
+          <em>Select multiple images at once from the picker, then use the ▲▼ buttons below to reorder them.</em>
       </p>
       <input type="file" id="imgInput" accept="image/png, image/jpeg, image/jpg, image/webp" multiple>
       <ul id="sortable-image-list" class="sortable-list"></ul>
       
-      <div style="display: flex; gap: 10px; margin-bottom: 0.5rem;">
-          <div style="flex: 1;">
+      <div class="options-row">
+          <div class="options-col">
               <label>Page Size</label>
               <select id="pageSize">
                   <option value="a4">A4 (Standard)</option>
@@ -214,7 +269,7 @@
                   <option value="fit">Fit to Image</option>
               </select>
           </div>
-          <div style="flex: 1;">
+          <div class="options-col">
               <label>Orientation</label>
               <select id="orientation">
                   <option value="auto">Auto Detect</option>
@@ -222,7 +277,7 @@
                   <option value="l">Landscape</option>
               </select>
           </div>
-          <div style="flex: 1;">
+          <div class="options-col">
               <label>Margins</label>
               <select id="margins">
                   <option value="28">Small (10mm)</option>
@@ -243,8 +298,8 @@
   <div class="tool-container">
       <h3 style="margin-top:0; color:#fff;">Merge Multiple PDFs</h3>
       <label>Select 2 or more PDF files (Order matters):</label>
-      <p style="color: #9ca3af; font-size: 0.8rem; margin-top: -5px; margin-bottom: 10px;">
-          <em>Tip: Hold <strong>Ctrl</strong> or <strong>Cmd</strong> to select multiple files. Drag items below to reorder them.</em>
+      <p class="reorder-tip">
+          <em>Select multiple files at once from the picker, then use the ▲▼ buttons below to reorder them.</em>
       </p>
       <input type="file" id="mergeInput" accept=".pdf" multiple>
       <ul id="sortable-file-list" class="sortable-list"></ul>
@@ -277,7 +332,7 @@
       <input type="file" id="textInput" accept=".pdf">
       <button class="action-btn" onclick="extractText()">📝 Read Text from PDF</button>
       <div id="status4" class="status-text"></div>
-      <textarea id="outputArea" style="display:none; width:100%; height:150px; background:#1f2937; color:#fff; border:1px solid #374151; border-radius:6px; margin-top:1rem; padding:0.5rem; font-family:inherit;" readonly></textarea>
+      <textarea id="outputArea" style="display:none; width:100%; height:150px; background:#1f2937; color:#fff; border:1px solid #374151; border-radius:6px; margin-top:1rem; padding:0.5rem; font-family:inherit; box-sizing:border-box;" readonly></textarea>
       <a id="downloadBtn4" class="download-btn">⬇️ Download Text File (.txt)</a>
   </div>
 </div>
@@ -293,43 +348,60 @@ function switchTab(evt, tabId) {
     evt.currentTarget.classList.add('active');
 }
 
+// Escapes a filename before dropping it into innerHTML
+function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
 // --- TAB 1: Images to PDF Logic ---
 let imgSelectedFiles = [];
-let imgDraggedStartIndex;
 const imgUploader = document.getElementById('imgInput');
 const imgListContainer = document.getElementById('sortable-image-list');
 
 imgUploader.addEventListener('change', function(event) {
-    imgSelectedFiles = Array.from(event.target.files);
+    imgSelectedFiles = imgSelectedFiles.concat(Array.from(event.target.files));
+    imgUploader.value = ''; // allow re-adding the same file later if removed
     renderImgList();
 });
 
 function renderImgList() {
-    imgListContainer.innerHTML = ''; 
+    imgListContainer.innerHTML = '';
     imgSelectedFiles.forEach((file, index) => {
         const li = document.createElement('li');
         li.className = 'sortable-item';
-        li.draggable = true;
-        li.setAttribute('data-index', index);
-        li.innerHTML = `🖼️ ${file.name}`;
-
-        li.addEventListener('dragstart', function(e) {
-            imgDraggedStartIndex = +this.getAttribute('data-index');
-            this.classList.add('dragging');
-        });
-        li.addEventListener('dragover', e => e.preventDefault());
-        li.addEventListener('drop', function(e) {
-            const dropIndex = +this.getAttribute('data-index');
-            const draggedFile = imgSelectedFiles.splice(imgDraggedStartIndex, 1)[0];
-            imgSelectedFiles.splice(dropIndex, 0, draggedFile);
-            renderImgList();
-        });
-        li.addEventListener('dragend', function() {
-            this.classList.remove('dragging');
-        });
+        li.dataset.index = index;
+        const isFirst = index === 0;
+        const isLast = index === imgSelectedFiles.length - 1;
+        li.innerHTML = `
+            <span class="item-icon">🖼️</span>
+            <span class="item-name">${escapeHtml(file.name)}</span>
+            <span class="item-actions">
+                <button type="button" class="icon-btn" data-action="up" aria-label="Move up" ${isFirst ? 'disabled' : ''}>▲</button>
+                <button type="button" class="icon-btn" data-action="down" aria-label="Move down" ${isLast ? 'disabled' : ''}>▼</button>
+                <button type="button" class="icon-btn icon-btn-danger" data-action="remove" aria-label="Remove">✕</button>
+            </span>`;
         imgListContainer.appendChild(li);
     });
 }
+
+// One click handler for all three actions, on both mouse and touch --
+// no separate mobile code path needed.
+imgListContainer.addEventListener('click', (e) => {
+    const btn = e.target.closest('.icon-btn');
+    if (!btn || btn.disabled) return;
+    const index = +btn.closest('.sortable-item').dataset.index;
+    const action = btn.dataset.action;
+    if (action === 'up' && index > 0) {
+        [imgSelectedFiles[index - 1], imgSelectedFiles[index]] = [imgSelectedFiles[index], imgSelectedFiles[index - 1]];
+    } else if (action === 'down' && index < imgSelectedFiles.length - 1) {
+        [imgSelectedFiles[index + 1], imgSelectedFiles[index]] = [imgSelectedFiles[index], imgSelectedFiles[index + 1]];
+    } else if (action === 'remove') {
+        imgSelectedFiles.splice(index, 1);
+    }
+    renderImgList();
+});
 
 const loadImage = (file) => new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -423,41 +495,49 @@ async function convertImages() {
 
 // --- TAB 2: Merge PDFs Logic ---
 let mergeSelectedFiles = [];
-let mergeDraggedStartIndex;
 const mergeUploader = document.getElementById('mergeInput');
 const mergeListContainer = document.getElementById('sortable-file-list');
 
 mergeUploader.addEventListener('change', function(event) {
-    mergeSelectedFiles = Array.from(event.target.files);
+    mergeSelectedFiles = mergeSelectedFiles.concat(Array.from(event.target.files));
+    mergeUploader.value = ''; // allow re-adding the same file later if removed
     renderMergeList();
 });
 
 function renderMergeList() {
-    mergeListContainer.innerHTML = ''; 
+    mergeListContainer.innerHTML = '';
     mergeSelectedFiles.forEach((file, index) => {
         const li = document.createElement('li');
         li.className = 'sortable-item';
-        li.draggable = true;
-        li.setAttribute('data-index', index);
-        li.innerHTML = `📄 ${file.name}`;
-
-        li.addEventListener('dragstart', function(e) {
-            mergeDraggedStartIndex = +this.getAttribute('data-index');
-            this.classList.add('dragging');
-        });
-        li.addEventListener('dragover', e => e.preventDefault());
-        li.addEventListener('drop', function(e) {
-            const dropIndex = +this.getAttribute('data-index');
-            const draggedFile = mergeSelectedFiles.splice(mergeDraggedStartIndex, 1)[0];
-            mergeSelectedFiles.splice(dropIndex, 0, draggedFile);
-            renderMergeList();
-        });
-        li.addEventListener('dragend', function() {
-            this.classList.remove('dragging');
-        });
+        li.dataset.index = index;
+        const isFirst = index === 0;
+        const isLast = index === mergeSelectedFiles.length - 1;
+        li.innerHTML = `
+            <span class="item-icon">📄</span>
+            <span class="item-name">${escapeHtml(file.name)}</span>
+            <span class="item-actions">
+                <button type="button" class="icon-btn" data-action="up" aria-label="Move up" ${isFirst ? 'disabled' : ''}>▲</button>
+                <button type="button" class="icon-btn" data-action="down" aria-label="Move down" ${isLast ? 'disabled' : ''}>▼</button>
+                <button type="button" class="icon-btn icon-btn-danger" data-action="remove" aria-label="Remove">✕</button>
+            </span>`;
         mergeListContainer.appendChild(li);
     });
 }
+
+mergeListContainer.addEventListener('click', (e) => {
+    const btn = e.target.closest('.icon-btn');
+    if (!btn || btn.disabled) return;
+    const index = +btn.closest('.sortable-item').dataset.index;
+    const action = btn.dataset.action;
+    if (action === 'up' && index > 0) {
+        [mergeSelectedFiles[index - 1], mergeSelectedFiles[index]] = [mergeSelectedFiles[index], mergeSelectedFiles[index - 1]];
+    } else if (action === 'down' && index < mergeSelectedFiles.length - 1) {
+        [mergeSelectedFiles[index + 1], mergeSelectedFiles[index]] = [mergeSelectedFiles[index], mergeSelectedFiles[index + 1]];
+    } else if (action === 'remove') {
+        mergeSelectedFiles.splice(index, 1);
+    }
+    renderMergeList();
+});
 
 async function mergePdfs() {
     const status = document.getElementById('status2');
