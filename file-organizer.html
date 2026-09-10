@@ -18,13 +18,19 @@
 
   /* --- Minimalist Global Nav --- */
   .global-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 40px;
-    background-color: #000000;
-    border-bottom: 1px solid #222222;
-  }
+  position: sticky;
+  top: 0; 
+  left: 0; 
+  width: 100%;
+  padding: 20px 40px;
+  background-color: #000000;
+  border-bottom: 1px solid #222222;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  z-index: 2000;
+}
   
   .nav-brand {
     font-size: 1.1rem;
