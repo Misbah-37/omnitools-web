@@ -3,145 +3,142 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free Custom QR Code Generator | OmniTools</title>
-  <link rel="icon" type="image/png" href="favicon.png">
+<title>QR Generator | OmniTools</title>
 <meta name="description" content="Create, customize, and securely download high-quality QR codes from any URL or text. 100% free and fast.">
 
 <!-- QRious Library for Client-Side QR Generation -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 
 <style>
-  /* --- Global Navigation Bar --- */
+  /* --- Adobe-Style Clean Resets --- */
+  body, html {
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* --- Minimalist Global Nav --- */
   .global-nav {
-    position: fixed;
-    top: 0; left: 0; width: 100%;
-    height: 65px;
-    background-color: rgba(14, 17, 23, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid #1e293b;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 32px;
-    box-sizing: border-box;
-    z-index: 2000;
+    padding: 20px 40px;
+    background-color: #000000;
+    border-bottom: 1px solid #222222;
   }
-  .nav-brand {
-    color: #f8fafc;
-    font-weight: 800;
-    text-decoration: none;
-    font-size: 1.25rem;
-    letter-spacing: -0.5px;
-  }
-  .nav-brand span { color: #6366f1; }
   
+  .nav-brand {
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #ffffff;
+    text-decoration: none;
+  }
+
   .nav-links {
     display: flex;
-    gap: 24px;
+    gap: 32px;
   }
+  
   .nav-links a {
-    color: #94a3b8;
+    color: #999999;
     text-decoration: none;
     font-size: 0.9rem;
-    font-weight: 600;
+    font-weight: 500;
     transition: color 0.2s;
   }
-  .nav-links a:hover, .nav-links a.active { color: #f8fafc; }
   
-  /* Restored native scrolling by removing height:100% and overflow constraints */
-  body, html {
-    margin: 0; 
-    padding: 0; 
-    background-color: #0e1117;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  .nav-links a:hover, .nav-links a.active {
+    color: #ffffff;
   }
-  
-  .premium-banner {
-    background: linear-gradient(to bottom, #022c22, #0e1117);
-    padding: 90px 24px 30px 24px; /* Accommodates the fixed navbar */
+
+  /* --- The Clean Hero --- */
+  .clean-header {
+    max-width: 800px;
+    margin: 100px auto 60px auto;
+    padding: 0 24px;
     text-align: center;
-    border-bottom: 1px solid #1e293b;
   }
-  
-  .banner-content { max-width: 750px; margin: 0 auto; }
 
-  /* --- Integrated Icon & Header --- */
-  .title-wrapper {
+  .icon-wrapper {
+    margin-bottom: 24px;
+    color: #ffffff;
     display: flex;
-    align-items: center;
     justify-content: center;
-    gap: 16px;
-    margin-bottom: 12px;
-  }
-  
-  .app-icon {
-    width: 65px; 
-    height: 65px;
-    object-fit: cover;
-    mix-blend-mode: screen; 
-    filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.4)); 
   }
 
-  .premium-banner h1 {
-    margin: 0;
-    font-size: 2.2rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, #34d399, #10b981);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: -0.02em;
+  .clean-header h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    margin: 0 0 20px 0;
+    line-height: 1.1;
   }
-  
-  .premium-banner p { margin: 0; font-size: 0.95rem; line-height: 1.4; color: #94a3b8; }
-  
-  /* Switched to flex column to stack tool and SEO content cleanly */
-  .tool-wrapper {
-    width: 100%; 
-    background-color: #0e1117;
-    padding: 40px 24px 60px 24px;
-    box-sizing: border-box;
+
+  .clean-header p {
+    font-size: 1.25rem;
+    color: #999999;
+    margin: 0 auto 0 auto;
+    line-height: 1.5;
+    max-width: 650px;
+  }
+
+  /* --- Tool Container & Structural Layout --- */
+  .app-container {
+    max-width: 850px;
+    margin: 0 auto 100px auto;
+    padding: 0 24px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    gap: 24px;
   }
 
-  /* --- Native App UI Container --- */
-  .tool-container { 
-    background: #111827; 
-    border: 1px solid #374151; 
-    padding: 32px; 
-    border-radius: 12px; 
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5); 
-    width: 100%; 
-    max-width: 800px;
+  .tool-panel {
+    background-color: #121212; 
+    border: 1px solid #222222;
+    border-radius: 12px;
+    padding: 40px;
+    box-sizing: border-box;
+  }
+
+  .split-layout {
     display: grid;
     grid-template-columns: 1.2fr 1fr;
     gap: 40px;
   }
 
-  /* Input Column */
+  /* Input Controls */
   label { 
-    display: block; font-size: 0.9rem; font-weight: 600; 
-    margin-bottom: 0.5rem; color: #9ca3af; 
+    display: block; 
+    font-size: 0.95rem; 
+    font-weight: 500; 
+    margin-bottom: 8px; 
+    color: #cccccc; 
   }
   
   textarea {
     width: 100%;
-    padding: 12px;
-    background: #1f2937;
-    color: #fff;
-    border: 1px solid #374151;
+    padding: 16px;
+    background-color: #000000;
+    color: #ffffff;
+    border: 1px solid #333333;
     border-radius: 8px;
     box-sizing: border-box;
     font-family: inherit;
     font-size: 1rem;
     resize: vertical;
-    min-height: 100px;
-    margin-bottom: 20px;
+    min-height: 140px;
+    margin-bottom: 24px;
     transition: border-color 0.2s;
   }
-  textarea:focus { outline: none; border-color: #10b981; }
+  
+  textarea:focus { 
+    outline: none; 
+    border-color: #1473E6; 
+  }
 
   .color-controls {
     display: flex;
@@ -156,32 +153,33 @@
   
   input[type="color"] {
     width: 100%;
-    height: 45px;
-    padding: 2px;
-    background: #1f2937;
-    border: 1px solid #374151;
+    height: 48px;
+    padding: 4px;
+    background-color: #000000;
+    border: 1px solid #333333;
     border-radius: 8px;
     cursor: pointer;
     box-sizing: border-box;
   }
+  
   input[type="color"]::-webkit-color-swatch-wrapper { padding: 2px; }
   input[type="color"]::-webkit-color-swatch { border-radius: 4px; border: none; }
 
-  /* Output Column */
-  .output-col {
+  /* Output Section */
+  .output-section {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: #0f172a;
-    border: 1px dashed #334155;
+    background-color: #000000;
+    border: 1px dashed #333333;
     border-radius: 8px;
-    padding: 24px;
+    padding: 32px 24px;
     min-height: 250px;
   }
 
   .placeholder-info {
-    color: #64748b;
+    color: #666666;
     font-size: 0.95rem;
     text-align: center;
     line-height: 1.5;
@@ -190,87 +188,94 @@
 
   canvas {
     border-radius: 4px;
-    background: white;
-    padding: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    background: #ffffff;
+    padding: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
     display: none;
     max-width: 100%;
     height: auto;
   }
 
-  .action-btn { 
-    background: linear-gradient(135deg, #34d399 0%, #10b981 100%); 
-    color: #064e3b; 
+  /* The Signature Solid Accent Button */
+  .btn-accent { 
+    display: none;
+    background-color: #1473E6; 
+    color: #ffffff; 
     border: none; 
-    padding: 14px; 
+    padding: 16px 36px; 
     width: 100%; 
-    border-radius: 8px; 
-    font-weight: 800; 
-    font-size: 1rem; 
+    border-radius: 30px; 
+    font-weight: 600; 
+    font-size: 1.05rem;
     cursor: pointer; 
     margin-top: 24px; 
-    transition: transform 0.1s, opacity 0.2s; 
-    display: none;
+    transition: background-color 0.2s ease;
+    text-align: center;
+    text-decoration: none;
+    box-sizing: border-box;
   }
-  .action-btn:hover { opacity: 0.9; }
-  .action-btn:active { transform: scale(0.98); }
+  
+  .btn-accent:hover { 
+    background-color: #0d66d0; 
+  }
 
   /* --- SEO & Educational Content Section --- */
   .seo-article {
     width: 100%;
     max-width: 800px;
     margin: 60px auto 20px auto;
-    color: #94a3b8;
+    color: #999999;
     line-height: 1.7;
     font-size: 1rem;
-    border-top: 1px solid #1e293b;
+    border-top: 1px solid #222222;
     padding-top: 40px;
   }
+  
   .seo-article h2, .seo-article h3 {
-    color: #f8fafc;
-    margin-top: 1.5rem;
+    color: #ffffff;
+    margin-top: 2rem;
     margin-bottom: 1rem;
   }
+  
   .seo-article h2 { font-size: 1.5rem; }
   .seo-article h3 { font-size: 1.2rem; }
   .seo-article ul { padding-left: 20px; }
   .seo-article li { margin-bottom: 10px; }
   
   .faq-box { margin-bottom: 16px; }
-  .faq-box details {
-    background-color: #111827;
-    border: 1px solid #334155;
+  details {
+    background-color: #121212;
+    border: 1px solid #222222;
     border-radius: 8px;
-    padding: 16px 20px;
+    padding: 20px;
     cursor: pointer;
-  }
-  .faq-box summary {
+    color: #ffffff;
     font-weight: 600;
-    color: #f8fafc;
-    outline: none;
-    list-style: none;
   }
-  .faq-box summary::-webkit-details-marker { display: none; }
+  details summary { outline: none; list-style: none; }
+  details summary::-webkit-details-marker { display: none; }
   .faq-box p {
-    margin: 12px 0 0 0;
+    margin: 16px 0 0 0;
     font-size: 0.95rem;
-    color: #cbd5e1;
+    color: #999999;
+    line-height: 1.6;
+    font-weight: 400;
   }
 
   @media (max-width: 768px) {
     .nav-links { display: none; }
-    .global-nav { padding: 0 20px; }
-    .premium-banner { padding-top: 90px; }
-    .tool-container { grid-template-columns: 1fr; gap: 24px; }
-    .color-controls { flex-direction: column; gap: 12px; }
+    .global-nav { padding: 20px; }
+    .clean-header h1 { font-size: 2.5rem; }
+    .split-layout { grid-template-columns: 1fr; gap: 32px; }
+    .tool-panel { padding: 24px; }
+    .color-controls { flex-direction: column; gap: 16px; }
   }
 </style>
 </head>
 <body>
 
-<!-- Global Navigation -->
 <nav class="global-nav">
-  <a href="index.html" class="nav-brand">Omni<span>Tools</span></a>
+  <a href="index.html" class="nav-brand">OmniTools</a>
   <div class="nav-links">
     <a href="pdf-converter.html">PDF Suite</a>
     <a href="file-organizer.html">File Organizer</a>
@@ -280,58 +285,63 @@
   </div>
 </nav>
 
-<div class="premium-banner">
-  <div class="banner-content">
-    <div class="title-wrapper">
-      <img src="qr_icon.png" alt="QR Code Generator" class="app-icon" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdib3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzEwYjk4MSIvPjwvc3ZnPg=='">
-      <h1>Custom QR Code Generator</h1>
-    </div>
-    <p>Create, customize, and securely download high-quality QR codes from any URL or text. Select your custom foreground and background colors, and export high-resolution PNGs instantly.</p>
+<div class="clean-header">
+  <div class="icon-wrapper">
+    <!-- Inline Lucide SVG matching the baseline -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+      <rect x="7" y="7" width="3" height="3"></rect>
+      <rect x="14" y="7" width="3" height="3"></rect>
+      <rect x="7" y="14" width="3" height="3"></rect>
+      <rect x="14" y="14" width="3" height="3"></rect>
+    </svg>
   </div>
+  <h1>QR Generator.</h1>
+  <p>Create, customize, and securely download high-quality QR codes from any URL or text. 100% offline generation right in your browser.</p>
 </div>
 
-<div class="tool-wrapper">
+<div class="app-container">
   
-  <div class="tool-container">
-    
-    <!-- Input Section -->
-    <div>
-        <label for="qrInput">URL or Text to encode:</label>
-        <textarea id="qrInput" placeholder="https://example.com"></textarea>
-        
-        <div class="color-controls">
-            <div class="color-group">
-                <label for="fgColor">QR Color</label>
-                <input type="color" id="fgColor" value="#000000">
-            </div>
-            <div class="color-group">
-                <label for="bgColor">Background</label>
-                <input type="color" id="bgColor" value="#FFFFFF">
-            </div>
-        </div>
-    </div>
+  <div class="tool-panel">
+    <div class="split-layout">
+      <!-- Input Section -->
+      <div class="input-section">
+          <label for="qrInput">URL or Text to encode:</label>
+          <textarea id="qrInput" placeholder="https://example.com"></textarea>
+          
+          <div class="color-controls">
+              <div class="color-group">
+                  <label for="fgColor">QR Color</label>
+                  <input type="color" id="fgColor" value="#000000">
+              </div>
+              <div class="color-group">
+                  <label for="bgColor">Background</label>
+                  <input type="color" id="bgColor" value="#FFFFFF">
+              </div>
+          </div>
+      </div>
 
-    <!-- Output Section -->
-    <div class="output-col">
-        <div id="placeholder" class="placeholder-info">
-            Enter a URL or text on the left to generate your QR code.
-        </div>
-        <canvas id="qrCanvas"></canvas>
-        <button id="downloadBtn" class="action-btn">⬇️ Download (PNG)</button>
+      <!-- Output Section -->
+      <div class="output-section">
+          <div id="placeholder" class="placeholder-info">
+              Enter a URL or text on the left to generate your QR code.
+          </div>
+          <canvas id="qrCanvas"></canvas>
+          <button id="downloadBtn" class="btn-accent">Download (PNG)</button>
+      </div>
     </div>
-
   </div>
 
   <!-- SEO & Educational Content -->
   <article class="seo-article">
     <h2>How to Create Effective Custom QR Codes</h2>
-    <p>QR codes (Quick Response codes) have become an essential tool for seamlessly connecting the physical world to digital experiences. Our free Custom QR Code Generator allows you to instantly create dynamic, high-resolution codes right in your browser without any tracking or sign-ups.</p>
+    <p>QR codes (Quick Response codes) have become an essential tool for seamlessly connecting the physical world to digital experiences[cite: 3]. Our free Custom QR Code Generator allows you to instantly create dynamic, high-resolution codes right in your browser without any tracking or sign-ups[cite: 3].</p>
     
     <h3>Tips for Better QR Code Scanning</h3>
     <ul>
-      <li><strong>High Contrast is Key:</strong> Always ensure there is a strong contrast between your QR Color and Background. The classic black on white is universally readable. Avoid using two light colors (like yellow on white) as smartphone cameras will struggle to detect the pattern.</li>
-      <li><strong>Keep it Simple:</strong> The more text or data you pack into a QR code, the denser and more complex the pixel pattern becomes. For best results, use short URLs (or URL shorteners) to keep the pattern clean and easy to scan from a distance.</li>
-      <li><strong>Test Before Printing:</strong> Always scan your downloaded PNG file with your own smartphone camera before printing it on physical materials like business cards or flyers.</li>
+      <li><strong>High Contrast is Key:</strong> Always ensure there is a strong contrast between your QR Color and Background[cite: 3]. The classic black on white is universally readable[cite: 3]. Avoid using two light colors (like yellow on white) as smartphone cameras will struggle to detect the pattern[cite: 3].</li>
+      <li><strong>Keep it Simple:</strong> The more text or data you pack into a QR code, the denser and more complex the pixel pattern becomes[cite: 3]. For best results, use short URLs (or URL shorteners) to keep the pattern clean and easy to scan from a distance[cite: 3].</li>
+      <li><strong>Test Before Printing:</strong> Always scan your downloaded PNG file with your own smartphone camera before printing it on physical materials like business cards or flyers[cite: 3].</li>
     </ul>
 
     <h2>Frequently Asked Questions</h2>
@@ -339,14 +349,14 @@
     <div class="faq-box">
       <details>
         <summary>Do these QR codes expire?</summary>
-        <p>No, they never expire. The QR codes generated here are "static," meaning the text or URL you enter is permanently mathematically encoded into the image itself. As long as the destination URL remains active, the QR code will work forever.</p>
+        <p>No, they never expire[cite: 3]. The QR codes generated here are "static," meaning the text or URL you enter is permanently mathematically encoded into the image itself[cite: 3]. As long as the destination URL remains active, the QR code will work forever[cite: 3].</p>
       </details>
     </div>
 
     <div class="faq-box">
       <details>
         <summary>Is my data stored or tracked?</summary>
-        <p>No. This tool utilizes a client-side JavaScript library to generate the image directly on your device. We do not track what URLs you enter, and we do not insert intermediary tracking redirects into your codes.</p>
+        <p>No. This tool utilizes a client-side JavaScript library to generate the image directly on your device[cite: 3]. We do not track what URLs you enter, and we do not insert intermediary tracking redirects into your codes[cite: 3].</p>
       </details>
     </div>
   </article>
