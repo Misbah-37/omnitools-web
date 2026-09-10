@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free PDF Converter Suite | OmniTools</title>
-  <link rel="icon" type="image/png" href="favicon.png">
+<title>PDF Suite | Pro Utilities</title>
 <meta name="description" content="Merge, split, extract pages, compress, and convert documents to and from PDF seamlessly. Secure in-browser processing.">
 
 <!-- Required PDF Libraries -->
@@ -13,270 +12,343 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 
 <style>
-  /* --- Global Navigation Bar --- */
+  /* --- Adobe-Style Clean Resets --- */
+  body, html {
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* --- Minimalist Global Nav --- */
   .global-nav {
-    position: fixed;
-    top: 0; left: 0; width: 100%;
-    height: 65px;
-    background-color: rgba(14, 17, 23, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid #1e293b;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 32px;
-    box-sizing: border-box;
-    z-index: 2000;
+    padding: 20px 40px;
+    background-color: #000000;
+    border-bottom: 1px solid #222222;
   }
-  .nav-brand {
-    color: #f8fafc;
-    font-weight: 800;
-    text-decoration: none;
-    font-size: 1.25rem;
-    letter-spacing: -0.5px;
-  }
-  .nav-brand span { color: #6366f1; }
   
+  .nav-brand {
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #ffffff;
+    text-decoration: none;
+  }
+
   .nav-links {
     display: flex;
-    gap: 24px;
+    gap: 32px;
   }
+  
   .nav-links a {
-    color: #94a3b8;
+    color: #999999;
     text-decoration: none;
     font-size: 0.9rem;
-    font-weight: 600;
+    font-weight: 500;
     transition: color 0.2s;
   }
-  .nav-links a:hover, .nav-links a.active { color: #f8fafc; }
   
-  /* Restored native scrolling by removing height:100% and overflow constraints */
-  body, html {
-    margin: 0; 
-    padding: 0; 
-    background-color: #0e1117;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  .nav-links a:hover, .nav-links a.active {
+    color: #ffffff;
   }
-  
-  .premium-banner {
-    background: linear-gradient(to bottom, #431407, #0e1117);
-    padding: 90px 24px 30px 24px; /* Accommodates the fixed navbar */
+
+  /* --- The Clean Hero --- */
+  .clean-header {
+    max-width: 800px;
+    margin: 100px auto 40px auto;
+    padding: 0 24px;
     text-align: center;
-    border-bottom: 1px solid #1e293b;
-  }
-  
-  .banner-content { max-width: 750px; margin: 0 auto; }
-
-  /* --- Integrated Icon & Header --- */
-  .title-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    margin-bottom: 12px;
-  }
-  
-  .app-icon {
-    width: 65px; 
-    height: 65px;
-    object-fit: cover;
-    mix-blend-mode: screen;
-    filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.4));
   }
 
-  .premium-banner h1 {
-    margin: 0;
-    font-size: clamp(1.5rem, 5vw, 2.2rem);
-    font-weight: 800;
-    background: linear-gradient(135deg, #fbd38d, #fb923c);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: -0.02em;
-  }
-  
-  .security-badge {
-    color: #34d399;
-    font-size: 0.85rem;
-    font-weight: bold;
-    margin-bottom: 8px;
-    letter-spacing: 0.05em;
-  }
-  
-  .premium-banner p { margin: 0; font-size: 0.95rem; line-height: 1.4; color: #94a3b8; }
-  
-  /* Flex column for proper SEO text flow beneath the tool */
-  .tool-wrapper {
-    width: 100%; 
-    background-color: #0e1117;
-    padding: 24px 24px 60px 24px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .clean-header h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    margin: 0 0 20px 0;
+    line-height: 1.1;
   }
 
-  /* --- Tab Navigation --- */
+  .clean-header p {
+    font-size: 1.25rem;
+    color: #999999;
+    margin: 0 auto;
+    line-height: 1.5;
+    max-width: 650px;
+  }
+
+  /* --- Minimalist Tab Navigation --- */
   .tabs-container {
     display: flex;
     justify-content: center;
-    gap: 10px;
-    margin-bottom: 30px;
+    gap: 12px;
+    margin-bottom: 40px;
     flex-wrap: wrap;
-    width: 100%;
     max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 24px;
   }
+  
   .tab-btn {
-    background: #1e293b;
-    color: #94a3b8;
-    border: 1px solid #334155;
-    padding: 10px 20px;
-    border-radius: 8px;
+    background: transparent;
+    color: #999999;
+    border: 1px solid #333333;
+    padding: 10px 24px;
+    border-radius: 24px;
     cursor: pointer;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 0.95rem;
     transition: all 0.2s;
-    touch-action: manipulation;
   }
-  .tab-btn.active, .tab-btn:hover {
-    background: #ea580c; 
-    color: #fff;
-    border-color: #fb923c;
+  
+  .tab-btn:hover {
+    border-color: #666666;
+    color: #ffffff;
+  }
+  
+  .tab-btn.active {
+    background: #ffffff;
+    color: #000000;
+    border-color: #ffffff;
+    font-weight: 600;
   }
 
-  /* --- Shared Tool Styles --- */
-  .tab-content { display: none; width: 100%; max-width: 600px; margin: 0 auto; }
-  .tab-content.active { display: block; }
-  
-  .tool-container { 
-    background: #111827; border: 1px solid #374151; padding: 1.5rem; 
-    border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+  /* --- Clean Tool Container --- */
+  .tool-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 60px;
+  }
+
+  .tab-content { 
+    display: none; 
+    width: 100%; 
+    max-width: 700px; 
+    margin: 0 auto; 
+    padding: 0 24px;
     box-sizing: border-box;
   }
-  label { display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.4rem; color: #9ca3af; }
-  input[type="file"], input[type="text"], select { 
-    width: 100%; padding: 0.6rem; background: #1f2937; color: #fff; 
-    border: 1px solid #374151; border-radius: 6px; box-sizing: border-box; margin-bottom: 1rem; 
-    font-family: inherit;
-    font-size: 16px; 
-  }
-  input:focus, select:focus { outline: none; border-color: #fb923c; }
-
-  .options-row { display: flex; gap: 10px; margin-bottom: 0.5rem; }
-  .options-col { flex: 1; min-width: 0; }
   
-  button.action-btn { 
-    background: linear-gradient(135deg, #ea580c 0%, #fb923c 100%); 
-    color: white; border: none; padding: 14px; width: 100%; 
-    border-radius: 8px; font-weight: bold; font-size: 1rem; 
-    cursor: pointer; transition: transform 0.1s, opacity 0.2s; 
-    touch-action: manipulation;
+  .tab-content.active { 
+    display: block; 
   }
-  button.action-btn:hover { opacity: 0.9; }
-  button.action-btn:active { transform: scale(0.98); }
-  
-  .status-text { text-align: center; margin-top: 1rem; font-size: 0.95rem; font-weight: 600; color: #9ca3af; }
-  .download-btn { 
-    display: none; background: #10b981; text-align: center; text-decoration: none; 
-    padding: 14px; border-radius: 8px; color: white; font-weight: bold; margin-top: 1rem; 
-  }
-  .download-btn:hover { background: #059669; }
 
+  .tool-container {
+    background-color: #121212;
+    border: 1px solid #222222;
+    border-radius: 16px;
+    padding: 40px;
+    box-sizing: border-box;
+  }
+
+  .tool-container h3 {
+    margin-top: 0;
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+  }
+
+  label { 
+    display: block; 
+    font-size: 0.9rem; 
+    font-weight: 500; 
+    margin-bottom: 8px; 
+    color: #999999; 
+  }
+  
   .reorder-tip {
-    color: #9ca3af; font-size: 0.8rem; margin-top: -5px; margin-bottom: 10px;
+    color: #666666; 
+    font-size: 0.85rem; 
+    margin-top: -4px; 
+    margin-bottom: 16px;
   }
 
-  /* --- Reorderable Lists --- */
-  ul.sortable-list { padding: 0; margin: 0 0 1rem 0; list-style: none; }
+  input[type="file"], input[type="text"], select { 
+    width: 100%; 
+    padding: 12px 16px; 
+    background-color: #000000; 
+    color: #ffffff; 
+    border: 1px solid #333333; 
+    border-radius: 8px; 
+    box-sizing: border-box; 
+    margin-bottom: 20px; 
+    font-family: inherit;
+    font-size: 1rem; 
+  }
+  
+  input:focus, select:focus { 
+    outline: none; 
+    border-color: #1473E6; 
+  }
+
+  .options-row { 
+    display: flex; 
+    gap: 16px; 
+    margin-bottom: 8px; 
+  }
+  .options-col { flex: 1; min-width: 0; }
+
+  /* --- Signature Buttons --- */
+  .btn-accent {
+    background-color: #1473E6;
+    color: #ffffff;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .btn-accent:hover { background-color: #0d66d0; }
+
+  .download-btn { 
+    display: none; 
+    background-color: #ffffff; 
+    color: #000000;
+    text-align: center; 
+    text-decoration: none; 
+    padding: 16px 32px; 
+    border-radius: 24px; 
+    font-weight: 600; 
+    margin-top: 16px; 
+    transition: background-color 0.2s;
+  }
+  
+  .download-btn:hover { background-color: #e5e5e5; }
+  
+  .status-text { 
+    text-align: center; 
+    margin-top: 16px; 
+    font-size: 0.95rem; 
+    font-weight: 500; 
+    color: #999999; 
+  }
+
+  /* --- Clean Sortable Lists --- */
+  ul.sortable-list { 
+    padding: 0; 
+    margin: 0 0 24px 0; 
+    list-style: none; 
+  }
+  
   .sortable-item {
-    background: #1f2937; border: 1px solid #374151; padding: 0.5rem 0.5rem 0.5rem 0.8rem;
-    margin-top: 0.5rem; border-radius: 6px; color: #fff;
-    font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem;
+    background: #000000; 
+    border: 1px solid #333333; 
+    padding: 12px 16px;
+    margin-top: 8px; 
+    border-radius: 8px; 
+    color: #cccccc;
+    font-size: 0.95rem; 
+    display: flex; 
+    align-items: center; 
+    gap: 12px;
     box-sizing: border-box;
   }
-  .item-icon { flex: 0 0 auto; }
+  
   .item-name {
-    flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis;
+    flex: 1 1 auto; 
+    min-width: 0; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
     white-space: nowrap;
   }
-  .item-actions { flex: 0 0 auto; display: flex; gap: 4px; }
-  .icon-btn {
-    width: 34px; height: 34px; flex: 0 0 auto;
-    background: #374151; color: #fff; border: 1px solid #4b5563;
-    border-radius: 6px; cursor: pointer; font-size: 0.85rem;
-    display: flex; align-items: center; justify-content: center;
-    touch-action: manipulation; padding: 0;
+  
+  .item-actions { 
+    flex: 0 0 auto; 
+    display: flex; 
+    gap: 6px; 
   }
-  .icon-btn:hover:not(:disabled) { background: #4b5563; border-color: #6b7280; }
+  
+  .icon-btn {
+    width: 32px; 
+    height: 32px; 
+    flex: 0 0 auto;
+    background: #121212; 
+    color: #999999; 
+    border: 1px solid #333333;
+    border-radius: 6px; 
+    cursor: pointer; 
+    font-size: 0.85rem;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+  }
+  
+  .icon-btn:hover:not(:disabled) { 
+    background: #222222; 
+    color: #ffffff; 
+  }
+  
   .icon-btn:disabled { opacity: 0.3; cursor: not-allowed; }
-  .icon-btn-danger:hover:not(:disabled) { background: #7f1d1d; border-color: #b91c1c; }
 
   /* --- SEO & Educational Content Section --- */
   .seo-article {
     width: 100%;
-    max-width: 900px;
-    margin: 60px auto 20px auto;
-    color: #94a3b8;
+    max-width: 800px;
+    margin: 80px auto 40px auto;
+    color: #999999;
     line-height: 1.7;
     font-size: 1rem;
-    border-top: 1px solid #1e293b;
-    padding-top: 40px;
+    border-top: 1px solid #222222;
+    padding: 60px 24px 0 24px;
+    box-sizing: border-box;
   }
+  
   .seo-article h2, .seo-article h3 {
-    color: #f8fafc;
+    color: #ffffff;
     margin-top: 1.5rem;
     margin-bottom: 1rem;
   }
+  
   .seo-article h2 { font-size: 1.5rem; }
-  .seo-article h3 { font-size: 1.2rem; }
+  .seo-article h3 { font-size: 1.1rem; }
   .seo-article ul { padding-left: 20px; }
   .seo-article li { margin-bottom: 10px; }
   
   .faq-box { margin-bottom: 16px; }
   .faq-box details {
-    background-color: #111827;
-    border: 1px solid #334155;
+    background-color: #121212;
+    border: 1px solid #222222;
     border-radius: 8px;
-    padding: 16px 20px;
+    padding: 20px;
     cursor: pointer;
   }
+  
   .faq-box summary {
-    font-weight: 600;
-    color: #f8fafc;
+    font-weight: 500;
+    color: #ffffff;
     outline: none;
     list-style: none;
   }
+  
   .faq-box summary::-webkit-details-marker { display: none; }
+  
   .faq-box p {
     margin: 12px 0 0 0;
     font-size: 0.95rem;
-    color: #cbd5e1;
+    color: #999999;
   }
 
   @media (max-width: 768px) {
     .nav-links { display: none; }
-    .global-nav { padding: 0 20px; }
-    .premium-banner { padding-top: 90px; }
-
-    .tabs-container {
-      flex-wrap: nowrap;
-      justify-content: flex-start;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scroll-snap-type: x proximity;
-      margin: 0 -24px 24px -24px;
-      padding: 0 24px 6px 24px;
-    }
-    .tab-btn {
-      flex: 0 0 auto;
-      scroll-snap-align: start;
-      white-space: nowrap;
-      padding: 12px 18px;
-    }
-
-    .options-row { flex-direction: column; gap: 0; margin-bottom: 0; }
-    .options-col { margin-bottom: 0.75rem; }
-    .icon-btn { width: 38px; height: 38px; font-size: 0.9rem; }
+    .global-nav { padding: 20px; }
+    .clean-header { margin-top: 60px; }
+    .clean-header h1 { font-size: 2.5rem; }
+    .tool-container { padding: 24px; }
+    .options-row { flex-direction: column; gap: 0; }
+    .options-col { margin-bottom: 0px; }
   }
 </style>
 </head>
@@ -284,151 +356,148 @@
 
 <!-- Global Navigation -->
 <nav class="global-nav">
-  <a href="index.html" class="nav-brand">Omni<span>Tools</span></a>
+  <a href="index.html" class="nav-brand">OmniTools</a>
   <div class="nav-links">
     <a href="pdf-converter.html" class="active">PDF Suite</a>
     <a href="file-organizer.html">File Organizer</a>
     <a href="photo-resizer.html">Photo Resizer</a>
     <a href="qr-generator.html">QR Generator</a>
-    <a href="typing-test.html">Typing Test</a>
+    <a href="typing-test.html">Typing Engine</a>
   </div>
 </nav>
 
-<div class="premium-banner">
-  <div class="banner-content">
-    <div class="title-wrapper">
-      <img src="pdf_icon.png" alt="PDF Tools" class="app-icon" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdib3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iI2VhNTgwYyIvPjwvc3ZnPg=='">
-      <h1>PDF Converter Suite</h1>
-    </div>
-    <div class="security-badge">🔒 100% SECURE CLIENT-SIDE PROCESSING</div>
-    <p>Seamlessly merge multiple PDFs, split large documents, extract specific pages, and compress files. Files are processed locally in your browser and never touch our servers.</p>
-  </div>
+<div class="clean-header">
+  <h1>PDF Converter Suite.</h1>
+  <p>Merge, split, compress, and construct PDFs seamlessly. Enterprise-grade document manipulation running securely in your local browser.</p>
+</div>
+
+<!-- Tab Navigation -->
+<div class="tabs-container">
+  <button class="tab-btn active" onclick="switchTab(event, 'tab-img2pdf')">Images to PDF</button>
+  <button class="tab-btn" onclick="switchTab(event, 'tab-merge')">Merge PDFs</button>
+  <button class="tab-btn" onclick="switchTab(event, 'tab-split')">Split / Extract</button>
+  <button class="tab-btn" onclick="switchTab(event, 'tab-compress')">Compress PDF</button>
+  <button class="tab-btn" onclick="switchTab(event, 'tab-extract')">Extract Text</button>
 </div>
 
 <div class="tool-wrapper">
 
-<!-- Tab Navigation -->
-<div class="tabs-container">
-  <button class="tab-btn active" onclick="switchTab(event, 'tab-img2pdf')">🖼️ Images to PDF</button>
-  <button class="tab-btn" onclick="switchTab(event, 'tab-merge')">📑 Merge PDFs</button>
-  <button class="tab-btn" onclick="switchTab(event, 'tab-split')">✂️ Split / Extract</button>
-  <button class="tab-btn" onclick="switchTab(event, 'tab-compress')">🗜️ Compress PDF</button>
-  <button class="tab-btn" onclick="switchTab(event, 'tab-extract')">📝 Extract Text</button>
-</div>
-
-<!-- TAB 1: IMAGES TO PDF -->
-<div id="tab-img2pdf" class="tab-content active">
-  <div class="tool-container">
-      <h3 style="margin-top:0; color:#fff;">Images to Standardized PDF</h3>
-      <label>Select images (JPG, PNG, WebP) (Order matters):</label>
-      <p class="reorder-tip">
-          <em>Select multiple images at once from the picker, then use the ▲▼ buttons below to reorder them.</em>
-      </p>
-      <input type="file" id="imgInput" accept="image/png, image/jpeg, image/jpg, image/webp" multiple>
-      <ul id="sortable-image-list" class="sortable-list"></ul>
-      
-      <div class="options-row">
-          <div class="options-col">
-              <label>Page Size</label>
-              <select id="pageSize">
-                  <option value="a4">A4 (Standard)</option>
-                  <option value="letter">US Letter</option>
-                  <option value="fit">Fit to Image</option>
-              </select>
-          </div>
-          <div class="options-col">
-              <label>Orientation</label>
-              <select id="orientation">
-                  <option value="auto">Auto Detect</option>
-                  <option value="p">Portrait</option>
-                  <option value="l">Landscape</option>
-              </select>
-          </div>
-          <div class="options-col">
-              <label>Margins</label>
-              <select id="margins">
-                  <option value="28">Small (10mm)</option>
-                  <option value="0">None (Bleed)</option>
-                  <option value="56">Medium (20mm)</option>
-              </select>
-          </div>
-      </div>
-      
-      <button class="action-btn" onclick="convertImages()">🚀 Compile PDF</button>
-      <div id="status1" class="status-text"></div>
-      <a id="downloadBtn1" class="download-btn">⬇️ Download Compiled PDF</a>
+  <!-- TAB 1: IMAGES TO PDF -->
+  <div id="tab-img2pdf" class="tab-content active">
+    <div class="tool-container">
+        <h3>Images to Standardized PDF</h3>
+        <label>Select images (JPG, PNG, WebP):</label>
+        <p class="reorder-tip">
+            Select multiple images at once, then use the arrows to reorder them prior to compilation.
+        </p>
+        <input type="file" id="imgInput" accept="image/png, image/jpeg, image/jpg, image/webp" multiple>
+        <ul id="sortable-image-list" class="sortable-list"></ul>
+        
+        <div class="options-row">
+            <div class="options-col">
+                <label>Page Size</label>
+                <select id="pageSize">
+                    <option value="a4">A4 (Standard)</option>
+                    <option value="letter">US Letter</option>
+                    <option value="fit">Fit to Image</option>
+                </select>
+            </div>
+            <div class="options-col">
+                <label>Orientation</label>
+                <select id="orientation">
+                    <option value="auto">Auto Detect</option>
+                    <option value="p">Portrait</option>
+                    <option value="l">Landscape</option>
+                </select>
+            </div>
+            <div class="options-col">
+                <label>Margins</label>
+                <select id="margins">
+                    <option value="28">Small (10mm)</option>
+                    <option value="0">None (Bleed)</option>
+                    <option value="56">Medium (20mm)</option>
+                </select>
+            </div>
+        </div>
+        
+        <button class="btn-accent" onclick="convertImages()">Compile PDF</button>
+        <div id="status1" class="status-text"></div>
+        <a id="downloadBtn1" class="download-btn">Download Compiled PDF</a>
+    </div>
   </div>
-</div>
 
-<!-- TAB 2: MERGE PDFS -->
-<div id="tab-merge" class="tab-content">
-  <div class="tool-container">
-      <h3 style="margin-top:0; color:#fff;">Merge Multiple PDFs</h3>
-      <label>Select 2 or more PDF files (Order matters):</label>
-      <p class="reorder-tip">
-          <em>Select multiple files at once from the picker, then use the ▲▼ buttons below to reorder them.</em>
-      </p>
-      <input type="file" id="mergeInput" accept=".pdf" multiple>
-      <ul id="sortable-file-list" class="sortable-list"></ul>
-      
-      <button class="action-btn" onclick="mergePdfs()">🚀 Merge in Browser</button>
-      <div id="status2" class="status-text"></div>
-      <a id="downloadBtn2" class="download-btn">⬇️ Download Merged PDF</a>
+  <!-- TAB 2: MERGE PDFS -->
+  <div id="tab-merge" class="tab-content">
+    <div class="tool-container">
+        <h3>Merge Multiple PDFs</h3>
+        <label>Select 2 or more PDF files:</label>
+        <p class="reorder-tip">
+            Upload multiple files from your machine and rearrange them in the exact order you need.
+        </p>
+        <input type="file" id="mergeInput" accept=".pdf" multiple>
+        <ul id="sortable-file-list" class="sortable-list"></ul>
+        
+        <button class="btn-accent" onclick="mergePdfs()">Merge Documents</button>
+        <div id="status2" class="status-text"></div>
+        <a id="downloadBtn2" class="download-btn">Download Merged PDF</a>
+    </div>
   </div>
-</div>
 
-<!-- TAB 3: SPLIT PDF -->
-<div id="tab-split" class="tab-content">
-  <div class="tool-container">
-      <h3 style="margin-top:0; color:#fff;">Extract Pages</h3>
-      <label>Select a PDF file:</label>
-      <input type="file" id="splitInput" accept=".pdf">
-      <label>Pages to extract (e.g., 1, 3-5, 8):</label>
-      <input type="text" id="rangeInput" placeholder="1-3">
-      <button class="action-btn" onclick="splitPdf()">✂️ Extract Pages</button>
-      <div id="status3" class="status-text"></div>
-      <a id="downloadBtn3" class="download-btn">⬇️ Download Extracted PDF</a>
+  <!-- TAB 3: SPLIT PDF -->
+  <div id="tab-split" class="tab-content">
+    <div class="tool-container">
+        <h3>Extract Pages</h3>
+        <label>Select a PDF file:</label>
+        <input type="file" id="splitInput" accept=".pdf">
+        <label>Pages to extract (e.g., 1, 3-5, 8):</label>
+        <input type="text" id="rangeInput" placeholder="1-3">
+        
+        <button class="btn-accent" onclick="splitPdf()">Extract Pages</button>
+        <div id="status3" class="status-text"></div>
+        <a id="downloadBtn3" class="download-btn">Download Extracted PDF</a>
+    </div>
   </div>
-</div>
 
-<!-- TAB 5 (NEW): COMPRESS PDF -->
-<div id="tab-compress" class="tab-content">
-  <div class="tool-container">
-      <h3 style="margin-top:0; color:#fff;">Compress & Optimize PDF</h3>
-      <label>Select a PDF file to reduce size:</label>
-      <p class="reorder-tip">
-          <em>Our compressor strips out invisible bloat, deleted objects, and excess metadata while preserving the visual quality of your document.</em>
-      </p>
-      <input type="file" id="compressInput" accept=".pdf">
-      <button class="action-btn" onclick="compressPdf()">🗜️ Compress PDF</button>
-      <div id="status5" class="status-text"></div>
-      <a id="downloadBtn5" class="download-btn">⬇️ Download Compressed PDF</a>
+  <!-- TAB 4: COMPRESS PDF -->
+  <div id="tab-compress" class="tab-content">
+    <div class="tool-container">
+        <h3>Compress & Optimize PDF</h3>
+        <label>Select a PDF file to reduce size:</label>
+        <p class="reorder-tip">
+            Our compressor strips out invisible bloat, deleted objects, and excess metadata while preserving the visual quality of your document.
+        </p>
+        <input type="file" id="compressInput" accept=".pdf">
+        
+        <button class="btn-accent" onclick="compressPdf()">Compress File</button>
+        <div id="status5" class="status-text"></div>
+        <a id="downloadBtn5" class="download-btn">Download Compressed PDF</a>
+    </div>
   </div>
-</div>
 
-<!-- TAB 4: EXTRACT TEXT -->
-<div id="tab-extract" class="tab-content">
-  <div class="tool-container">
-      <h3 style="margin-top:0; color:#fff;">Extract Raw Text</h3>
-      <label>Select a PDF file to read:</label>
-      <input type="file" id="textInput" accept=".pdf">
-      <button class="action-btn" onclick="extractText()">📝 Read Text from PDF</button>
-      <div id="status4" class="status-text"></div>
-      <textarea id="outputArea" style="display:none; width:100%; height:150px; background:#1f2937; color:#fff; border:1px solid #374151; border-radius:6px; margin-top:1rem; padding:0.5rem; font-family:inherit; box-sizing:border-box;" readonly></textarea>
-      <a id="downloadBtn4" class="download-btn">⬇️ Download Text File (.txt)</a>
+  <!-- TAB 5: EXTRACT TEXT -->
+  <div id="tab-extract" class="tab-content">
+    <div class="tool-container">
+        <h3>Extract Raw Text</h3>
+        <label>Select a PDF file to read:</label>
+        <input type="file" id="textInput" accept=".pdf">
+        
+        <button class="btn-accent" onclick="extractText()">Read Text</button>
+        <div id="status4" class="status-text"></div>
+        <textarea id="outputArea" style="display:none; width:100%; height:200px; background:#000000; color:#cccccc; border:1px solid #333333; border-radius:8px; margin-top:1.5rem; padding:16px; font-family:inherit; box-sizing:border-box; line-height: 1.5;" readonly></textarea>
+        <a id="downloadBtn4" class="download-btn">Download Text File (.txt)</a>
+    </div>
   </div>
-</div>
 
   <!-- SEO & Educational Content -->
   <article class="seo-article">
-    <h2>The Ultimate Free PDF Suite</h2>
-    <p>Managing digital documents doesn't have to be complicated or compromise your privacy. Our PDF Suite offers enterprise-grade document manipulation tools that run directly inside your web browser. This means your sensitive tax documents, legal forms, and personal files are processed locally on your device and never uploaded to an external server.</p>
+    <h2>Client-Side Document Architecture</h2>
+    <p>Managing digital documents shouldn't compromise your privacy. Our PDF Suite offers secure document manipulation tools that run directly inside your web browser. This means your sensitive tax documents, legal forms, and personal files are processed locally on your device and never uploaded to an external server.</p>
     
-    <h3>Key Features</h3>
+    <h3>Core Capabilities</h3>
     <ul>
       <li><strong>Combine & Merge:</strong> Easily stitch together multiple PDF documents into a single file. Perfect for creating consolidated reports or portfolios.</li>
       <li><strong>Split & Extract:</strong> Pull out specific pages from massive documents by simply entering the page ranges you need.</li>
-      <li><strong>Photo to PDF Engine:</strong> Convert JPGs and PNGs into standardized A4 or Letter-sized documents, complete with custom margins and orientation settings.</li>
+      <li><strong>Image Conversion:</strong> Convert JPGs and PNGs into standardized A4 or Letter-sized documents, complete with custom margins and orientation settings.</li>
       <li><strong>Local Optimization:</strong> Our compressor re-indexes your document and safely strips out unused metadata, reducing the overall file size without sacrificing text quality.</li>
     </ul>
 
@@ -436,15 +505,15 @@
     
     <div class="faq-box">
       <details>
-        <summary>Is it really safe to upload my bank statements here?</summary>
-        <p>Yes, because you aren't actually "uploading" anything. All the code that powers this PDF tool is downloaded to your browser the moment you visit the page. When you select a file, the processing happens directly on your own computer's memory. No data is transmitted over the internet.</p>
+        <summary>Is it safe to upload secure forms here?</summary>
+        <p>You aren't actually "uploading" anything. All the code that powers this PDF tool is downloaded to your browser the moment you visit the page. When you select a file, the processing happens directly on your own computer's memory. No data is transmitted over the internet.</p>
       </details>
     </div>
 
     <div class="faq-box">
       <details>
         <summary>Why didn't my PDF compress very much?</summary>
-        <p>Because this tool runs in the browser, it focuses on structural compression—removing invisible bloat, deleted objects, and excess metadata. If your PDF is massive because it contains dozens of high-resolution scanned photographs, true compression would require downsampling those images, which is difficult to perform efficiently in a client-side environment.</p>
+        <p>Because this tool runs in the browser, it focuses on structural compression—removing invisible bloat, deleted objects, and excess metadata. If your PDF is massive because it contains dozens of high-resolution scanned photographs, true compression would require downsampling those images, which is difficult to perform efficiently in a strictly client-side environment.</p>
       </details>
     </div>
   </article>
@@ -487,12 +556,11 @@ function renderImgList() {
         const isFirst = index === 0;
         const isLast = index === imgSelectedFiles.length - 1;
         li.innerHTML = `
-            <span class="item-icon">🖼️</span>
             <span class="item-name">${escapeHtml(file.name)}</span>
             <span class="item-actions">
                 <button type="button" class="icon-btn" data-action="up" aria-label="Move up" ${isFirst ? 'disabled' : ''}>▲</button>
                 <button type="button" class="icon-btn" data-action="down" aria-label="Move down" ${isLast ? 'disabled' : ''}>▼</button>
-                <button type="button" class="icon-btn icon-btn-danger" data-action="remove" aria-label="Remove">✕</button>
+                <button type="button" class="icon-btn" data-action="remove" aria-label="Remove">✕</button>
             </span>`;
         imgListContainer.appendChild(li);
     });
@@ -534,7 +602,7 @@ async function convertImages() {
     
     if (files.length === 0) { alert('Please select at least one image.'); return; }
     
-    status.innerText = "⏳ Processing images... Please wait.";
+    status.innerText = "Processing images...";
     btn.style.display = "none";
     
     try {
@@ -543,7 +611,7 @@ async function convertImages() {
         const sizes = { 'a4': [595.28, 841.89], 'letter': [612, 792] };
         
         for (let i = 0; i < files.length; i++) {
-            status.innerText = `⏳ Processing image ${i + 1} of ${files.length}...`;
+            status.innerText = `Processing image ${i + 1} of ${files.length}...`;
             const { img, dataUrl, type } = await loadImage(files[i]);
             
             let isLand = false;
@@ -595,11 +663,11 @@ async function convertImages() {
         btn.href = URL.createObjectURL(pdfBlob);
         btn.download = "OmniTools_Compiled_Images.pdf";
         btn.style.display = "block";
-        status.innerText = "✅ Successfully compiled PDF!";
-        status.style.color = "#34d399";
+        status.innerText = "Successfully compiled PDF.";
+        status.style.color = "#ffffff";
     } catch (e) {
-        status.innerText = "❌ Error: " + e.message;
-        status.style.color = "#f87171";
+        status.innerText = "Error: " + e.message;
+        status.style.color = "#ff4444";
     }
 }
 
@@ -623,12 +691,11 @@ function renderMergeList() {
         const isFirst = index === 0;
         const isLast = index === mergeSelectedFiles.length - 1;
         li.innerHTML = `
-            <span class="item-icon">📄</span>
             <span class="item-name">${escapeHtml(file.name)}</span>
             <span class="item-actions">
                 <button type="button" class="icon-btn" data-action="up" aria-label="Move up" ${isFirst ? 'disabled' : ''}>▲</button>
                 <button type="button" class="icon-btn" data-action="down" aria-label="Move down" ${isLast ? 'disabled' : ''}>▼</button>
-                <button type="button" class="icon-btn icon-btn-danger" data-action="remove" aria-label="Remove">✕</button>
+                <button type="button" class="icon-btn" data-action="remove" aria-label="Remove">✕</button>
             </span>`;
         mergeListContainer.appendChild(li);
     });
@@ -655,7 +722,7 @@ async function mergePdfs() {
     
     if (mergeSelectedFiles.length < 2) { alert('Please select at least 2 PDF files.'); return; }
     
-    status.innerText = "⏳ Merging files locally... Please wait.";
+    status.innerText = "Merging files locally...";
     btn.style.display = "none";
     
     try {
@@ -672,11 +739,11 @@ async function mergePdfs() {
         btn.href = URL.createObjectURL(blob);
         btn.download = "OmniTools_Merged.pdf";
         btn.style.display = "block";
-        status.innerText = "✅ Merged successfully!";
-        status.style.color = "#34d399";
+        status.innerText = "Merged successfully.";
+        status.style.color = "#ffffff";
     } catch (e) {
-        status.innerText = "❌ Error: " + e.message;
-        status.style.color = "#f87171";
+        status.innerText = "Error: " + e.message;
+        status.style.color = "#ff4444";
     }
 }
 
@@ -689,7 +756,7 @@ async function splitPdf() {
     
     if (!file || !rangeStr) { alert('Please select a file and enter a page range.'); return; }
     
-    status.innerText = "⏳ Extracting pages... Please wait.";
+    status.innerText = "Extracting pages...";
     btn.style.display = "none";
     
     try {
@@ -725,15 +792,15 @@ async function splitPdf() {
         btn.href = URL.createObjectURL(blob);
         btn.download = "Extracted_" + file.name;
         btn.style.display = "block";
-        status.innerText = `✅ Extracted ${indices.length} page(s) successfully!`;
-        status.style.color = "#34d399";
+        status.innerText = `Extracted ${indices.length} page(s) successfully.`;
+        status.style.color = "#ffffff";
     } catch (e) {
-        status.innerText = "❌ Error: " + e.message;
-        status.style.color = "#f87171";
+        status.innerText = "Error: " + e.message;
+        status.style.color = "#ff4444";
     }
 }
 
-// --- TAB 5 (NEW): Compress PDF Logic ---
+// --- TAB 4: Compress PDF Logic ---
 async function compressPdf() {
     const file = document.getElementById('compressInput').files[0];
     const status = document.getElementById('status5');
@@ -741,48 +808,39 @@ async function compressPdf() {
     
     if (!file) { alert('Please select a PDF file to compress.'); return; }
     
-    status.innerText = "⏳ Optimizing structure and cleaning metadata... Please wait.";
+    status.innerText = "Optimizing structure...";
     btn.style.display = "none";
     
     try {
         const arrayBuffer = await file.arrayBuffer();
-        
-        // Load the original PDF
         const pdf = await PDFLib.PDFDocument.load(arrayBuffer);
-        
-        // Create a completely fresh PDF
         const newPdf = await PDFLib.PDFDocument.create();
-        
-        // Copy all pages into the new document (strips orphaned objects)
         const copiedPages = await newPdf.copyPages(pdf, pdf.getPageIndices());
         copiedPages.forEach((page) => newPdf.addPage(page));
         
-        // Save with object streams turned on to aggressively compress the internal structure
         const pdfBytes = await newPdf.save({ useObjectStreams: true });
-        
         const blob = new Blob([pdfBytes], { type: 'application/pdf' });
         btn.href = URL.createObjectURL(blob);
         btn.download = "Compressed_" + file.name;
         btn.style.display = "block";
         
-        // Calculate size differences
         const originalKB = (file.size / 1024).toFixed(1);
         const newKB = (blob.size / 1024).toFixed(1);
         
         if (blob.size < file.size) {
-            status.innerText = `✅ Compression successful! Reduced from ${originalKB} KB to ${newKB} KB.`;
+            status.innerText = `Compression successful: Reduced from ${originalKB} KB to ${newKB} KB.`;
         } else {
-            status.innerText = `✅ File processed! (File was already optimized: ${newKB} KB).`;
+            status.innerText = `File processed. (File was already optimized: ${newKB} KB).`;
         }
         
-        status.style.color = "#34d399";
+        status.style.color = "#ffffff";
     } catch (e) {
-        status.innerText = "❌ Error: " + e.message;
-        status.style.color = "#f87171";
+        status.innerText = "Error: " + e.message;
+        status.style.color = "#ff4444";
     }
 }
 
-// --- TAB 4: Extract Text Logic ---
+// --- TAB 5: Extract Text Logic ---
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
 
 async function extractText() {
@@ -793,7 +851,7 @@ async function extractText() {
     
     if (!file) { alert('Please select a PDF file first.'); return; }
     
-    status.innerText = "⏳ Reading document... (This might take a moment)";
+    status.innerText = "Reading document...";
     textArea.style.display = "none";
     btn.style.display = "none";
     
@@ -804,7 +862,7 @@ async function extractText() {
         let fullText = "";
         
         for (let i = 1; i <= pdf.numPages; i++) {
-            status.innerText = `⏳ Extracting page ${i} of ${pdf.numPages}...`;
+            status.innerText = `Extracting page ${i} of ${pdf.numPages}...`;
             const page = await pdf.getPage(i);
             const textContent = await page.getTextContent();
             const pageText = textContent.items.map(item => item.str).join(" ");
@@ -819,11 +877,11 @@ async function extractText() {
         btn.download = file.name.replace('.pdf', '_extracted.txt');
         btn.style.display = "block";
         
-        status.innerText = "✅ Text extraction complete!";
-        status.style.color = "#34d399";
+        status.innerText = "Text extraction complete.";
+        status.style.color = "#ffffff";
     } catch (e) {
-        status.innerText = "❌ Error reading PDF: " + e.message;
-        status.style.color = "#f87171";
+        status.innerText = "Error reading PDF: " + e.message;
+        status.style.color = "#ff4444";
     }
 }
 </script>
