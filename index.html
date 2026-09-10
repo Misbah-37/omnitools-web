@@ -1,61 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OmniTools | Privacy-First Digital Utilities</title>
+<meta name="description" content="A premium suite of client-side tools. Convert, organize, and compress your files with zero server uploads and complete privacy.">
 <style>
-  /* The Spotlight Background */
-  body {
-    background-color: #0a0c10;
-    background-image: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 60%);
-    background-repeat: no-repeat;
+  /* --- Global Resets & Typography --- */
+  body, html {
+    margin: 0;
+    padding: 0;
+    background-color: #0e1117;
+    color: #e2e8f0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
   }
 
-  /* The Elevated Header */
-  .middle-ground-header {
-    padding: 120px 24px 60px 24px;
+  /* --- Global Navigation --- */
+  .global-nav {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    height: 70px;
+    background-color: rgba(14, 17, 23, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid #1e293b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    box-sizing: border-box;
+    z-index: 2000;
+  }
+  
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #f8fafc;
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: -0.5px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+  }
+  
+  .nav-links a {
+    color: #94a3b8;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+    position: relative;
+    padding-bottom: 4px;
+  }
+  
+  .nav-links a:hover, .nav-links a.active {
+    color: #f8fafc;
+  }
+  
+  .nav-links a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #f8fafc;
+    border-radius: 2px;
+  }
+
+  /* --- Minimalist Hero Section --- */
+  .hero {
+    padding: 160px 24px 80px 24px;
     text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
   }
 
-  /* Softly Tinted Icon */
-  .icon-wrapper {
-    width: 56px; 
-    height: 56px; 
-    margin: 0 auto 24px auto;
-    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-    border: 1px solid rgba(255, 255, 255, 0.1); 
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    border-radius: 14px;
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    color: #818cf8; /* Indigo accent */
+  .hero-badge {
+    display: inline-block;
+    border: 1px solid #334155;
+    background-color: #111827;
+    color: #94a3b8;
+    padding: 6px 16px;
+    border-radius: 99px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 24px;
+    letter-spacing: 0.5px;
   }
 
-  /* Metallic Text Gradient */
-  .middle-ground-header h1 {
-    margin: 0 0 16px 0;
-    font-size: 2.5rem;
+  .hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
     font-weight: 800;
-    background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #f8fafc;
+    margin: 0 0 24px 0;
+    line-height: 1.1;
     letter-spacing: -0.03em;
   }
 
-  /* Premium Primary Button */
-  .btn-premium {
-    background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%);
-    color: white;
-    border: 1px solid #4338ca;
-    box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.39), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    padding: 14px 28px;
-    border-radius: 8px;
+  .hero p {
+    font-size: 1.15rem;
+    color: #94a3b8;
+    max-width: 650px;
+    margin: 0 auto 40px auto;
+    line-height: 1.6;
+  }
+
+  /* --- Tool Grid (Bento Layout) --- */
+  .grid-container {
+    max-width: 1100px;
+    margin: 0 auto 120px auto;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+  }
+
+  .tool-card {
+    background-color: #111827;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    padding: 32px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tool-card:hover {
+    border-color: #334155;
+    background-color: #151d2e;
+    transform: translateY(-2px);
+  }
+
+  .card-icon {
+    width: 48px;
+    height: 48px;
+    background-color: #0e1117;
+    border: 1px solid #1e293b;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    color: #f8fafc;
+  }
+
+  .tool-card h3 {
+    font-size: 1.25rem;
     font-weight: 600;
-    cursor: pointer;
+    color: #f8fafc;
+    margin: 0 0 12px 0;
+    letter-spacing: -0.01em;
+  }
+
+  .tool-card p {
+    font-size: 0.95rem;
+    color: #94a3b8;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* --- Trust Section --- */
+  .trust-section {
+    border-top: 1px solid #1e293b;
+    padding: 80px 24px;
+    background-color: #0a0c10;
+  }
+
+  .trust-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    text-align: center;
+  }
+
+  .trust-item h4 {
+    color: #f8fafc;
+    font-size: 1.1rem;
+    margin: 0 0 12px 0;
+  }
+
+  .trust-item p {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .global-nav { padding: 0 24px; }
+    .hero { padding: 120px 20px 60px 20px; }
+    .trust-grid { grid-template-columns: 1fr; gap: 32px; }
   }
 </style>
+</head>
+<body>
 
-<div class="middle-ground-header">
-  <div class="icon-wrapper">
-    <!-- SVG goes here -->
+<!-- OmniTools Global Nav -->
+<nav class="global-nav">
+  <a href="index.html" class="nav-brand">OmniTools</a>
+  <div class="nav-links">
+    <a href="pdf-converter.html">PDF Suite</a>
+    <a href="file-organizer.html">File Organizer</a>
+    <a href="photo-resizer.html">Photo Resizer</a>
+    <a href="qr-generator.html">QR Generator</a>
+    <a href="typing-test.html">Typing Test</a>
   </div>
-  <h1>Typing Speed Test</h1>
-  <p style="color: #94a3b8; max-width: 600px; margin: 0 auto 32px auto;">Test your typing speed and accuracy in real-time.</p>
-  <button class="btn-premium">Start Typing Test</button>
-</div>
+</nav>
+
+<!-- Minimalist Hero -->
+<section class="hero">
+  <div class="hero-badge">100% Offline Processing</div>
+  <h1>Engineered for Privacy. <br>Built for Speed.</h1>
+  <p>OmniTools is a premium collection of client-side utilities. Compress images, split PDFs, and organize files securely in your browser without ever transmitting your data to an external server.</p>
+</section>
+
+<!-- Tools Grid -->
+<section class="grid-container">
+  
+  <a href="pdf-converter.html" class="tool-card">
+    <div class="card-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+    </div>
+    <h3>PDF Suite</h3>
+    <p>Merge, split, extract, and compress PDF documents. Powered by an advanced local engine to keep sensitive records private.</p>
+  </a>
+
+  <a href="file-organizer.html" class="tool-card">
+    <div class="card-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+    </div>
+    <h3>File Organizer</h3>
+    <p>A standalone, verified application that instantly structures messy directories into 12 clean categories on your local machine.</p>
+  </a>
+
+  <a href="photo-resizer.html" class="tool-card">
+    <div class="card-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+    </div>
+    <h3>Photo Resizer</h3>
+    <p>Crop, resize, and compress images with exact pixel precision and binary search targeting for strict KB file size limits.</p>
+  </a>
+
+  <a href="qr-generator.html" class="tool-card">
+    <div class="card-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><rect x="7" y="7" width="3" height="3"></rect><rect x="14" y="7" width="3" height="3"></rect><rect x="7" y="14" width="3" height="3"></rect><rect x="14" y="14" width="3" height="3"></rect></svg>
+    </div>
+    <h3>QR Generator</h3>
+    <p>Generate secure, permanent Quick Response codes from URLs or text. Customize colors and export as high-resolution PNGs.</p>
+  </a>
+
+  <a href="typing-test.html" class="tool-card">
+    <div class="card-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6" y2="8"></line><line x1="10" y1="8" x2="10" y2="8"></line><line x1="14" y1="8" x2="14" y2="8"></line><line x1="18" y1="8" x2="18" y2="8"></line><line x1="8" y1="12" x2="8" y2="12"></line><line x1="12" y1="12" x2="12" y2="12"></line><line x1="16" y1="12" x2="16" y2="12"></line><line x1="7" y1="16" x2="17" y2="16"></line></svg>
+    </div>
+    <h3>Typing Engine</h3>
+    <p>Benchmark your keyboard velocity and accuracy in a distraction-free terminal environment, fully optimized for all devices.</p>
+  </a>
+
+</section>
+
+<!-- Value Propositions -->
+<section class="trust-section">
+  <div class="trust-grid">
+    <div class="trust-item">
+      <h4>Zero Server Footprint</h4>
+      <p>Your files never leave your device. All processing happens within your browser's local sandbox, ensuring total data privacy.</p>
+    </div>
+    <div class="trust-item">
+      <h4>No Subscriptions</h4>
+      <p>OmniTools is an open toolkit designed to replace bloated, subscription-based cloud services with fast, local alternatives.</p>
+    </div>
+    <div class="trust-item">
+      <h4>Uncompromising Speed</h4>
+      <p>Because there are no upload or download queues, file manipulation happens instantly utilizing your own device's CPU.</p>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
