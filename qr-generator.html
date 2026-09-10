@@ -25,6 +25,27 @@
     color: #ffffff;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
+
+    .global-footer {
+  border-top: 1px solid #222222;
+  padding: 40px 24px;
+  text-align: center;
+  color: #666666;
+  font-size: 0.9rem;
+  background-color: #000000;
+  margin-top: 60px;
+}
+
+.global-footer a {
+  color: #999999;
+  text-decoration: none;
+  transition: color 0.2s;
+  margin: 0 12px;
+}
+
+.global-footer a:hover {
+  color: #ffffff;
+}
   }
 
   /* --- Minimalist Global Nav --- */
@@ -433,4 +454,16 @@
 </script>
 
 </body>
+  <!-- Your other tool HTML is up here -->
+
+  <footer class="global-footer">
+    <div style="margin-bottom: 16px;">
+      <a href="index.html">Home</a>
+      <a href="https://github.com/yourusername/omnitools" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">↑ Back to Top</a>
+    </div>
+    <div>&copy; 2026 OmniTools. 100% Client-Side Processing.</div>
+  </footer>
+</body>
+</html>
 </html>
