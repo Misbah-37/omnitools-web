@@ -17,7 +17,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 
 <style>
-  /* --- Adobe-Style Clean Resets --- */
+  /* --- Clean Minimalist Resets --- */
+  * {
+    box-sizing: border-box;
+  }
+
   body, html {
     margin: 0;
     padding: 0;
@@ -27,6 +31,54 @@
     -webkit-font-smoothing: antialiased;
   }
 
+  /* --- Minimalist Global Nav (Docked & Right-Aligned) --- */
+  .global-nav {
+    position: sticky;
+    top: 0; 
+    left: 0; 
+    width: 100%;
+    padding: 18px 40px;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid #222222;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    z-index: 2000;
+  }
+  
+  .nav-brand {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #ffffff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+    margin-left: auto; /* Guarantees right alignment across all devices */
+  }
+  
+  .nav-links a {
+    color: #999999;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+  
+  .nav-links a:hover, .nav-links a.active {
+    color: #00d2ff; /* Electric cyan hover & active indicator */
+  }
+
+  /* --- Global Footer --- */
   .global-footer {
     border-top: 1px solid #222222;
     padding: 40px 24px;
@@ -37,57 +89,15 @@
     margin-top: 60px;
   }
 
-.global-footer a {
-  color: #999999;
-  text-decoration: none;
-  transition: color 0.2s;
-  margin: 0 12px;
-}
-
-.global-footer a:hover {
-  color: #ffffff;
-}
-  }
-
-  /* --- Minimalist Global Nav --- */
-  .global-nav {
-  position: sticky;
-  top: 0; 
-  left: 0; 
-  width: 100%;
-  padding: 20px 40px;
-  background-color: #000000;
-  border-bottom: 1px solid #222222;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-sizing: border-box;
-  z-index: 2000;
-}
-  
-  .nav-brand {
-    font-size: 1.1rem;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    color: #ffffff;
-    text-decoration: none;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 32px;
-  }
-  
-  .nav-links a {
+  .global-footer a {
     color: #999999;
     text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
     transition: color 0.2s;
+    margin: 0 12px;
   }
-  
-  .nav-links a:hover, .nav-links a.active {
-    color: #ffffff;
+
+  .global-footer a:hover {
+    color: #00d2ff;
   }
 
   /* --- The Clean Hero --- */
