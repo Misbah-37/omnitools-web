@@ -3,31 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Typing Engine | Pro Utilities</title>
+<title>Typing Speed Test | OmniTools</title>
+<meta name="description" content="Test your typing speed and accuracy in real-time. Track your WPM and improve your keyboard skills for free.">
 <style>
-  /* --- Adobe-Style Clean Resets --- */
+  /* --- Global Resets & Typography --- */
   body, html {
     margin: 0;
     padding: 0;
-    background-color: #000000; /* Pure black background */
-    color: #ffffff;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #0e1117;
+    color: #e2e8f0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
 
-  /* --- Minimalist Global Nav --- */
+  /* --- Global Navigation (Minimalist) --- */
   .global-nav {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    height: 70px;
+    background-color: rgba(14, 17, 23, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid #1e293b;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 40px;
-    background-color: #000000;
-    border-bottom: 1px solid #222222;
+    padding: 0 40px;
+    box-sizing: border-box;
+    z-index: 2000;
   }
   
   .nav-brand {
-    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #f8fafc;
     font-weight: 700;
+    font-size: 1.25rem;
     letter-spacing: -0.5px;
   }
 
@@ -37,126 +49,557 @@
   }
   
   .nav-links a {
-    color: #999999;
+    color: #94a3b8;
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 500;
     transition: color 0.2s;
+    position: relative;
+    padding-bottom: 4px;
   }
   
   .nav-links a:hover, .nav-links a.active {
-    color: #ffffff;
+    color: #f8fafc;
+  }
+  
+  .nav-links a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #f8fafc;
+    border-radius: 2px;
   }
 
-  /* --- The Adobe-Style Hero --- */
-  .clean-header {
-    max-width: 800px;
-    margin: 100px auto 60px auto;
-    padding: 0 24px;
+  /* --- Flat SaaS Header (Replaces Premium Banner) --- */
+  .flat-header {
+    padding: 130px 24px 40px 24px;
     text-align: center;
+    background-color: #0e1117;
+    border-bottom: 1px solid #1e293b;
+  }
+  
+  .icon-wrapper {
+    width: 56px; 
+    height: 56px; 
+    margin: 0 auto 20px auto;
+    background-color: #111827; 
+    border: 1px solid #1e293b; 
+    border-radius: 12px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    color: #f8fafc;
   }
 
-  .clean-header h1 {
-    font-size: 3.5rem;
+  .flat-header h1 {
+    margin: 0 0 12px 0;
+    font-size: 2rem;
     font-weight: 700;
-    letter-spacing: -0.04em;
-    margin: 0 0 20px 0;
-    line-height: 1.1;
+    color: #f8fafc;
+    letter-spacing: -0.02em;
   }
-
-  .clean-header p {
-    font-size: 1.25rem;
-    color: #999999;
-    margin: 0 auto 40px auto;
-    line-height: 1.5;
-    max-width: 600px;
-  }
-
-  /* The Signature Solid Accent Button */
-  .btn-accent {
-    background-color: #1473E6; /* Classic Adobe Blue */
-    color: #ffffff;
-    border: none;
-    padding: 14px 32px;
-    border-radius: 24px; /* Pill shape commonly used by Adobe */
+  
+  .flat-header p {
+    margin: 0 auto;
     font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s;
+    line-height: 1.6;
+    color: #94a3b8;
+    max-width: 650px;
   }
-
-  .btn-accent:hover {
-    background-color: #0d66d0;
-  }
-
-  /* --- Clean Tool Container --- */
-  .tool-container {
-    max-width: 800px;
-    margin: 0 auto 100px auto;
-    padding: 40px;
-    background-color: #121212; /* Very subtle contrast against black */
-    border: 1px solid #222222;
-    border-radius: 16px;
-  }
-
-  .st-radio-group {
+  
+  .tool-wrapper {
+    width: 100%;
+    background-color: #0e1117;
+    padding: 40px 24px 60px 24px;
+    box-sizing: border-box;
     display: flex;
-    gap: 16px;
-    margin-bottom: 32px;
-    flex-wrap: wrap;
+    justify-content: center;
   }
 
+  /* --- Native App UI Container --- */
+  .st-app-replica {
+    width: 100%;
+    max-width: 800px;
+  }
+  
+  .st-radio-group {
+    margin-bottom: 32px;
+  }
+  .st-radio-label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #cbd5e1;
+    margin-bottom: 16px;
+    display: block;
+  }
   .st-radio-option {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
+    margin-bottom: 8px;
     font-size: 0.95rem;
-    color: #cccccc;
     cursor: pointer;
+    padding: 12px 16px;
+    background-color: #111827;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    transition: border-color 0.2s, background-color 0.2s;
   }
-
+  .st-radio-option:hover {
+    border-color: #334155;
+    background-color: #151d2e;
+  }
   .st-radio-option input {
-    accent-color: #1473E6; /* Matches the button */
+    accent-color: #f8fafc; /* Minimalist white accent */
     width: 18px;
     height: 18px;
+    cursor: pointer;
+  }
+  
+  .st-btn-primary {
+    background-color: #f8fafc; 
+    color: #0e1117;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    width: 100%;
+  }
+  .st-btn-primary:hover {
+    opacity: 0.9;
+  }
+  
+  .st-btn-secondary {
+    background-color: transparent;
+    color: #f8fafc;
+    border: 1px solid #334155;
+    padding: 14px 24px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    cursor: pointer;
+    margin-top: 24px;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+  .st-btn-secondary:hover {
+    border-color: #64748b;
+  }
+
+  .st-info-box {
+    background-color: transparent;
+    border: 1px solid #1e293b;
+    color: #94a3b8;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    font-size: 0.95rem;
+    text-align: center;
+  }
+
+  .typing-box {
+    background-color: #111827;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 24px;
+    position: relative;
+    cursor: text;
+  }
+
+  #hiddenInput {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    opacity: 0; border: none; outline: none; background: transparent;
+    font-size: 16px; caret-color: transparent; padding: 0; margin: 0;
+  }
+
+  .sentence { 
+    font-size: clamp(1.1rem, 4.5vw, 1.4rem); 
+    line-height: 1.6; 
+    letter-spacing: 0.2px; 
+    margin-bottom: 24px; 
+    user-select: none; 
+    word-wrap: break-word; 
+    color: #64748b; /* Inactive text */
+  }
+  .correct { 
+    color: #f8fafc; /* Pure white for correct */
+    font-weight: 500;
+  }
+  .current { 
+    text-decoration: underline; 
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+    color: #f8fafc; 
+  }
+  #stats { 
+    font-size: 1.1rem; 
+    font-weight: 500; 
+    color: #f8fafc; 
+    line-height: 1.8; 
+  }
+  #progress { 
+    font-size: 0.85rem; 
+    color: #475569; 
+    margin-bottom: 16px; 
+    font-weight: 600; 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+  }
+  .mobile-hint {
+    display: none; font-size: 0.85rem; color: #64748b; margin-top: -12px; margin-bottom: 20px; text-align: center;
+  }
+
+  /* --- SEO & Educational Content Section --- */
+  .seo-article {
+    width: 100%;
+    max-width: 800px;
+    margin: 60px auto 20px auto;
+    color: #94a3b8;
+    line-height: 1.7;
+    font-size: 1rem;
+    border-top: 1px solid #1e293b;
+    padding-top: 40px;
+  }
+  .seo-article h2, .seo-article h3 { color: #f8fafc; margin-top: 1.5rem; margin-bottom: 1rem; }
+  .seo-article h2 { font-size: 1.5rem; }
+  .seo-article h3 { font-size: 1.1rem; }
+  .seo-article ul { padding-left: 20px; }
+  .seo-article li { margin-bottom: 10px; }
+  
+  .faq-box { margin-bottom: 16px; }
+  .faq-box details {
+    background-color: #111827; border: 1px solid #1e293b; border-radius: 8px; padding: 16px 20px; cursor: pointer;
+  }
+  .faq-box summary { font-weight: 500; color: #f8fafc; outline: none; list-style: none; }
+  .faq-box summary::-webkit-details-marker { display: none; }
+  .faq-box p { margin: 12px 0 0 0; font-size: 0.95rem; color: #94a3b8; }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .global-nav { padding: 0 24px; }
+    .flat-header { padding-top: 110px; }
+    .mobile-hint { display: block; }
   }
 </style>
 </head>
 <body>
 
+<!-- Minimalist Global Nav -->
 <nav class="global-nav">
-  <div class="nav-brand">Pro Utilities</div>
+  <a href="index.html" class="nav-brand">OmniTools</a>
   <div class="nav-links">
-    <a href="#">PDF Suite</a>
-    <a href="#">File Organizer</a>
-    <a href="#">Photo Resizer</a>
-    <a href="#" class="active">Typing Engine</a>
+    <a href="pdf-converter.html">PDF Suite</a>
+    <a href="file-organizer.html">File Organizer</a>
+    <a href="photo-resizer.html">Photo Resizer</a>
+    <a href="qr-generator.html">QR Generator</a>
+    <a href="typing-test.html" class="active">Typing Test</a>
   </div>
 </nav>
 
-<div class="clean-header">
-  <h1>Typing Engine.</h1>
-  <p>Measure your typing speed and accuracy in real-time. A distraction-free environment to improve your keyboard velocity.</p>
-  <button class="btn-accent">Start Typing Test</button>
+<!-- Flat Header replacing Premium Banner -->
+<div class="flat-header">
+  <div class="icon-wrapper">
+    <!-- Inline Lucide SVG -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
+      <line x1="6" y1="8" x2="6" y2="8"></line>
+      <line x1="10" y1="8" x2="10" y2="8"></line>
+      <line x1="14" y1="8" x2="14" y2="8"></line>
+      <line x1="18" y1="8" x2="18" y2="8"></line>
+      <line x1="8" y1="12" x2="8" y2="12"></line>
+      <line x1="12" y1="12" x2="12" y2="12"></line>
+      <line x1="16" y1="12" x2="16" y2="12"></line>
+      <line x1="7" y1="16" x2="17" y2="16"></line>
+    </svg>
+  </div>
+  <h1>Typing Speed Test</h1>
+  <p>Test your typing speed and accuracy in real-time. Track your Words Per Minute (WPM), monitor your error rate, and improve your keyboard skills instantly in your browser.</p>
 </div>
+  
+  <div class="tool-wrapper">
+    <div class="st-app-replica">
+      
+      <!-- Setup Screen -->
+      <div id="setup-screen">
+        <div class="st-radio-group">
+          <span class="st-radio-label">Select Difficulty</span>
+          <label class="st-radio-option">
+            <input type="radio" name="difficulty" value="easy" checked> Easy (30 Letters)
+          </label>
+          <label class="st-radio-option">
+            <input type="radio" name="difficulty" value="medium"> Medium (15 Words)
+          </label>
+          <label class="st-radio-option">
+            <input type="radio" name="difficulty" value="hard"> Hard (10 Sentences)
+          </label>
+          <label class="st-radio-option">
+            <input type="radio" name="difficulty" value="expert"> Expert (1 Paragraph)
+          </label>
+        </div>
+        <button class="st-btn-primary" id="startBtn">Start Typing Test</button>
+      </div>
+  
+      <!-- Active Test Screen -->
+    <div id="test-screen" style="display: none;">
+      <div class="st-info-box">
+        Tap anywhere in the box below and start typing to begin.
+      </div>
+      
+      <div class="typing-box" id="typingBox">
+        <input
+          id="hiddenInput"
+          type="text"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+          inputmode="text"
+          aria-hidden="true"
+        />
+        <div id="progress">Loading...</div>
+        <div id="textDisplay" class="sentence"></div>
+        <div id="stats"></div>
+      </div>
+      <p class="mobile-hint">Using a phone? Tap the box above to bring up your keyboard.</p>
+      
+      <button class="st-btn-secondary" id="endBtn">End Test / Change Difficulty</button>
+    </div>
 
-<div class="tool-container">
-  <div class="st-radio-group">
-    <label class="st-radio-option">
-      <input type="radio" name="difficulty" value="easy" checked> Easy (30 Letters)
-    </label>
-    <label class="st-radio-option">
-      <input type="radio" name="difficulty" value="medium"> Medium (15 Words)
-    </label>
-    <label class="st-radio-option">
-      <input type="radio" name="difficulty" value="hard"> Hard (10 Sentences)
-    </label>
+      <!-- SEO Content -->
+      <article class="seo-article">
+        <h2>How to Improve Your Typing Speed</h2>
+        <p>Whether you are coding, writing emails, or drafting essays, typing speed is a critical productivity multiplier. Our free typing speed test is designed to help you benchmark your current Words Per Minute (WPM) and track your progress over time[cite: 5].</p>
+        
+        <h3>Top Tips for Faster Typing</h3>
+        <ul>
+          <li><strong>Master the Home Row:</strong> Rest your fingers on the ASDF and JKL; keys. This minimizes finger travel distance and builds muscle memory.</li>
+          <li><strong>Accuracy Over Speed:</strong> Do not rush. Hitting backspace destroys your WPM. Focus on hitting the correct keys slowly, and speed will naturally follow.</li>
+          <li><strong>Look at the Screen, Not the Keyboard:</strong> Touch typing requires trusting your hands. If you look down, you break your flow and lose your place in the text.</li>
+        </ul>
+
+        <h2>Frequently Asked Questions</h2>
+        
+        <div class="faq-box">
+          <details>
+            <summary>What is a good typing speed?</summary>
+            <p>The average typing speed is around 40 WPM. A speed of 60 WPM is considered good and is often required for professional administrative jobs. Programmers and writers frequently average between 70 and 90 WPM.</p>
+          </details>
+        </div>
+
+        <div class="faq-box">
+          <details>
+            <summary>How is WPM calculated?</summary>
+            <p>Words Per Minute (WPM) is standardized based on characters typed, not literal words. One "word" is calculated as 5 keystrokes. We take your total keystrokes, divide by 5, and adjust for the time elapsed.</p>
+          </details>
+        </div>
+      </article>
+      
+    </div>
   </div>
   
-  <div style="height: 150px; border: 1px solid #333333; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #666666;">
-    [ Typing Box Area ]
-  </div>
-</div>
+  <script>
+    const letters = ("abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;':,.<>/?`~ ").split("");
+    const words = [
+      "apple", "banana", "table", "chair", "mountain", "river", "ocean", "space", "rocket",
+      "planet", "orbit", "galaxy", "universe", "telescope", "computer", "keyboard", "mouse",
+      "screen", "window", "door", "house", "building", "street", "city", "country", "world",
+      "globe", "map", "compass", "north", "south", "east", "west", "up", "down", "left", "right",
+      "front", "back", "top", "bottom", "inside", "outside", "near", "far", "close", "open", "shut",
+      "lock", "key", "safe", "danger", "fast", "slow", "quick", "speedy", "rapid", "swift", "sudden",
+      "abrupt", "gradual", "steady", "constant", "changing", "dynamic", "static", "still", "quiet",
+      "loud", "noisy", "silent", "peaceful", "calm", "chaotic", "messy", "neat", "tidy", "clean", "dirty",
+      "filthy", "spotless", "bright", "dark", "light", "heavy", "soft", "hard", "rough", "smooth", "sharp",
+      "dull", "blunt", "pointed", "round", "square", "flat", "curved", "straight", "bent", "broken"
+    ];
+    const sentences = [
+      "The quick brown fox jumps over the lazy dog.",
+      "Pack my box with five dozen liquor jugs.",
+      "How vexingly quick daft zebras jump!",
+      "Sphinx of black quartz, judge my vow.",
+      "Two driven jocks help fax my big quiz.",
+      "Five quacking zephyrs jolt my wax bed.",
+      "The five boxing wizards jump quickly.",
+      "Bright vixens jump; dozy fowl quack.",
+      "A wizard's job is to vex chumps quickly in fog.",
+      "Watch Jeopardy, Alex Trebek's fun TV quiz game.",
+      "By Jove, my quick study of lexicography won a prize.",
+      "Programming is not about memorizing code; it is about solving problems.",
+      "Artificial Intelligence is changing the world very quickly.",
+      "The internet is a vast network that connects computers all over the world.",
+      "Cybersecurity is the practice of protecting systems, networks, and programs.",
+      "Software engineering is the systematic application of engineering approaches.",
+      "Cloud computing provides on-demand availability of computer system resources.",
+      "Python is an interpreted, high-level and general-purpose programming language."
+    ];
+    const paragraphs = [
+      "The morning sun cast a gentle golden glow across the quiet streets as the city slowly woke up. A cool breeze carried the sweet aroma of freshly brewed coffee from the corner bakery, welcoming early morning commuters on their way to work.",
+      "Consistency is the secret ingredient behind mastering any new skill in life. When you dedicate even ten minutes each day to focused practice, the compound effect over months and years produces remarkable results that talent alone cannot achieve.",
+      "Reading books is one of the most rewarding habits you can develop. It allows you to travel across different eras, explore distant worlds, and experience the thoughts of great minds throughout history, all from the comfort of your favorite armchair.",
+      "The ocean covers more than seventy percent of our planet and remains one of the least explored frontiers on Earth. Beneath its shimmering surface lie vast underwater mountain ranges, deep trenches, and countless mysterious creatures that have never seen sunlight.",
+      "In the modern digital era, learning how to type quickly and accurately is an essential superpower. It allows your thoughts to flow seamlessly onto the screen without interruption, boosting both your productivity and creative expression.",
+      "Clean code is like well-written prose; it is intuitive, easy to understand, and pleasant to maintain over time. Great software engineers do not just write code for machines to execute, but for fellow developers to read and improve.",
+      "Coding is equal parts logic and creativity. Whether building a simple calculator, designing an interactive game, or training a machine learning model, programming gives you the power to bring abstract ideas into tangible reality.",
+      "Master the art of finishing what you start. While starting new projects is exciting, the true satisfaction and growth come from pushing through the messy middle and bringing your work across the finish line."
+    ];
+  
+    const setupScreen = document.getElementById("setup-screen");
+    const testScreen = document.getElementById("test-screen");
+    const startBtn = document.getElementById("startBtn");
+    const endBtn = document.getElementById("endBtn");
+    const typingBox = document.getElementById("typingBox");
+    const hiddenInput = document.getElementById("hiddenInput");
+    const display = document.getElementById("textDisplay");
+    const stats = document.getElementById("stats");
+    const progress = document.getElementById("progress");
+  
+    let pool = [];
+    let targetCount = 0;
+    let currentTarget = "";
+    let currentIndex = 0;
+    let roundsCompleted = 0;
+    let startTime = null;
+    let totalCharactersTyped = 0;
+    let errors = 0;
+    let isTestActive = false;
+    let lastComposition = "";
+  
+    function render() {
+      progress.innerText = `Round: ${roundsCompleted + 1} / ${targetCount}`;
+      let html = "";
+      for (let i = 0; i < currentTarget.length; i++) {
+        if (i < currentIndex) {
+          html += `<span class="correct">${currentTarget[i]}</span>`;
+        } else if (i === currentIndex) {
+          html += `<span class="current">${currentTarget[i]}</span>`;
+        } else {
+          html += `<span>${currentTarget[i]}</span>`;
+        }
+      }
+      display.innerHTML = html;
+    }
 
+    function finishTest() {
+      let endTime = new Date().getTime();
+      let elapsedSeconds = (endTime - startTime) / 1000;
+      let wpm = (totalCharactersTyped / 5) / (elapsedSeconds / 60);
+      let accuracy = (totalCharactersTyped / (totalCharactersTyped + errors)) * 100;
+
+      progress.innerText = "Test Complete";
+      display.innerHTML = "";
+      stats.innerHTML = `Speed: ${wpm.toFixed(2)} WPM <br> Accuracy: ${accuracy.toFixed(2)}%`;
+      isTestActive = false;
+    }
+
+    function processChar(char) {
+      if (!isTestActive) return;
+      if (roundsCompleted >= targetCount) return;
+      if (startTime === null) startTime = new Date().getTime();
+
+      if (char === currentTarget[currentIndex]) {
+        currentIndex++;
+        totalCharactersTyped++;
+      } else {
+        errors++;
+      }
+
+      if (currentIndex === currentTarget.length) {
+        roundsCompleted++;
+        if (roundsCompleted === targetCount) {
+          finishTest();
+          return;
+        } else {
+          currentTarget = pool[Math.floor(Math.random() * pool.length)];
+          currentIndex = 0;
+        }
+      }
+      render();
+    }
+
+    hiddenInput.addEventListener("beforeinput", (e) => {
+      if (!isTestActive) {
+        e.preventDefault();
+        return;
+      }
+      e.preventDefault();
+
+      const insertingTypes = ["insertText", "insertCompositionText", "insertReplacementText"];
+      if (!insertingTypes.includes(e.inputType)) return;
+
+      let data = e.data;
+      if (!data) return;
+
+      if (data.length > 1) {
+        if (lastComposition && data.startsWith(lastComposition)) {
+          data = data.slice(lastComposition.length);
+        } else {
+          data = data.endsWith(" ") ? " " : "";
+          if (!data) return;
+        }
+      }
+
+      for (const ch of data) {
+        processChar(ch);
+      }
+
+      if (e.inputType === "insertCompositionText") {
+        lastComposition = e.data;
+      } else {
+        lastComposition = "";
+      }
+    });
+
+    typingBox.addEventListener("click", () => {
+      if (isTestActive) hiddenInput.focus();
+    });
+  
+    startBtn.addEventListener("click", () => {
+      const selectedDiff = document.querySelector('input[name="difficulty"]:checked').value;
+      
+      if (selectedDiff === "easy") {
+        pool = letters;
+        targetCount = 30;
+      } else if (selectedDiff === "medium") {
+        pool = words;
+        targetCount = 15;
+      } else if (selectedDiff === "hard") {
+        pool = sentences;
+        targetCount = 10;
+      } else {
+        pool = paragraphs;
+        targetCount = 1;
+      }
+  
+      currentTarget = pool[Math.floor(Math.random() * pool.length)];
+      currentIndex = 0;
+      roundsCompleted = 0;
+      startTime = null;
+      totalCharactersTyped = 0;
+      errors = 0;
+      isTestActive = true;
+      lastComposition = "";
+  
+      stats.innerHTML = "";
+      hiddenInput.value = "";
+      setupScreen.style.display = "none";
+      testScreen.style.display = "block";
+      
+      render();
+      hiddenInput.focus();
+    });
+  
+    endBtn.addEventListener("click", () => {
+      isTestActive = false;
+      hiddenInput.blur();
+      testScreen.style.display = "none";
+      setupScreen.style.display = "block";
+    });
+  </script>
 </body>
 </html>
