@@ -36,14 +36,14 @@
     color: #00d2ff;
   }
 
-  /* --- Mobile Responsive Navigation --- */
+    /* --- Mobile Responsive Navigation & Layout --- */
   @media (max-width: 768px) {
     .global-nav {
       padding: 16px 20px;
     }
     
     .menu-toggle {
-      display: flex; /* Visible on mobile */
+      display: flex; /* Shows hamburger on mobile */
     }
 
     .nav-links {
@@ -64,7 +64,7 @@
     }
 
     .nav-links.open {
-      display: flex; /* Opens when hamburger is tapped */
+      display: flex !important; /* Opens menu when clicked */
     }
 
     .nav-links a {
@@ -76,6 +76,9 @@
     .nav-links a:last-child {
       border-bottom: none;
     }
+
+    .hero { margin: 60px auto 50px auto; }
+    .trust-grid { grid-template-columns: 1fr; gap: 32px; }
   }
   /* --- Clean Minimalist Resets --- */
   * {
@@ -391,5 +394,15 @@
   <div>&copy; 2026 OmniTools. 100% Client-Side Processing.</div>
 </footer>
 
+<script>
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  if (menuToggle && navLinks) {
+    menuToggle.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', isOpen);
+    });
+  }
+</script>
 </body>
 </html>
