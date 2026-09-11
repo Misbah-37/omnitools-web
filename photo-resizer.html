@@ -182,6 +182,48 @@
     outline: none;
     border-color: #1473E6;
   }
+    select {
+    width: 100%;
+    padding: 14px;
+    background-color: #000000;
+    color: #ffffff;
+    border: 1px solid #333333;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  select:focus {
+    outline: none;
+    border-color: #1473E6;
+  }
+
+  .preset-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .preset-btn {
+    background: #111111;
+    border: 1px solid #333333;
+    color: #cccccc;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .preset-btn:hover, .preset-btn.active {
+    background: #1473E6;
+    border-color: #1473E6;
+    color: #ffffff;
+  }
   
   .dimension-row { 
     display: grid; 
@@ -402,15 +444,33 @@
     <img id="imageToCrop" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" alt="Image to crop">
 </div>
     
+        <div class="input-group">
+        <label>Quick Presets</label>
+        <div class="preset-buttons">
+            <button type="button" class="preset-btn active" onclick="applyPreset(132, 170, this)">Passport (132×170)</button>
+            <button type="button" class="preset-btn" onclick="applyPreset(1080, 1080, this)">Square Avatar (1:1)</button>
+            <button type="button" class="preset-btn" onclick="applyPreset(1200, 630, this)">Social Banner (16:9)</button>
+            <button type="button" class="preset-btn" onclick="applyPreset(1240, 1754, this)">Document A4</button>
+        </div>
+    </div>
+
     <div class="dimension-row">
         <div class="input-group">
             <label>Target Width (px)</label>
-            <input type="number" id="widthInput" value="132" onchange="updateAspectRatio()">
+            <input type="number" id="widthInput" value="132" oninput="clearPresetActive(); updateAspectRatio();">
         </div>
         <div class="input-group">
             <label>Target Height (px)</label>
-            <input type="number" id="heightInput" value="170" onchange="updateAspectRatio()">
+            <input type="number" id="heightInput" value="170" oninput="clearPresetActive(); updateAspectRatio();">
         </div>
+    </div>
+
+    <div class="input-group">
+        <label>Output Format</label>
+        <select id="formatSelect" onchange="toggleFormat()">
+            <option value="image/jpeg">JPG / JPEG (Best for compression & smaller files)</option>
+            <option value="image/png">PNG (Best for sharpness & transparency)</option>
+        </select>
     </div>
     
     <div class="dimension-row">
@@ -491,6 +551,28 @@
         }
     });
 
+        function applyPreset(w, h, btn) {
+        widthInput.value = w;
+        heightInput.value = h;
+        document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+        if (btn) btn.classList.add('active');
+        updateAspectRatio();
+    }
+
+    function clearPresetActive() {
+        document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+    }
+
+    function toggleFormat() {
+        const format = document.getElementById('formatSelect').value;
+        const kbRows = document.querySelectorAll('.dimension-row')[1];
+        if (format === 'image/png') {
+            if (kbRows) kbRows.style.opacity = '0.4';
+        } else {
+            if (kbRows) kbRows.style.opacity = '1';
+        }
+    }
+
     function updateAspectRatio() {
         if (cropper) {
             const newRatio = parseInt(widthInput.value) / parseInt(heightInput.value);
@@ -498,15 +580,16 @@
         }
     }
 
-    const getBlob = (canvas, quality) => {
-        return new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', quality));
+    const getBlob = (canvas, format, quality) => {
+        return new Promise(resolve => canvas.toBlob(resolve, format, quality));
     };
 
-    function showSuccess(blob, statusEl, downloadBtn) {
+    function showSuccess(blob, statusEl, downloadBtn, ext) {
         statusEl.innerText = `Success! Final Size: ${(blob.size / 1024).toFixed(1)} KB`;
         statusEl.style.color = "#ffffff";
         const url = URL.createObjectURL(blob);
         downloadBtn.href = url;
+        downloadBtn.download = `OmniTools_Resized.${ext}`;
         downloadBtn.style.display = "block";
     }
 
@@ -514,42 +597,52 @@
         if (!cropper) return;
         const targetWidth = parseInt(widthInput.value);
         const targetHeight = parseInt(heightInput.value);
+        const format = document.getElementById('formatSelect').value;
+        const isPng = format === 'image/png';
+        const ext = isPng ? 'png' : 'jpg';
+
         const minBytes = parseFloat(document.getElementById('minKbInput').value) * 1024;
         const maxBytes = parseFloat(document.getElementById('maxKbInput').value) * 1024;
         const statusEl = document.getElementById('status');
         const downloadBtn = document.getElementById('downloadBtn');
 
-        if (minBytes >= maxBytes) {
+        if (!isPng && minBytes >= maxBytes) {
             alert("Maximum KB must be greater than Minimum KB.");
             return;
         }
 
-        statusEl.innerText = "Calculating perfect compression...";
+        statusEl.innerText = isPng ? "Rendering lossless PNG..." : "Calculating perfect compression...";
         statusEl.style.color = "#cccccc";
         downloadBtn.style.display = "none";
 
         const croppedCanvas = cropper.getCroppedCanvas();
-        
         const finalCanvas = document.createElement('canvas');
         finalCanvas.width = targetWidth;
         finalCanvas.height = targetHeight;
         const ctx = finalCanvas.getContext('2d');
         
-        ctx.fillStyle = '#FFFFFF';
-        ctx.fillRect(0, 0, targetWidth, targetHeight);
+        if (!isPng) {
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(0, 0, targetWidth, targetHeight);
+        }
         ctx.drawImage(croppedCanvas, 0, 0, targetWidth, targetHeight);
 
-        let blob = await getBlob(finalCanvas, 1.0);
+        if (isPng) {
+            const blob = await getBlob(finalCanvas, 'image/png');
+            return showSuccess(blob, statusEl, downloadBtn, 'png');
+        }
+
+        let blob = await getBlob(finalCanvas, 'image/jpeg', 1.0);
         if (blob.size < minBytes) {
             statusEl.innerText = `Error: Image is too small (${(blob.size/1024).toFixed(1)} KB) even at maximum quality. Upload a higher resolution photo.`;
             statusEl.style.color = "#ff9999";
             return;
         }
         if (blob.size <= maxBytes) {
-            return showSuccess(blob, statusEl, downloadBtn);
+            return showSuccess(blob, statusEl, downloadBtn, 'jpg');
         }
 
-        let minBlob = await getBlob(finalCanvas, 0.01);
+        let minBlob = await getBlob(finalCanvas, 'image/jpeg', 0.01);
         if (minBlob.size > maxBytes) {
             statusEl.innerText = `Error: Cannot compress enough. Minimum possible size is ${(minBlob.size/1024).toFixed(1)} KB.`;
             statusEl.style.color = "#ff9999";
@@ -559,10 +652,10 @@
         let min_q = 0.01, max_q = 1.0, best_blob = null;
         for (let i = 0; i < 15; i++) {
             let q = (min_q + max_q) / 2;
-            blob = await getBlob(finalCanvas, q);
+            blob = await getBlob(finalCanvas, 'image/jpeg', q);
             
             if (blob.size >= minBytes && blob.size <= maxBytes) {
-                return showSuccess(blob, statusEl, downloadBtn);
+                return showSuccess(blob, statusEl, downloadBtn, 'jpg');
             }
             
             if (blob.size > maxBytes) {
@@ -578,6 +671,7 @@
             statusEl.style.color = "#ffcc66";
             const url = URL.createObjectURL(best_blob);
             downloadBtn.href = url;
+            downloadBtn.download = `OmniTools_Resized.jpg`;
             downloadBtn.style.display = "block";
         }
     }
