@@ -289,9 +289,69 @@
   font-weight: 400;
   }
 
+    /* --- Menu Toggle Button --- */
+  .menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 8px;
+    margin-left: auto;
+    border-radius: 6px;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+  }
+
+  .menu-toggle:hover {
+    color: #00d2ff;
+  }
+
   @media (max-width: 768px) {
-    .nav-links { display: none; }
-    .global-nav { padding: 20px; }
+    .global-nav {
+      padding: 16px 20px;
+    }
+    
+    .menu-toggle {
+      display: flex;
+    }
+
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid #222222;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 16px 24px;
+      gap: 12px;
+      box-sizing: border-box;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
+      margin: 0;
+    }
+
+    .nav-links.open {
+      display: flex !important;
+    }
+
+    .nav-links a {
+      font-size: 1rem;
+      padding: 10px 0;
+      border-bottom: 1px solid #161616;
+      width: 100%;
+      text-align: left;
+    }
+
+    .nav-links a:last-child {
+      border-bottom: none;
+    }
+
     .clean-header h1 { font-size: 2.5rem; }
     .dimension-row { grid-template-columns: 1fr; gap: 0; }
     .tool-panel { padding: 24px; }
@@ -302,7 +362,14 @@
 
 <nav class="global-nav">
   <a href="index.html" class="nav-brand">Omni<span>Tools</span></a>
-  <div class="nav-links">
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </button>
+  <div class="nav-links" id="navLinks">
     <a href="pdf-converter.html">PDF Suite</a>
     <a href="file-organizer.html">File Organizer</a>
     <a href="photo-resizer.html" class="active">Photo Resizer</a>
@@ -524,5 +591,15 @@
     </div>
     <div>&copy; 2026 OmniTools. 100% Client-Side Processing.</div>
   </footer>
+  <script>
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  if (menuToggle && navLinks) {
+    menuToggle.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', isOpen);
+    });
+  }
+</script>
 </body>
 </html>
