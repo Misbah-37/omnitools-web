@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Photo Resizer | OmniTools</title>
-<meta name="description" content="Losslessly resize, crop, and optimize JPEG, PNG, and WebP images. Precision scaling designed for web publishing and compliance.">
-<!-- Foundation & Social Meta Tags -->
+<meta name="description" content="Resize, compress, and convert images locally without uploading to any external servers. Secure in-browser processing.">
+  <!-- Foundation & Social Meta Tags -->
 <link rel="icon" type="image/png" href="favicon.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="OmniTools">
@@ -66,7 +66,7 @@
     display: flex;
     gap: 28px;
     align-items: center;
-    margin-left: auto;
+    margin-left: auto; /* Guarantees right alignment across all devices */
   }
   
   .nav-links a {
@@ -75,24 +75,6 @@
     font-size: 0.9rem;
     font-weight: 500;
     transition: color 0.2s ease;
-  }
-
-  /* --- Menu Toggle Button (Hidden on Desktop) --- */
-  .menu-toggle {
-    display: none;
-    background: transparent;
-    border: none;
-    color: #ffffff;
-    cursor: pointer;
-    padding: 8px;
-    margin-left: auto;
-    border-radius: 6px;
-    align-items: center;
-    justify-content: center;
-    transition: color 0.2s ease;
-  }
-  .menu-toggle:hover {
-    color: #00d2ff;
   }
   
   .nav-links a:hover, .nav-links a.active {
@@ -120,7 +102,7 @@
   .global-footer a:hover {
     color: #00d2ff;
   }
-
+  
   /* --- The Clean Hero --- */
   .clean-header {
     max-width: 800px;
@@ -130,11 +112,11 @@
   }
 
   .icon-wrapper {
-    margin-bottom: 24px;
-    color: #00d2ff; /* Electric Cyan Blue */
-    display: flex;
-    justify-content: center;
-    filter: drop-shadow(0 0 12px rgba(0, 210, 255, 0.4));
+  margin-bottom: 24px;
+  color: #00d2ff; /* Electric Cyan Blue */
+  display: flex;
+  justify-content: center;
+  filter: drop-shadow(0 0 12px rgba(0, 210, 255, 0.4)); /* Subtle ambient neon glow */
   }
 
   .clean-header h1 {
@@ -146,11 +128,11 @@
   }
 
   .clean-header p {
-    font-size: 1.25rem;
-    color: #999999;
-    margin: 0 auto 0 auto;
-    line-height: 1.5;
-    max-width: 650px;
+  font-size: 1.25rem;
+  color: #bbbbbb;
+  margin: 0 auto 0 auto;
+  line-height: 1.5;
+  max-width: 650px;
   }
 
   /* --- Tool Container & Structural Layout --- */
@@ -171,39 +153,42 @@
     box-sizing: border-box;
   }
 
-  /* Adobe-Style Outline Drag & Drop Zone */
-  .upload-box {
-    border: 2px dashed #333333;
-    border-radius: 8px;
-    padding: 48px 24px;
-    text-align: center;
-    background-color: #000000;
-    cursor: pointer;
-    transition: border-color 0.2s, background-color 0.2s;
-    margin-bottom: 24px;
+  .input-group { 
+    margin-bottom: 24px; 
   }
-
-  .upload-box:hover {
-    border-color: #555555;
-    background-color: #050505;
+  
+  .input-group label { 
+    display: block; 
+    font-size: 0.95rem; 
+    font-weight: 500; 
+    margin-bottom: 8px; 
+    color: #cccccc; 
   }
-
-  .upload-box svg {
-    color: #666666;
-    margin-bottom: 12px;
+  
+  input[type="number"], input[type="file"] { 
+    width: 100%; 
+    padding: 14px; 
+    background-color: #000000; 
+    color: #ffffff; 
+    border: 1px solid #333333; 
+    border-radius: 8px; 
+    box-sizing: border-box; 
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
   }
-
-  .upload-box span {
-    display: block;
-    color: #999999;
-    font-size: 0.95rem;
+  
+  input[type="number"]:focus, input[type="file"]:focus {
+    outline: none;
+    border-color: #1473E6;
   }
-
-  .upload-box span strong {
-    color: #ffffff;
+  
+  .dimension-row { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px; 
   }
-
-  /* Cropper Canvas Container */
+  
   .img-container { 
     width: 100%; 
     max-height: 400px; 
@@ -214,187 +199,99 @@
     border-radius: 8px; 
     overflow: hidden; 
   }
-
-  .img-container img { 
-    max-width: 100%; 
+  
+  img { 
     display: block; 
+    max-width: 100%; 
   }
-
-  /* Dimension Controls */
-  .dimension-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-bottom: 24px;
-  }
-
-  .input-group label {
+  
+  /* The Signature Solid Accent Button */
+  .btn-accent { 
     display: block;
-    font-size: 0.85rem;
-    color: #999999;
-    margin-bottom: 8px;
-    font-weight: 500;
-  }
-
-  .input-group input {
-    width: 100%;
-    padding: 14px 16px;
-    background-color: #000000;
-    border: 1px solid #333333;
-    border-radius: 8px;
-    color: #ffffff;
-    font-size: 0.95rem;
-    box-sizing: border-box;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-
-  .input-group input:focus {
-    border-color: #1473E6;
-  }
-
-  /* Signature Buttons */
-  .btn-accent {
-    display: none;
     background-color: #1473E6; 
-    color: #ffffff;
-    border: none;
-    padding: 16px 36px;
-    width: 100%;
+    color: #ffffff; 
+    border: none; 
+    padding: 16px 36px; 
+    width: 100%; 
     border-radius: 30px; 
-    font-weight: 600;
+    font-weight: 600; 
     font-size: 1.05rem;
-    cursor: pointer;
-    transition: background-color 0.2s;
+    cursor: pointer; 
+    margin-top: 16px; 
+    transition: background-color 0.2s ease;
     text-align: center;
-    box-sizing: border-box;
-  }
-
-  .btn-accent:hover {
-    background-color: #0d66d0;
-  }
-
-  .btn-download {
-    display: none;
-    background-color: #000000;
-    color: #ffffff;
-    border: 1px solid #333333;
-    padding: 14px 24px;
-    width: 100%;
-    border-radius: 30px;
-    font-weight: 500;
-    font-size: 0.95rem;
-    cursor: pointer;
-    margin-top: 16px;
     text-decoration: none;
-    text-align: center;
-    transition: border-color 0.2s, background-color 0.2s;
     box-sizing: border-box;
   }
-
-  .btn-download:hover {
-    border-color: #ffffff;
-    background-color: #0a0a0a;
+  
+  .btn-accent:hover { 
+    background-color: #0d66d0; 
   }
 
-  .status-text {
-    font-size: 0.9rem;
-    color: #999999;
-    margin-top: 16px;
-    text-align: center;
+  #downloadBtn { 
+    display: none; 
+    background-color: #ffffff;
+    color: #000000;
+  }
+  
+  #downloadBtn:hover {
+    background-color: #e2e8f0;
+  }
+
+  #status { 
+    text-align: center; 
+    margin-top: 16px; 
+    font-size: 0.95rem; 
+    font-weight: 500; 
+    color: #999999; 
   }
 
   /* --- SEO & Educational Content Section --- */
   .seo-article {
-    width: 100%;
-    max-width: 800px;
-    margin: 60px auto 20px auto;
-    color: #bbbbbb;
-    line-height: 1.7;
-    font-size: 1rem;
-    border-top: 1px solid #222222;
-    padding-top: 40px;
-  }
-
+  width: 100%;
+  max-width: 800px;
+  margin: 60px auto 20px auto;
+  color: #bbbbbb;
+  line-height: 1.7;
+  font-size: 1rem;
+  border-top: 1px solid #222222;
+  padding-top: 40px;
+}
+  
   .seo-article h2, .seo-article h3 {
     color: #ffffff;
     margin-top: 2rem;
     margin-bottom: 1rem;
   }
-
+  
   .seo-article h2 { font-size: 1.5rem; }
   .seo-article h3 { font-size: 1.2rem; }
   .seo-article ul { padding-left: 20px; }
   .seo-article li { margin-bottom: 10px; }
   
   .faq-box { margin-bottom: 16px; }
-  .faq-box details {
+  details {
     background-color: #121212;
     border: 1px solid #222222;
     border-radius: 8px;
     padding: 20px;
     cursor: pointer;
-  }
-  .faq-box summary {
-    font-weight: 500;
     color: #ffffff;
-    outline: none;
-    list-style: none;
+    font-weight: 600;
   }
-  .faq-box summary::-webkit-details-marker { display: none; }
+  details summary { outline: none; list-style: none; }
+  details summary::-webkit-details-marker { display: none; }
   .faq-box p {
-    margin: 16px 0 0 0;
-    font-size: 0.95rem;
-    color: #bbbbbb;
-    line-height: 1.6;
-    font-weight: 400;
+  margin: 16px 0 0 0;
+  font-size: 0.95rem;
+  color: #bbbbbb;
+  line-height: 1.6;
+  font-weight: 400;
   }
 
-  /* --- Mobile Responsive Navigation & Layout --- */
   @media (max-width: 768px) {
-    .global-nav {
-      padding: 16px 20px;
-    }
-    
-    .menu-toggle {
-      display: flex;
-    }
-
-    .nav-links {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      width: 100%;
-      background-color: rgba(0, 0, 0, 0.96);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid #222222;
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 16px 24px;
-      gap: 12px;
-      box-sizing: border-box;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
-      margin: 0;
-    }
-
-    .nav-links.open {
-      display: flex !important;
-    }
-
-    .nav-links a {
-      font-size: 1rem;
-      padding: 10px 0;
-      border-bottom: 1px solid #161616;
-      width: 100%;
-      text-align: left;
-    }
-
-    .nav-links a:last-child {
-      border-bottom: none;
-    }
-
+    .nav-links { display: none; }
+    .global-nav { padding: 20px; }
     .clean-header h1 { font-size: 2.5rem; }
     .dimension-row { grid-template-columns: 1fr; gap: 0; }
     .tool-panel { padding: 24px; }
@@ -403,17 +300,9 @@
 </head>
 <body>
 
-<!-- Global Navigation (Docked to the Right) -->
 <nav class="global-nav">
   <a href="index.html" class="nav-brand">Omni<span>Tools</span></a>
-  <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <line x1="3" y1="6" x2="21" y2="6"></line>
-      <line x1="3" y1="12" x2="21" y2="12"></line>
-      <line x1="3" y1="18" x2="21" y2="18"></line>
-    </svg>
-  </button>
-  <div class="nav-links" id="navLinks">
+  <div class="nav-links">
     <a href="pdf-converter.html">PDF Suite</a>
     <a href="file-organizer.html">File Organizer</a>
     <a href="photo-resizer.html" class="active">Photo Resizer</a>
@@ -424,25 +313,27 @@
 
 <div class="clean-header">
   <div class="icon-wrapper">
-    <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-6l-2-2H8a2 2 0 0 0-2 2z"></path><line x1="18" y1="18" x2="18" y2="22"></line><line x1="15" y1="22" x2="21" y2="22"></line></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+      <circle cx="8.5" cy="8.5" r="1.5"></circle>
+      <polyline points="21 15 16 10 5 21"></polyline>
+    </svg>
   </div>
   <h1>Photo Resizer.</h1>
-  <p>Resize, crop, and compress your image to exact dimensions and strict byte constraints locally in your browser.</p>
+  <p>Resize, compress, and convert images locally. Choose your target dimensions or file size, and export instantly. 100% private in-browser processing.</p>
 </div>
 
 <div class="app-container">
   
   <div class="tool-panel">
-    
-    <div class="upload-box" onclick="document.getElementById('imageInput').click()">
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-      <span><strong>Choose an image</strong> to crop & resize</span>
-      <input type="file" id="imageInput" style="display:none" accept="image/png, image/jpeg, image/jpg">
+    <div class="input-group">
+        <label>Select Photo</label>
+        <input type="file" id="imageInput" accept="image/png, image/jpeg, image/jpg">
     </div>
     
     <div class="img-container" id="cropContainer">
-        <img id="imageToCrop" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" alt="Image to crop">
-    </div>
+    <img id="imageToCrop" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" alt="Image to crop">
+</div>
     
     <div class="dimension-row">
         <div class="input-group">
@@ -455,44 +346,53 @@
         </div>
     </div>
     
-    <button class="btn-accent" id="processBtn">Crop & Optimize File</button>
-    <a class="btn-download" id="downloadBtn">Download Processed Image</a>
-    <div class="status-text" id="status"></div>
+    <div class="dimension-row">
+        <div class="input-group">
+            <label>Minimum Size (KB)</label>
+            <input type="number" id="minKbInput" value="20">
+        </div>
+        <div class="input-group">
+            <label>Maximum Size (KB)</label>
+            <input type="number" id="maxKbInput" value="50">
+        </div>
+    </div>
+    
+    <button class="btn-accent" onclick="processAndCompress()" id="processBtn" style="display:none;">Crop & Compress Photo</button>
+    <div id="status"></div>
+    <a id="downloadBtn" class="btn-accent" download="OmniTools_Ready.jpg">Download Resized Photo</a>
   </div>
 
-  <!-- Educational Article & Architecture Section -->
   <article class="seo-article">
-    <h2>Client-Side Image Resizing vs Cloud Converters</h2>
-    <p>Most standard image converters upload your personal photos, ID documents, and profile pictures to an external server where third parties can theoretically log and store your visual identity. The OmniTools Photo Resizer utilizes client-side HTML5 Canvas manipulation and binary Blob encoding to perform 100% of the cropping, resizing, and byte-budget optimization directly on your GPU/CPU.</p>
+    <h2>How to Resize and Compress Images Securely</h2>
+    <p>Whether you need to shrink a large photo for a website, meet a strict file size limit for a portal upload, or crop an image for social media, our Photo Cropper & Resizer handles it all locally. Because the processing happens entirely in your browser, your files are never uploaded to any external servers, ensuring complete privacy.</p>
     
-    <h3>Technical Optimization Pipeline</h3>
+    <h3>Tips for Perfect Image Compression</h3>
     <ul>
-      <li><strong>Bilinear Pixel Interpolation:</strong> Downscale high-resolution camera photos to exact pixel targets without creating jagged artifacts.</li>
-      <li><strong>Iterative Byte-Target Compression:</strong> Automatically adjusts JPEG quantization tables to guarantee your file fits under strict upload thresholds (e.g., &lt;50KB) while preserving maximum visual fidelity.</li>
-      <li><strong>Aspect-Locked Freeform Cropping:</strong> Crop specific facial frames or product boundaries while maintaining your destination aspect ratio automatically.</li>
+      <li><strong>Lock Your Aspect Ratio:</strong> When changing dimensions, ensure your width and height remain proportional to avoid stretching or squishing the photo. Our tool calculates this automatically when you use the crop feature.</li>
+      <li><strong>Understand KB Limits:</strong> If a website requires a file under 50KB, compressing a massive 4K image might reduce the quality too much. Try reducing the target width (e.g., to 800px or 1200px) before compressing to maintain a sharper look at lower file sizes.</li>
+      <li><strong>JPEG vs PNG:</strong> If your image has a transparent background, you must use PNG. However, for standard photographs, exporting as a JPEG will yield a much smaller file size without a noticeable drop in visual quality.</li>
     </ul>
 
-    <h3>Frequently Asked Questions</h3>
+    <h2>Frequently Asked Questions</h2>
+    
     <div class="faq-box">
       <details>
-        <summary>Will this reduce the visual clarity of my photo?</summary>
-        <p>No. Our compression engine uses iterative binary search to calculate the highest possible JPEG quality level that still satisfies your target file-size constraints.</p>
+        <summary>Why does the image process in my browser instead of a server?</summary>
+        <p>Processing images locally (client-side) is significantly faster and 100% secure. You don't have to wait for large files to upload or download, and you never have to worry about your personal photos being stored on a third-party server.</p>
       </details>
     </div>
 
     <div class="faq-box">
       <details>
-        <summary>Can I resize pictures on my mobile phone?</summary>
-        <p>Yes. The entire processing engine runs natively inside modern mobile browsers (iOS Safari, Android Chrome) with zero app installations required.</p>
+        <summary>What does "Target Dimensions" do?</summary>
+        <p>It forces your final image to be exactly the width and height you specify in pixels. The Cropper tool lets you select exactly which part of your original image will fit into those new dimensions so nothing gets awkwardly stretched.</p>
       </details>
     </div>
   </article>
 
 </div>
 
-<!-- CropperJS JS (CDN) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
-
 <script>
     let cropper;
     const imageToCrop = document.getElementById('imageToCrop');
@@ -535,82 +435,94 @@
         return new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', quality));
     };
 
-    processBtn.addEventListener('click', async function() {
-        if (!cropper) return;
+    function showSuccess(blob, statusEl, downloadBtn) {
+        statusEl.innerText = `Success! Final Size: ${(blob.size / 1024).toFixed(1)} KB`;
+        statusEl.style.color = "#ffffff";
+        const url = URL.createObjectURL(blob);
+        downloadBtn.href = url;
+        downloadBtn.style.display = "block";
+    }
 
+    async function processAndCompress() {
+        if (!cropper) return;
         const targetWidth = parseInt(widthInput.value);
         const targetHeight = parseInt(heightInput.value);
-        const status = document.getElementById('status');
+        const minBytes = parseFloat(document.getElementById('minKbInput').value) * 1024;
+        const maxBytes = parseFloat(document.getElementById('maxKbInput').value) * 1024;
+        const statusEl = document.getElementById('status');
         const downloadBtn = document.getElementById('downloadBtn');
 
-        status.innerText = "Processing image...";
-        status.style.color = "#999999";
+        if (minBytes >= maxBytes) {
+            alert("Maximum KB must be greater than Minimum KB.");
+            return;
+        }
 
-        // Get cropped canvas at target dimensions
-        const canvas = cropper.getCroppedCanvas({
-            width: targetWidth,
-            height: targetHeight,
-            imageSmoothingEnabled: true,
-            imageSmoothingQuality: 'high',
-        });
+        statusEl.innerText = "Calculating perfect compression...";
+        statusEl.style.color = "#cccccc";
+        downloadBtn.style.display = "none";
 
-        const minBytes = 20 * 1024;
-        const maxBytes = 50 * 1024;
-        let finalBlob = null;
+        const croppedCanvas = cropper.getCroppedCanvas();
+        
+        const finalCanvas = document.createElement('canvas');
+        finalCanvas.width = targetWidth;
+        finalCanvas.height = targetHeight;
+        const ctx = finalCanvas.getContext('2d');
+        
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, targetWidth, targetHeight);
+        ctx.drawImage(croppedCanvas, 0, 0, targetWidth, targetHeight);
 
-        // Binary search for ideal JPEG quality to stay under size limits
-        let low = 0.05, high = 1.0;
-        let bestBlob = null;
+        let blob = await getBlob(finalCanvas, 1.0);
+        if (blob.size < minBytes) {
+            statusEl.innerText = `Error: Image is too small (${(blob.size/1024).toFixed(1)} KB) even at maximum quality. Upload a higher resolution photo.`;
+            statusEl.style.color = "#ff9999";
+            return;
+        }
+        if (blob.size <= maxBytes) {
+            return showSuccess(blob, statusEl, downloadBtn);
+        }
 
-        for (let i = 0; i < 8; i++) {
-            let mid = (low + high) / 2;
-            let blob = await getBlob(canvas, mid);
+        let minBlob = await getBlob(finalCanvas, 0.01);
+        if (minBlob.size > maxBytes) {
+            statusEl.innerText = `Error: Cannot compress enough. Minimum possible size is ${(minBlob.size/1024).toFixed(1)} KB.`;
+            statusEl.style.color = "#ff9999";
+            return;
+        }
 
-            if (blob.size <= maxBytes) {
-                bestBlob = blob;
-                low = mid; 
+        let min_q = 0.01, max_q = 1.0, best_blob = null;
+        for (let i = 0; i < 15; i++) {
+            let q = (min_q + max_q) / 2;
+            blob = await getBlob(finalCanvas, q);
+            
+            if (blob.size >= minBytes && blob.size <= maxBytes) {
+                return showSuccess(blob, statusEl, downloadBtn);
+            }
+            
+            if (blob.size > maxBytes) {
+                max_q = q;
             } else {
-                high = mid; 
+                min_q = q;
+                best_blob = blob;
             }
         }
-
-        finalBlob = bestBlob;
-
-        if (!finalBlob) {
-            finalBlob = await getBlob(canvas, 0.05);
-        }
-
-        const sizeKb = (finalBlob.size / 1024).toFixed(2);
         
-        status.innerHTML = `Successfully processed! Resulting size: <strong>${sizeKb} KB</strong> (${targetWidth}x${targetHeight}px)`;
-        status.style.color = "#00d2ff";
-
-        const downloadUrl = URL.createObjectURL(finalBlob);
-        downloadBtn.href = downloadUrl;
-        downloadBtn.download = `resized_${targetWidth}x${targetHeight}.jpg`;
-        downloadBtn.style.display = "block";
-    });
-
-  // Mobile Menu Toggle
-  const menuToggle = document.getElementById('menuToggle');
-  const navLinks = document.getElementById('navLinks');
-  if (menuToggle && navLinks) {
-    menuToggle.addEventListener('click', () => {
-      const isOpen = navLinks.classList.toggle('open');
-      menuToggle.setAttribute('aria-expanded', isOpen);
-    });
-  }
+        if (best_blob) {
+            statusEl.innerText = `Warning: Settled on closest safe size: ${(best_blob.size / 1024).toFixed(1)} KB`;
+            statusEl.style.color = "#ffcc66";
+            const url = URL.createObjectURL(best_blob);
+            downloadBtn.href = url;
+            downloadBtn.style.display = "block";
+        }
+    }
 </script>
 
-<!-- Global Footer -->
-<footer class="global-footer">
-  <div style="margin-bottom: 16px;">
-    <a href="index.html">Home</a>
-    <a href="https://github.com/Misbah-37/omnitools-web" target="_blank" rel="noopener noreferrer">GitHub</a>
-    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">↑ Back to Top</a>
-  </div>
-  <div>&copy; 2026 OmniTools. 100% Client-Side Processing.</div>
-</footer>
-
+  <footer class="global-footer">
+    <div style="margin-bottom: 16px;">
+      <a href="index.html">Home</a>
+      <a href="https://github.com/Misbah-37/omnitools-web" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">↑ Back to Top</a>
+    </div>
+    <div>&copy; 2026 OmniTools. 100% Client-Side Processing.</div>
+  </footer>
 </body>
 </html>
