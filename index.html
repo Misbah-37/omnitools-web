@@ -17,6 +17,66 @@
 <meta name="twitter:image" content="https://raw.githubusercontent.com/Misbah-37/omnitools-web/main/social-banner.png">
 
 <style>
+    /* --- Menu Toggle Button (Hidden on Desktop) --- */
+  .menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 8px;
+    margin-left: auto;
+    border-radius: 6px;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+  }
+  
+  .menu-toggle:hover {
+    color: #00d2ff;
+  }
+
+  /* --- Mobile Responsive Navigation --- */
+  @media (max-width: 768px) {
+    .global-nav {
+      padding: 16px 20px;
+    }
+    
+    .menu-toggle {
+      display: flex; /* Visible on mobile */
+    }
+
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid #222222;
+      flex-direction: column;
+      padding: 16px 24px;
+      gap: 12px;
+      box-sizing: border-box;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
+    }
+
+    .nav-links.open {
+      display: flex; /* Opens when hamburger is tapped */
+    }
+
+    .nav-links a {
+      font-size: 1rem;
+      padding: 10px 0;
+      border-bottom: 1px solid #161616;
+    }
+
+    .nav-links a:last-child {
+      border-bottom: none;
+    }
+  }
   /* --- Clean Minimalist Resets --- */
   * {
     box-sizing: border-box;
