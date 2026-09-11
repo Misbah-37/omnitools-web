@@ -26,8 +26,8 @@ Most online utility sites quietly upload your sensitive photos, contracts, and d
 * **Features**: Native standalone Windows utility that categorizes messy folders (e.g. `Downloads`, `Desktop`) into 12 distinct categories in seconds.
 * **Security & Integrity**: 
   * **Network Access**: 0 Bytes (Completely offline).
-  * **Integrity Hash (SHA-256)**: `fb1f049609e868132699d07f07736423b821371cfce3d146469f689a7ed4fca2`
-  * **VirusTotal**: [0/70 Detections Clean](https://www.virustotal.com/gui/file/fb1f049609e868132699d07f07736423b821371cfce3d146469f689a7ed4fca2)
+  * **Integrity Hash (SHA-256)**: `fe54fa49bde4b8830c8c47b5b3b3c9cfa22fe5a625a2ed18ce71b72a4f7f0b72`
+  * **VirusTotal**: [Verified Clean Report](https://www.virustotal.com/gui/file/fe54fa49bde4b8830c8c47b5b3b3c9cfa22fe5a625a2ed18ce71b72a4f7f0b72)
 
 ### 3. 🖼️ Photo Resizer & Compressor (`photo-resizer.html`)
 * **Features**: In-browser cropping, 1-click dimension presets (Passport, Square Avatar, Social Banner, Document A4), target KB compression, and PNG (lossless) vs. JPG format selection.
