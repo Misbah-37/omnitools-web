@@ -396,6 +396,24 @@
   line-height: 1.6;
   font-weight: 400;
   }
+    /* --- Menu Toggle Button --- */
+  .menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 8px;
+    margin-left: auto;
+    border-radius: 6px;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+  }
+
+  .menu-toggle:hover {
+    color: #00d2ff;
+  }
 
     @media (max-width: 768px) {
     .global-nav {
@@ -997,7 +1015,7 @@ async function extractText() {
         status.style.color = "#ff4444";
     }
 }
-<script>
+</script>
 <script>
   const menuToggle = document.getElementById('menuToggle');
   const navLinks = document.getElementById('navLinks');
