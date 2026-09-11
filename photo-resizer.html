@@ -12,7 +12,31 @@
 <meta property="og:title" content="OmniTools | Professional Client-Side Utilities">
 <meta property="og:description" content="Secure, fast, and 100% offline digital utilities. Process PDFs, resize photos, and organize files locally.">
 <meta property="og:image" content="https://misbah-37.github.io/omnitools-web/social-banner.png">
-
+<!-- Schema.org FAQ Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why does the image process in my browser instead of a server?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Processing images locally (client-side) is significantly faster and 100% secure. You do not have to wait for large files to upload or download, and you never have to worry about your personal photos being stored on a third-party server."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does \"Target Dimensions\" do?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It forces your final image to be exactly the width and height you specify in pixels. The Cropper tool lets you select exactly which part of your original image will fit into those new dimensions so nothing gets awkwardly stretched."
+      }
+    }
+  ]
+}
+</script>
 <!-- CropperJS CSS (CDN) -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" rel="stylesheet">
 
