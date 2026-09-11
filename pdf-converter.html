@@ -12,6 +12,32 @@
 <meta property="og:title" content="OmniTools | Professional Client-Side Utilities">
 <meta property="og:description" content="Secure, fast, and 100% offline digital utilities. Process PDFs, resize photos, and organize files locally.">
 <meta property="og:image" content="https://misbah-37.github.io/omnitools-web/social-banner.png">
+
+<!-- Schema.org FAQ Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is it safe to upload secure forms here?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You aren't actually uploading anything. All the code that powers this PDF tool runs entirely within your web browser on your device using WebAssembly and client-side JavaScript. Your documents never travel across the internet or touch any external server."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why didn't my PDF compress very much?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because this tool runs in the browser, it focuses on structural compression—removing duplicate objects, unused fonts, and metadata without re-encoding and degrading your high-resolution images."
+      }
+    }
+  ]
+}
+</script>
 <!-- Required PDF Libraries -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
