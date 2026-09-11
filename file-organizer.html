@@ -12,6 +12,31 @@
 <meta property="og:title" content="OmniTools | Professional Client-Side Utilities">
 <meta property="og:description" content="Secure, fast, and 100% offline digital utilities. Process PDFs, resize photos, and organize files locally.">
 <meta property="og:image" content="https://misbah-37.github.io/omnitools-web/social-banner.png">
+<!-- Schema.org FAQ Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why can't this run directly in the web browser?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Modern web browsers have strict security sandboxes that intentionally prevent web pages from moving, renaming, and categorizing arbitrary files across your computer directories. A standalone local desktop application is required to safely interact with your local file system."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the executable file safe to run?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The OmniTools File Organizer operates 100% locally with zero internet communication, no registry modifications, and verified 0/70 clean detections on VirusTotal. It simply reads file extensions in the directory you select and moves them into organized category folders."
+      }
+    }
+  ]
+}
+</script>
 <style>
   /* --- Clean Minimalist Resets --- */
   * {
