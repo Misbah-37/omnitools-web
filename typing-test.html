@@ -287,6 +287,38 @@
     font-weight: 600;
     text-shadow: 0 0 10px rgba(0, 210, 255, 0.6);
   }
+    .current.error-flash {
+    color: #ff4444 !important;
+    background-color: rgba(255, 68, 68, 0.25) !important;
+    border-bottom-color: #ff4444 !important;
+    text-shadow: 0 0 10px rgba(255, 68, 68, 0.8) !important;
+    animation: shake 0.2s ease-in-out;
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    75% { transform: translateX(3px); }
+  }
+
+  .high-score-badge {
+    display: inline-block;
+    background: rgba(20, 115, 230, 0.15);
+    border: 1px solid #1473E6;
+    color: #00d2ff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-top: 12px;
+  }
+
+  .live-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
   
   #stats { 
     font-size: 1.1rem; 
@@ -499,9 +531,13 @@
           inputmode="text"
           aria-label="Typing input area"
         />
-        <div id="progress">Loading...</div>
+                <div class="live-stats">
+          <div id="progress">Loading...</div>
+          <div id="liveWpm" style="font-size: 0.9rem; font-weight: 600; color: #00d2ff;">0 WPM</div>
+        </div>
         <div id="textDisplay" class="sentence"></div>
         <div id="stats"></div>
+        <div id="highScoreDisplay"></div>
       </div>
       <p class="mobile-hint">Using a phone? Tap the box above to bring up your keyboard.</p>
       
@@ -608,8 +644,33 @@
   let isTestActive = false;
   let lastComposition = "";
 
+    const liveWpmEl = document.getElementById("liveWpm");
+  const highScoreEl = document.getElementById("highScoreDisplay");
+  let currentDifficulty = "easy";
+
+  function updateLiveWpm() {
+    if (!startTime || totalCharactersTyped === 0) {
+      if (liveWpmEl) liveWpmEl.innerText = "0 WPM";
+      return;
+    }
+    const elapsedMinutes = (new Date().getTime() - startTime) / 60000;
+    const currentWpm = Math.max(0, Math.round((totalCharactersTyped / 5) / elapsedMinutes));
+    if (liveWpmEl) liveWpmEl.innerText = `${currentWpm} WPM`;
+  }
+
+  function flashError() {
+    const currentSpan = display.querySelector(".current");
+    if (currentSpan) {
+      currentSpan.classList.add("error-flash");
+      setTimeout(() => {
+        currentSpan.classList.remove("error-flash");
+      }, 200);
+    }
+  }
+
   function render() {
     progress.innerText = `Round: ${roundsCompleted + 1} / ${targetCount}`;
+    updateLiveWpm();
     let html = "";
     for (let i = 0; i < currentTarget.length; i++) {
       if (i < currentIndex) {
@@ -626,12 +687,32 @@
   function finishTest() {
     let endTime = new Date().getTime();
     let elapsedSeconds = (endTime - startTime) / 1000;
-    let wpm = (totalCharactersTyped / 5) / (elapsedSeconds / 60);
-    let accuracy = (totalCharactersTyped / (totalCharactersTyped + errors)) * 100;
+    let wpm = Math.round((totalCharactersTyped / 5) / (elapsedSeconds / 60));
+    let accuracy = Math.round((totalCharactersTyped / (totalCharactersTyped + errors)) * 100);
 
     progress.innerText = "Test Complete";
     display.innerHTML = "";
-    stats.innerHTML = `Speed: ${wpm.toFixed(2)} WPM <br> Accuracy: ${accuracy.toFixed(2)}%`;
+    if (liveWpmEl) liveWpmEl.innerText = `${wpm} WPM`;
+
+    const storageKey = `omnitools_typing_best_${currentDifficulty}`;
+    const previousBest = parseInt(localStorage.getItem(storageKey) || "0", 10);
+    let isNewBest = false;
+
+    if (wpm > previousBest) {
+      localStorage.setItem(storageKey, wpm);
+      isNewBest = true;
+    }
+
+    const bestScore = Math.max(wpm, previousBest);
+    stats.innerHTML = `Speed: <strong>${wpm} WPM</strong> <br> Accuracy: <strong>${accuracy}%</strong>`;
+    
+    if (highScoreEl) {
+      highScoreEl.innerHTML = `
+        <div class="high-score-badge">
+          ${isNewBest ? '🏆 New Personal Best!' : '⭐ Personal Best'}: ${bestScore} WPM (${currentDifficulty.toUpperCase()})
+        </div>
+      `;
+    }
     isTestActive = false;
   }
 
@@ -645,6 +726,8 @@
       totalCharactersTyped++;
     } else {
       errors++;
+      flashError();
+      return;
     }
 
     if (currentIndex === currentTarget.length) {
@@ -699,6 +782,9 @@
 
   startBtn.addEventListener("click", () => {
     const selectedDiff = document.querySelector('input[name="difficulty"]:checked').value;
+        currentDifficulty = selectedDiff;
+    if (highScoreEl) highScoreEl.innerHTML = "";
+    if (liveWpmEl) liveWpmEl.innerText = "0 WPM";
     
     if (selectedDiff === "easy") {
       pool = letters;
