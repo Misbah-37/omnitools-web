@@ -1,592 +1,598 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>File Organizer | OmniTools</title>
-<meta name="description" content="A standalone, verified Windows application designed to instantly organize messy folders on your PC into 12 clean categories. Completely secure, running entirely on your local machine.">
-  <!-- Foundation & Social Meta Tags -->
-<link rel="icon" type="image/png" href="favicon.png">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="OmniTools">
-<meta property="og:title" content="OmniTools | Professional Client-Side Utilities">
-<meta property="og:description" content="Secure, fast, and 100% offline digital utilities. Process PDFs, resize photos, and organize files locally.">
-<meta property="og:image" content="https://misbah-37.github.io/omnitools-web/social-banner.png">
-<!-- Schema.org FAQ Structured Data -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "Why can't this run directly in the web browser?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Modern web browsers have strict security sandboxes that intentionally prevent web pages from moving, renaming, and categorizing arbitrary files across your computer directories. A standalone local desktop application is required to safely interact with your local file system."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Is the executable file safe to run?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. The OmniTools File Organizer operates 100% locally with zero internet communication, no registry modifications, and verified 0/70 clean detections on VirusTotal. It simply reads file extensions in the directory you select and moves them into organized category folders."
-      }
-    }
-  ]
-}
-</script>
-<style>
-  /* --- Clean Minimalist Resets --- */
-  * {
-    box-sizing: border-box;
-  }
-
-  body, html {
-    margin: 0;
-    padding: 0;
-    background-color: #000000;
-    color: #ffffff;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  /* --- Minimalist Global Nav (Docked & Right-Aligned) --- */
-  .global-nav {
-    position: sticky;
-    top: 0; 
-    left: 0; 
-    width: 100%;
-    padding: 18px 40px;
-    background-color: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid #222222;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-sizing: border-box;
-    z-index: 2000;
-  }
-  
-    .nav-brand {
-    font-size: 1.15rem;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    text-decoration: none;
-    color: #ffffff;
-    display: inline-block;
-  }
-  
-  .nav-brand span {
-    color: #00d2ff;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 28px;
-    align-items: center;
-    margin-left: auto; /* Guarantees right alignment across all devices */
-  }
-  
-  .nav-links a {
-    color: #999999;
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: color 0.2s ease;
-  }
-    /* --- Menu Toggle Button (Hidden on Desktop) --- */
-  .menu-toggle {
-    display: none;
-    background: transparent;
-    border: none;
-    color: #ffffff;
-    cursor: pointer;
-    padding: 8px;
-    margin-left: auto;
-    border-radius: 6px;
-    align-items: center;
-    justify-content: center;
-    transition: color 0.2s ease;
-  }
-  .menu-toggle:hover {
-    color: #00d2ff;
-  }
-  
-  .nav-links a:hover, .nav-links a.active {
-    color: #00d2ff; /* Electric cyan hover & active indicator */
-  }
-
-  /* --- Global Footer --- */
-  .global-footer {
-    border-top: 1px solid #222222;
-    padding: 40px 24px;
-    text-align: center;
-    color: #666666;
-    font-size: 0.9rem;
-    background-color: #000000;
-    margin-top: 60px;
-  }
-
-  .global-footer a {
-    color: #999999;
-    text-decoration: none;
-    transition: color 0.2s;
-    margin: 0 12px;
-  }
-
-  .global-footer a:hover {
-    color: #00d2ff;
-  }
-
-  /* --- The Clean Hero --- */
-  .clean-header {
-    max-width: 800px;
-    margin: 100px auto 60px auto;
-    padding: 0 24px;
-    text-align: center;
-  }
-
-  .icon-wrapper {
-  margin-bottom: 24px;
-  color: #00d2ff; /* Electric Cyan Blue */
-  display: flex;
-  justify-content: center;
-  filter: drop-shadow(0 0 12px rgba(0, 210, 255, 0.4)); /* Subtle ambient neon glow */
-}
-
-  .clean-header h1 {
-    font-size: 3.5rem;
-    font-weight: 700;
-    letter-spacing: -0.04em;
-    margin: 0 0 20px 0;
-    line-height: 1.1;
-  }
-
-  .clean-header p {
-    font-size: 1.25rem;
-    color: #999999;
-    margin: 0 auto 40px auto;
-    line-height: 1.5;
-    max-width: 650px;
-  }
-
-  /* The Signature Solid Accent Button */
-  .btn-accent {
-    display: inline-block;
-    background-color: #1473E6; 
-    color: #ffffff;
-    border: none;
-    padding: 16px 36px;
-    border-radius: 30px; 
-    font-size: 1.05rem;
-    font-weight: 600;
-    cursor: pointer;
-    text-decoration: none;
-    transition: background-color 0.2s;
-  }
-
-  .btn-accent:hover {
-    background-color: #0d66d0;
-  }
-
-  /* --- Tool Container & Structural Layout --- */
-  .app-container {
-    max-width: 850px;
-    margin: 0 auto 100px auto;
-    padding: 0 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-  }
-
-  .trust-badge-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    justify-content: center;
-    margin-bottom: 16px;
-  }
-
-  .trust-badge {
-    border: 1px solid #333333;
-    padding: 6px 16px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: #cccccc;
-  }
-
-  .platform-warning {
-    display: none;
-    align-items: flex-start;
-    gap: 10px;
-    background-color: #1a0505;
-    border: 1px solid #4a1515;
-    padding: 14px 16px;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    color: #ff9999;
-    line-height: 1.5;
-  }
-  
-  .platform-warning strong { color: #ffcccc; }
-
-  /* Flattened Cards */
-  .card-panel {
-    background-color: #121212; 
-    border: 1px solid #222222;
-    border-radius: 12px;
-    padding: 32px;
-  }
-
-  .card-panel h3, .cert-title {
-    margin: 0 0 24px 0;
-    color: #ffffff;
-    font-size: 1.25rem;
-    border-bottom: 1px solid #222222;
-    padding-bottom: 16px;
-    font-weight: 600;
-  }
-
-  .content-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-  }
-
-  .cert-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 16px;
-    font-size: 0.9rem;
-    color: #999999;
-  }
-
-  .cert-grid strong { color: #cccccc; }
-
-  .warning-box {
-    background-color: #1a1505;
-    border: 1px solid #4a3c15;
-    padding: 16px;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    color: #ffcc66;
-    line-height: 1.6;
-    margin-top: 24px;
-  }
-  
-  .warning-box strong { color: #ffeeaa; }
-
-  .steps-list { margin: 0; padding-left: 20px; color: #999999; line-height: 1.8; font-size: 0.95rem; }
-  .features-list { list-style: none; padding: 0; margin: 0; color: #999999; line-height: 1.8; font-size: 0.95rem; }
-  .features-list strong { color: #cccccc; }
-
-  /* Accordion / Categories Section */
-  details {
-    background-color: #121212;
-    border: 1px solid #222222;
-    border-radius: 8px;
-    padding: 20px;
-    cursor: pointer;
-    color: #ffffff;
-    font-weight: 600;
-  }
-  
-  details summary { outline: none; list-style: none; }
-  details summary::-webkit-details-marker { display: none; }
-  
-  .categories-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 12px;
-    margin-top: 24px;
-    font-weight: 400;
-    font-size: 0.9rem;
-    color: #999999;
-  }
-  
-  .category-item {
-    background-color: #000000;
-    padding: 14px;
-    border-radius: 6px;
-    border: 1px solid #222222;
-  }
-  
-  .category-item strong { color: #ffffff; display: block; margin-bottom: 6px; }
-  .category-item code { color: #1473E6; font-family: monospace; font-size: 0.85rem; }
-
-  /* --- SEO & Educational Content Section --- */
-  .seo-article {
-    width: 100%;
-    max-width: 800px;
-    margin: 60px auto 20px auto;
-    color: #999999;
-    line-height: 1.7;
-    font-size: 1rem;
-    border-top: 1px solid #222222;
-    padding-top: 40px;
-  }
-  
-  .seo-article h2, .seo-article h3 {
-    color: #ffffff;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-  }
-  
-  .seo-article h2 { font-size: 1.5rem; }
-  .seo-article h3 { font-size: 1.2rem; }
-  .seo-article ul { padding-left: 20px; }
-  .seo-article li { margin-bottom: 10px; }
-  
-  .faq-box { margin-bottom: 16px; }
-  .faq-box p {
-    margin: 16px 0 0 0;
-    font-size: 0.95rem;
-    color: #999999;
-    line-height: 1.6;
-  }
-
-    /* --- Mobile Responsive Navigation & Layout --- */
-  @media (max-width: 768px) {
-    .global-nav {
-      padding: 16px 20px;
-    }
-    
-    .menu-toggle {
-      display: flex;
-    }
-
-    .nav-links {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      width: 100%;
-      background-color: rgba(0, 0, 0, 0.96);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid #222222;
-      flex-direction: column;
-      align-items: flex-start; /* 👈 Locks items flush to the left under OmniTools */
-      padding: 16px 24px;
-      gap: 12px;
-      box-sizing: border-box;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
-      margin: 0;
-    }
-
-    .nav-links.open {
-      display: flex !important;
-    }
-
-    .nav-links a {
-      font-size: 1rem;
-      padding: 10px 0;
-      border-bottom: 1px solid #161616;
-      width: 100%;
-      text-align: left; /* Left-aligns text */
-    }
-
-    .nav-links a:last-child {
-      border-bottom: none;
-    }
-
-    .clean-header h1 { font-size: 2.5rem; }
-    .content-grid { grid-template-columns: 1fr; }
-  }
-</style>
-</head>
-<body>
-
-<!-- Global Navigation (Docked to the Right) -->
-<nav class="global-nav">
-  <a href="index.html" class="nav-brand">Omni<span>Tools</span></a>
-  <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <line x1="3" y1="6" x2="21" y2="6"></line>
-      <line x1="3" y1="12" x2="21" y2="12"></line>
-      <line x1="3" y1="18" x2="21" y2="18"></line>
-    </svg>
-  </button>
-  <div class="nav-links" id="navLinks">
-    <a href="pdf-converter.html">PDF Suite</a>
-    <a href="file-organizer.html" class="active">File Organizer</a>
-    <a href="photo-resizer.html">Photo Resizer</a>
-    <a href="qr-generator.html">QR Generator</a>
-    <a href="typing-test.html">Typing Test</a>
-  </div>
-</nav>
-
-<div class="clean-header">
-  <div class="icon-wrapper">
-    <!-- Inline Lucide SVG matching the new asset baseline -->
-    <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-    </svg>
-  </div>
-  <h1>File Organizer.</h1>
-  <p>A native application that structures messy directories into 12 clean categories instantly. Completely secure, running entirely on your local machine.</p>
-  
-      <div class="trust-badge-container">
-    <a href="https://www.virustotal.com/gui/file/fe54fa49bde4b8830c8c47b5b3b3c9cfa22fe5a625a2ed18ce71b72a4f7f0b72" target="_blank" rel="noopener noreferrer" class="trust-badge" style="text-decoration: none; color: #00d2ff; border-color: #00d2ff;" title="View independent scan report on VirusTotal">
-      🛡️ VirusTotal Verified — 0 Detections on Microsoft & Major Engines (View Report ↗)
-    </a>
-    <span class="trust-badge">100% Offline</span>
-    <span class="trust-badge">Portable App</span>
-  </div>
-  
-  <a href="File_Organizer.zip" id="downloadBtnHero" class="btn-accent" download>Download for Windows (Portable ZIP)</a>
-</div>
-
-<div class="app-container">
-  
-  <div id="platformWarning" class="platform-warning">
-    <span id="platformWarningText"></span>
-  </div>
-
-  <div class="card-panel">
-    <h3 class="cert-title">Verified Application Certificate</h3>
-    <div class="cert-grid">
-      <div><strong>Application:</strong> File_Organizer.exe (Native x64)</div>
-      <div><strong>Publisher:</strong> OmniTools Open Source</div>
-      <div><strong>Network Access:</strong> None (0 Bytes Outbound)</div>
-      <div><strong>Privacy Policy:</strong> Zero Data Collection</div>
-      <div><strong>Antivirus Status:</strong> Clean (Passed Microsoft Defender, Bitdefender, Kaspersky)</div>
-      <div><strong>System Integrity:</strong> Portable (No Registry or System Changes)</div>
-      <div style="grid-column: 1 / -1; margin-top: 8px; padding-top: 12px; border-top: 1px dashed #222222; word-break: break-all;">
-        <strong>SHA-256 Checksum:</strong> <code style="color: #00d2ff; font-family: monospace; font-size: 0.82rem;">fe54fa49bde4b8830c8c47b5b3b3c9cfa22fe5a625a2ed18ce71b72a4f7f0b72</code>
-      </div>
-    </div>
-  </div>
-
-  <div class="content-grid">
-    <div class="card-panel">
-      <h3>How to use</h3>
-      <ol class="steps-list">
-        <li><strong>Download & Extract:</strong> Extract the <code>File_Organizer.zip</code> folder anywhere on your PC.</li>
-        <li><strong>Launch:</strong> Open the extracted folder and double-click <code>file_organizer.exe</code>.</li>
-        <li><strong>Select Directory:</strong> Click <strong>Browse</strong> to choose your messy folder (e.g., <code>Downloads</code> or <code>Desktop</code>).</li>
-        <li><strong>Organize:</strong> Click <strong>Organize!</strong> and watch your files get categorized in seconds.</li>
-      </ol>
-      <div class="warning-box" style="line-height: 1.5; font-size: 0.85rem;">
-        <strong>Why does Windows SmartScreen show a popup?</strong><br>
-        As an independent open-source project, OmniTools does not purchase $400/year corporate code-signing certificates. Because the binary is new, Windows SmartScreen and 3 heuristic AI engines flag unsigned binaries as "unrecognized". All major antivirus engines (Microsoft Defender, Bitdefender, Kaspersky, Sophos) verify this file as 100% clean.<br>
-        ➔ Click <strong>More info</strong> ➔ Click <strong>Run anyway</strong>.
-      </div>
-    </div>
-
-    <div class="card-panel">
-      <h3>Key Features</h3>
-      <ul class="features-list">
-        <li><strong>Native Windows Picker:</strong> Select any directory effortlessly.</li>
-        <li><strong>1-Click Sorting:</strong> Automatically structures files into 12 categories.</li>
-        <li><strong>Complete Privacy:</strong> Operates 100% locally with zero internet communication.</li>
-        <li><strong>Portable:</strong> Single executable file under 20MB.</li>
-      </ul>
-    </div>
-  </div>
-
-  <details>
-    <summary>View Supported File Categories & Extensions</summary>
-    <div class="categories-grid">
-      <div class="category-item"><strong>Data & Spreadsheets</strong> <code>.csv, .xlsx, .json, .xml, .sql</code></div>
-      <div class="category-item"><strong>Documents</strong> <code>.pdf, .docx, .txt, .rtf, .md</code></div>
-      <div class="category-item"><strong>Presentations</strong> <code>.pptx, .ppt, .key</code></div>
-      <div class="category-item"><strong>Images</strong> <code>.jpg, .png, .svg, .webp, .raw</code></div>
-      <div class="category-item"><strong>Design Files</strong> <code>.psd, .ai, .xd, .fig</code></div>
-      <div class="category-item"><strong>Videos</strong> <code>.mp4, .mov, .mkv, .webm</code></div>
-      <div class="category-item"><strong>Audio</strong> <code>.mp3, .wav, .flac, .ogg</code></div>
-      <div class="category-item"><strong>Archives & Zips</strong> <code>.zip, .rar, .7z, .tar, .gz</code></div>
-      <div class="category-item"><strong>Programming</strong> <code>.py, .js, .html, .css, .cpp, .sh</code></div>
-      <div class="category-item"><strong>Applications</strong> <code>.exe, .msi, .apk, .dmg</code></div>
-      <div class="category-item"><strong>Disc Images</strong> <code>.iso, .img</code></div>
-      <div class="category-item"><strong>Fonts</strong> <code>.ttf, .otf</code></div>
-    </div>
-  </details>
-
-  <article class="seo-article">
-    <h2>Why Use a Local Desktop File Organizer?</h2>
-    <p>A cluttered computer desktop can slow down your productivity and make finding important documents a nightmare. While many web-based tools offer to process individual files, managing entire messy folders safely requires a different approach. Our Desktop File Organizer is a compiled Windows application that runs entirely on your local machine, avoiding the limitations of web browser file sandboxes.</p>
-    
-    <h3>Best Practices for Digital Organization</h3>
-    <ul>
-      <li><strong>Sort Regularly:</strong> Don't wait until your <code>Downloads</code> or <code>Desktop</code> folder has thousands of files. Run the organizer weekly to maintain a clean workspace.</li>
-      <li><strong>Review Categories:</strong> The app automatically sorts files into 12 distinct folders (like Documents, Images, Data & Spreadsheets). Once sorted, quickly review these folders to delete old or unnecessary files.</li>
-      <li><strong>Keep System Files Safe:</strong> The organizer is designed for user directories (like Desktop or Downloads). Avoid running it in critical system folders (like <code>C:\Windows</code>) to prevent accidental reorganization of application dependencies.</li>
-    </ul>
-
-    <h2>Frequently Asked Questions</h2>
-    
-    <div class="faq-box">
-      <details>
-        <summary>Why can't this run directly in the web browser?</summary>
-        <p>Modern web browsers have strict security sandboxes that intentionally prevent websites from reading, moving, or modifying files directly on your hard drive. To achieve instant, batch organization across your folders without uploading everything, a dedicated native desktop application is required.</p>
-      </details>
-    </div>
-
-    <div class="faq-box">
-      <details>
-        <summary>Is the executable file safe to run?</summary>
-        <p>Yes. The OmniTools File Organizer operates 100% locally with zero internet communication. It has 0 bytes of outbound network access, meaning it physically cannot transmit your personal data anywhere. If Windows SmartScreen flags it with a blue popup upon the first launch, it is simply because it is an independent open-source tool without a corporate publisher certificate.</p>
-      </details>
-    </div>
-  </article>
-
-</div>
-
-<script>
-  (function warnNonWindowsVisitors() {
-    const ua = navigator.userAgent || '';
-    const isWindows = /Windows/i.test(ua);
-    if (isWindows) return;
-
-    const isiOS = /iPhone|iPad|iPod/i.test(ua);
-    const isAndroid = /Android/i.test(ua);
-    const isMac = /Macintosh|Mac OS X/i.test(ua) && !isiOS;
-    const isLinux = /Linux/i.test(ua) && !isAndroid;
-
-    let device = 'device';
-    if (isiOS) device = 'iPhone/iPad';
-    else if (isAndroid) device = 'Android device';
-    else if (isMac) device = 'Mac';
-    else if (isLinux) device = 'Linux computer';
-    else return;
-
-    const banner = document.getElementById('platformWarning');
-    const bannerText = document.getElementById('platformWarningText');
-    const downloadBtn = document.getElementById('downloadBtnHero');
-
-    bannerText.innerHTML = `<strong>Heads up:</strong> this is a Windows-only desktop app (.exe) and won't run on your ${device}. Only download it if you plan to move the file to a Windows PC.`;
-    banner.style.display = 'flex';
-
-    if (isiOS || isAndroid) {
-      downloadBtn.textContent = 'Download Anyway (Windows Only)';
-    }
-  })();
-
-  // Mobile Menu Toggle
-  const menuToggle = document.getElementById('menuToggle');
-  const navLinks = document.getElementById('navLinks');
-  if (menuToggle && navLinks) {
-    menuToggle.addEventListener('click', () => {
-      const isOpen = navLinks.classList.toggle('open');
-      menuToggle.setAttribute('aria-expanded', isOpen);
-    });
-  }
-</script>
-
-<!-- Global Footer -->
-<footer class="global-footer">
-  <div style="margin-bottom: 16px;">
-    <a href="index.html">Home</a>
-    <a href="https://github.com/Misbah-37/omnitools-web" target="_blank" rel="noopener noreferrer">GitHub</a>
-    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">↑ Back to Top</a>
-  </div>
-  <div>&copy; 2026 OmniTools. 100% Client-Side Processing.</div>
-</footer>
-
-</body>
-</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>File Organizer | Tangent</title>
+<meta name="description" content="A standalone, verified Windows application designed to instantly organize messy folders on your PC into 12 clean categories. Completely secure, running entirely on your local machine.">
+  <!-- Foundation & Social Meta Tags -->
+<link rel="icon" type="image/png" href="favicon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tangent">
+<meta property="og:title" content="Tangent | Professional Client-Side Utilities">
+<meta property="og:description" content="Secure, fast, and 100% offline digital utilities. Process PDFs, resize photos, and organize files locally.">
+<meta property="og:image" content="https://misbah-37.github.io/omnitools-web/social-banner.png">
+<!-- Schema.org FAQ Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why can't this run directly in the web browser?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Modern web browsers have strict security sandboxes that intentionally prevent web pages from moving, renaming, and categorizing arbitrary files across your computer directories. A standalone local desktop application is required to safely interact with your local file system."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the executable file safe to run?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The Tangent File Organizer operates 100% locally with zero internet communication, no registry modifications, and verified 0/70 clean detections on VirusTotal. It simply reads file extensions in the directory you select and moves them into organized category folders."
+      }
+    }
+  ]
+}
+</script>
+<style>
+  /* --- Clean Minimalist Resets --- */
+  * {
+    box-sizing: border-box;
+  }
+
+  body, html {
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* --- Minimalist Global Nav (Docked & Right-Aligned) --- */
+  .global-nav {
+    position: sticky;
+    top: 0; 
+    left: 0; 
+    width: 100%;
+    padding: 18px 40px;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid #222222;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    z-index: 2000;
+  }
+  
+    .nav-brand {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    text-decoration: none;
+    color: #ffffff;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  
+  .nav-brand span {
+    color: #00d2ff;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+    margin-left: auto; /* Guarantees right alignment across all devices */
+  }
+  
+  .nav-links a {
+    color: #999999;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+    /* --- Menu Toggle Button (Hidden on Desktop) --- */
+  .menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 8px;
+    margin-left: auto;
+    border-radius: 6px;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+  }
+  .menu-toggle:hover {
+    color: #00d2ff;
+  }
+  
+  .nav-links a:hover, .nav-links a.active {
+    color: #00d2ff; /* Electric cyan hover & active indicator */
+  }
+
+  /* --- Global Footer --- */
+  .global-footer {
+    border-top: 1px solid #222222;
+    padding: 40px 24px;
+    text-align: center;
+    color: #666666;
+    font-size: 0.9rem;
+    background-color: #000000;
+    margin-top: 60px;
+  }
+
+  .global-footer a {
+    color: #999999;
+    text-decoration: none;
+    transition: color 0.2s;
+    margin: 0 12px;
+  }
+
+  .global-footer a:hover {
+    color: #00d2ff;
+  }
+
+  /* --- The Clean Hero --- */
+  .clean-header {
+    max-width: 800px;
+    margin: 100px auto 60px auto;
+    padding: 0 24px;
+    text-align: center;
+  }
+
+  .icon-wrapper {
+  margin-bottom: 24px;
+  color: #00d2ff; /* Electric Cyan Blue */
+  display: flex;
+  justify-content: center;
+  filter: drop-shadow(0 0 12px rgba(0, 210, 255, 0.4)); /* Subtle ambient neon glow */
+}
+
+  .clean-header h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    margin: 0 0 20px 0;
+    line-height: 1.1;
+  }
+
+  .clean-header p {
+    font-size: 1.25rem;
+    color: #999999;
+    margin: 0 auto 40px auto;
+    line-height: 1.5;
+    max-width: 650px;
+  }
+
+  /* The Signature Solid Accent Button */
+  .btn-accent {
+    display: inline-block;
+    background-color: #1473E6; 
+    color: #ffffff;
+    border: none;
+    padding: 16px 36px;
+    border-radius: 30px; 
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s;
+  }
+
+  .btn-accent:hover {
+    background-color: #0d66d0;
+  }
+
+  /* --- Tool Container & Structural Layout --- */
+  .app-container {
+    max-width: 850px;
+    margin: 0 auto 100px auto;
+    padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .trust-badge-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+
+  .trust-badge {
+    border: 1px solid #333333;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #cccccc;
+  }
+
+  .platform-warning {
+    display: none;
+    align-items: flex-start;
+    gap: 10px;
+    background-color: #1a0505;
+    border: 1px solid #4a1515;
+    padding: 14px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #ff9999;
+    line-height: 1.5;
+  }
+  
+  .platform-warning strong { color: #ffcccc; }
+
+  /* Flattened Cards */
+  .card-panel {
+    background-color: #121212; 
+    border: 1px solid #222222;
+    border-radius: 12px;
+    padding: 32px;
+  }
+
+  .card-panel h3, .cert-title {
+    margin: 0 0 24px 0;
+    color: #ffffff;
+    font-size: 1.25rem;
+    border-bottom: 1px solid #222222;
+    padding-bottom: 16px;
+    font-weight: 600;
+  }
+
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .cert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+    font-size: 0.9rem;
+    color: #999999;
+  }
+
+  .cert-grid strong { color: #cccccc; }
+
+  .warning-box {
+    background-color: #1a1505;
+    border: 1px solid #4a3c15;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #ffcc66;
+    line-height: 1.6;
+    margin-top: 24px;
+  }
+  
+  .warning-box strong { color: #ffeeaa; }
+
+  .steps-list { margin: 0; padding-left: 20px; color: #999999; line-height: 1.8; font-size: 0.95rem; }
+  .features-list { list-style: none; padding: 0; margin: 0; color: #999999; line-height: 1.8; font-size: 0.95rem; }
+  .features-list strong { color: #cccccc; }
+
+  /* Accordion / Categories Section */
+  details {
+    background-color: #121212;
+    border: 1px solid #222222;
+    border-radius: 8px;
+    padding: 20px;
+    cursor: pointer;
+    color: #ffffff;
+    font-weight: 600;
+  }
+  
+  details summary { outline: none; list-style: none; }
+  details summary::-webkit-details-marker { display: none; }
+  
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+    margin-top: 24px;
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: #999999;
+  }
+  
+  .category-item {
+    background-color: #000000;
+    padding: 14px;
+    border-radius: 6px;
+    border: 1px solid #222222;
+  }
+  
+  .category-item strong { color: #ffffff; display: block; margin-bottom: 6px; }
+  .category-item code { color: #1473E6; font-family: monospace; font-size: 0.85rem; }
+
+  /* --- SEO & Educational Content Section --- */
+  .seo-article {
+    width: 100%;
+    max-width: 800px;
+    margin: 60px auto 20px auto;
+    color: #999999;
+    line-height: 1.7;
+    font-size: 1rem;
+    border-top: 1px solid #222222;
+    padding-top: 40px;
+  }
+  
+  .seo-article h2, .seo-article h3 {
+    color: #ffffff;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .seo-article h2 { font-size: 1.5rem; }
+  .seo-article h3 { font-size: 1.2rem; }
+  .seo-article ul { padding-left: 20px; }
+  .seo-article li { margin-bottom: 10px; }
+  
+  .faq-box { margin-bottom: 16px; }
+  .faq-box p {
+    margin: 16px 0 0 0;
+    font-size: 0.95rem;
+    color: #999999;
+    line-height: 1.6;
+  }
+
+    /* --- Mobile Responsive Navigation & Layout --- */
+  @media (max-width: 768px) {
+    .global-nav {
+      padding: 16px 20px;
+    }
+    
+    .menu-toggle {
+      display: flex;
+    }
+
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.96);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid #222222;
+      flex-direction: column;
+      align-items: flex-start; /* 👈 Locks items flush to the left under OmniTools */
+      padding: 16px 24px;
+      gap: 12px;
+      box-sizing: border-box;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
+      margin: 0;
+    }
+
+    .nav-links.open {
+      display: flex !important;
+    }
+
+    .nav-links a {
+      font-size: 1rem;
+      padding: 10px 0;
+      border-bottom: 1px solid #161616;
+      width: 100%;
+      text-align: left; /* Left-aligns text */
+    }
+
+    .nav-links a:last-child {
+      border-bottom: none;
+    }
+
+    .clean-header h1 { font-size: 2.5rem; }
+    .content-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Global Navigation (Docked to the Right) -->
+<nav class="global-nav">
+  <a href="index.html" class="nav-brand">
+        <svg width="22" height="22" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+          <path d="M 32 50 C 22.06 50 14 41.94 14 32 C 14 22.06 22.06 14 32 14 L 54 14" stroke="#00d2ff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M 32 14 V 44" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
+        </svg>
+        <span>Tan<span style="color:#00d2ff;">gent</span></span>
+      </a>
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </button>
+  <div class="nav-links" id="navLinks">
+    <a href="pdf-converter.html">PDF Suite</a>
+    <a href="file-organizer.html" class="active">File Organizer</a>
+    <a href="photo-resizer.html">Photo Resizer</a>
+    <a href="qr-generator.html">QR Generator</a>
+    <a href="typing-test.html">Typing Test</a>
+  </div>
+</nav>
+
+<div class="clean-header">
+  <div class="icon-wrapper">
+    <!-- Inline Lucide SVG matching the new asset baseline -->
+    <svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+    </svg>
+  </div>
+  <h1>File Organizer.</h1>
+  <p>A native application that structures messy directories into 12 clean categories instantly. Completely secure, running entirely on your local machine.</p>
+  
+      <div class="trust-badge-container">
+    <a href="https://www.virustotal.com/gui/file/fe54fa49bde4b8830c8c47b5b3b3c9cfa22fe5a625a2ed18ce71b72a4f7f0b72" target="_blank" rel="noopener noreferrer" class="trust-badge" style="text-decoration: none; color: #00d2ff; border-color: #00d2ff;" title="View independent scan report on VirusTotal">
+      🛡️ VirusTotal Verified — 0 Detections on Microsoft & Major Engines (View Report ↗)
+    </a>
+    <span class="trust-badge">100% Offline</span>
+    <span class="trust-badge">Portable App</span>
+  </div>
+  
+  <a href="File_Organizer.zip" id="downloadBtnHero" class="btn-accent" download>Download for Windows (Portable ZIP)</a>
+</div>
+
+<div class="app-container">
+  
+  <div id="platformWarning" class="platform-warning">
+    <span id="platformWarningText"></span>
+  </div>
+
+  <div class="card-panel">
+    <h3 class="cert-title">Verified Application Certificate</h3>
+    <div class="cert-grid">
+      <div><strong>Application:</strong> File_Organizer.exe (Native x64)</div>
+      <div><strong>Publisher:</strong> Tangent Open Source</div>
+      <div><strong>Network Access:</strong> None (0 Bytes Outbound)</div>
+      <div><strong>Privacy Policy:</strong> Zero Data Collection</div>
+      <div><strong>Antivirus Status:</strong> Clean (Passed Microsoft Defender, Bitdefender, Kaspersky)</div>
+      <div><strong>System Integrity:</strong> Portable (No Registry or System Changes)</div>
+      <div style="grid-column: 1 / -1; margin-top: 8px; padding-top: 12px; border-top: 1px dashed #222222; word-break: break-all;">
+        <strong>SHA-256 Checksum:</strong> <code style="color: #00d2ff; font-family: monospace; font-size: 0.82rem;">fe54fa49bde4b8830c8c47b5b3b3c9cfa22fe5a625a2ed18ce71b72a4f7f0b72</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-grid">
+    <div class="card-panel">
+      <h3>How to use</h3>
+      <ol class="steps-list">
+        <li><strong>Download & Extract:</strong> Extract the <code>File_Organizer.zip</code> folder anywhere on your PC.</li>
+        <li><strong>Launch:</strong> Open the extracted folder and double-click <code>file_organizer.exe</code>.</li>
+        <li><strong>Select Directory:</strong> Click <strong>Browse</strong> to choose your messy folder (e.g., <code>Downloads</code> or <code>Desktop</code>).</li>
+        <li><strong>Organize:</strong> Click <strong>Organize!</strong> and watch your files get categorized in seconds.</li>
+      </ol>
+      <div class="warning-box" style="line-height: 1.5; font-size: 0.85rem;">
+        <strong>Why does Windows SmartScreen show a popup?</strong><br>
+        As an independent open-source project, Tangent does not purchase $400/year corporate code-signing certificates. Because the binary is new, Windows SmartScreen and 3 heuristic AI engines flag unsigned binaries as "unrecognized". All major antivirus engines (Microsoft Defender, Bitdefender, Kaspersky, Sophos) verify this file as 100% clean.<br>
+        ➔ Click <strong>More info</strong> ➔ Click <strong>Run anyway</strong>.
+      </div>
+    </div>
+
+    <div class="card-panel">
+      <h3>Key Features</h3>
+      <ul class="features-list">
+        <li><strong>Native Windows Picker:</strong> Select any directory effortlessly.</li>
+        <li><strong>1-Click Sorting:</strong> Automatically structures files into 12 categories.</li>
+        <li><strong>Complete Privacy:</strong> Operates 100% locally with zero internet communication.</li>
+        <li><strong>Portable:</strong> Single executable file under 20MB.</li>
+      </ul>
+    </div>
+  </div>
+
+  <details>
+    <summary>View Supported File Categories & Extensions</summary>
+    <div class="categories-grid">
+      <div class="category-item"><strong>Data & Spreadsheets</strong> <code>.csv, .xlsx, .json, .xml, .sql</code></div>
+      <div class="category-item"><strong>Documents</strong> <code>.pdf, .docx, .txt, .rtf, .md</code></div>
+      <div class="category-item"><strong>Presentations</strong> <code>.pptx, .ppt, .key</code></div>
+      <div class="category-item"><strong>Images</strong> <code>.jpg, .png, .svg, .webp, .raw</code></div>
+      <div class="category-item"><strong>Design Files</strong> <code>.psd, .ai, .xd, .fig</code></div>
+      <div class="category-item"><strong>Videos</strong> <code>.mp4, .mov, .mkv, .webm</code></div>
+      <div class="category-item"><strong>Audio</strong> <code>.mp3, .wav, .flac, .ogg</code></div>
+      <div class="category-item"><strong>Archives & Zips</strong> <code>.zip, .rar, .7z, .tar, .gz</code></div>
+      <div class="category-item"><strong>Programming</strong> <code>.py, .js, .html, .css, .cpp, .sh</code></div>
+      <div class="category-item"><strong>Applications</strong> <code>.exe, .msi, .apk, .dmg</code></div>
+      <div class="category-item"><strong>Disc Images</strong> <code>.iso, .img</code></div>
+      <div class="category-item"><strong>Fonts</strong> <code>.ttf, .otf</code></div>
+    </div>
+  </details>
+
+  <article class="seo-article">
+    <h2>Why Use a Local Desktop File Organizer?</h2>
+    <p>A cluttered computer desktop can slow down your productivity and make finding important documents a nightmare. While many web-based tools offer to process individual files, managing entire messy folders safely requires a different approach. Our Desktop File Organizer is a compiled Windows application that runs entirely on your local machine, avoiding the limitations of web browser file sandboxes.</p>
+    
+    <h3>Best Practices for Digital Organization</h3>
+    <ul>
+      <li><strong>Sort Regularly:</strong> Don't wait until your <code>Downloads</code> or <code>Desktop</code> folder has thousands of files. Run the organizer weekly to maintain a clean workspace.</li>
+      <li><strong>Review Categories:</strong> The app automatically sorts files into 12 distinct folders (like Documents, Images, Data & Spreadsheets). Once sorted, quickly review these folders to delete old or unnecessary files.</li>
+      <li><strong>Keep System Files Safe:</strong> The organizer is designed for user directories (like Desktop or Downloads). Avoid running it in critical system folders (like <code>C:\Windows</code>) to prevent accidental reorganization of application dependencies.</li>
+    </ul>
+
+    <h2>Frequently Asked Questions</h2>
+    
+    <div class="faq-box">
+      <details>
+        <summary>Why can't this run directly in the web browser?</summary>
+        <p>Modern web browsers have strict security sandboxes that intentionally prevent websites from reading, moving, or modifying files directly on your hard drive. To achieve instant, batch organization across your folders without uploading everything, a dedicated native desktop application is required.</p>
+      </details>
+    </div>
+
+    <div class="faq-box">
+      <details>
+        <summary>Is the executable file safe to run?</summary>
+        <p>Yes. The Tangent File Organizer operates 100% locally with zero internet communication. It has 0 bytes of outbound network access, meaning it physically cannot transmit your personal data anywhere. If Windows SmartScreen flags it with a blue popup upon the first launch, it is simply because it is an independent open-source tool without a corporate publisher certificate.</p>
+      </details>
+    </div>
+  </article>
+
+</div>
+
+<script>
+  (function warnNonWindowsVisitors() {
+    const ua = navigator.userAgent || '';
+    const isWindows = /Windows/i.test(ua);
+    if (isWindows) return;
+
+    const isiOS = /iPhone|iPad|iPod/i.test(ua);
+    const isAndroid = /Android/i.test(ua);
+    const isMac = /Macintosh|Mac OS X/i.test(ua) && !isiOS;
+    const isLinux = /Linux/i.test(ua) && !isAndroid;
+
+    let device = 'device';
+    if (isiOS) device = 'iPhone/iPad';
+    else if (isAndroid) device = 'Android device';
+    else if (isMac) device = 'Mac';
+    else if (isLinux) device = 'Linux computer';
+    else return;
+
+    const banner = document.getElementById('platformWarning');
+    const bannerText = document.getElementById('platformWarningText');
+    const downloadBtn = document.getElementById('downloadBtnHero');
+
+    bannerText.innerHTML = `<strong>Heads up:</strong> this is a Windows-only desktop app (.exe) and won't run on your ${device}. Only download it if you plan to move the file to a Windows PC.`;
+    banner.style.display = 'flex';
+
+    if (isiOS || isAndroid) {
+      downloadBtn.textContent = 'Download Anyway (Windows Only)';
+    }
+  })();
+
+  // Mobile Menu Toggle
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  if (menuToggle && navLinks) {
+    menuToggle.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', isOpen);
+    });
+  }
+</script>
+
+<!-- Global Footer -->
+<footer class="global-footer">
+  <div style="margin-bottom: 16px;">
+    <a href="index.html">Home</a>
+    <a href="https://github.com/Misbah-37/omnitools-web" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">↑ Back to Top</a>
+  </div>
+  <div>&copy; 2026 Tangent. Built for speed, privacy, and precision.</div>
+</footer>
+
+</body>
+</html>

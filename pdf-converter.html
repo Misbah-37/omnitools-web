@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PDF Suite | OmniTools</title>
+<title>PDF Suite | Tangent</title>
 <meta name="description" content="Merge, split, extract pages, compress, and convert documents to and from PDF seamlessly. Secure in-browser processing.">
 <link rel="canonical" href="https://misbah-37.github.io/omnitools-web/pdf-converter.html">
 <!-- Foundation & Social Meta Tags -->
 <link rel="icon" type="image/png" href="favicon.png">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="OmniTools">
-<meta property="og:title" content="OmniTools | Professional Client-Side Utilities">
+<meta property="og:site_name" content="Tangent">
+<meta property="og:title" content="Tangent | Professional Client-Side Utilities">
 <meta property="og:description" content="Secure, fast, and 100% offline digital utilities. Process PDFs, resize photos, and organize files locally.">
 <meta property="og:image" content="https://misbah-37.github.io/omnitools-web/social-banner.png">
 
@@ -83,7 +83,7 @@
     letter-spacing: -0.5px;
     text-decoration: none;
     color: #ffffff;
-    display: inline-block;
+    display: inline-flex; align-items: center; gap: 8px;
   }
   
   .nav-brand span {
@@ -499,7 +499,13 @@
 
 <!-- Global Navigation -->
 <nav class="global-nav">
-  <a href="index.html" class="nav-brand">Omni<span>Tools</span></a>
+  <a href="index.html" class="nav-brand">
+        <svg width="22" height="22" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+          <path d="M 32 50 C 22.06 50 14 41.94 14 32 C 14 22.06 22.06 14 32 14 L 54 14" stroke="#00d2ff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M 32 14 V 44" stroke="currentColor" stroke-width="7" stroke-linecap="round"/>
+        </svg>
+        <span>Tan<span style="color:#00d2ff;">gent</span></span>
+      </a>
   <button class="menu-toggle" id="menuToggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -821,7 +827,7 @@ async function convertImages() {
         
         const pdfBlob = pdf.output('blob');
         btn.href = URL.createObjectURL(pdfBlob);
-        btn.download = "OmniTools_Compiled_Images.pdf";
+        btn.download = "Tangent_Compiled_Images.pdf";
         btn.style.display = "block";
         status.innerText = "Successfully compiled PDF.";
         status.style.color = "#ffffff";
@@ -897,7 +903,7 @@ async function mergePdfs() {
         const pdfBytes = await mergedPdf.save();
         const blob = new Blob([pdfBytes], { type: 'application/pdf' });
         btn.href = URL.createObjectURL(blob);
-        btn.download = "OmniTools_Merged.pdf";
+        btn.download = "Tangent_Merged.pdf";
         btn.style.display = "block";
         status.innerText = "Merged successfully.";
         status.style.color = "#ffffff";
@@ -1051,7 +1057,7 @@ async function extractText() {
       <a href="https://github.com/Misbah-37/omnitools-web" target="_blank" rel="noopener noreferrer">GitHub</a>
       <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">↑ Back to Top</a>
     </div>
-    <div>&copy; 2026 OmniTools. 100% Client-Side Processing.</div>
+    <div>&copy; 2026 Tangent. Built for speed, privacy, and precision.</div>
   </footer>
 <script>
   const menuToggle = document.getElementById('menuToggle');
