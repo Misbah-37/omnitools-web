@@ -8,7 +8,7 @@
   </p>
 
   <p align="center">
-    <a href="https://misbah-37.github.io/omnitools-web/"><strong>Explore Live Site »</strong></a>
+    <a href="https://misbah-37.github.io/tangent/"><strong>Explore Live Site »</strong></a>
     <br />
     <br />
     <img src="https://img.shields.io/badge/Privacy-100%25%20Client--Side-00d2ff?style=flat-square" alt="Privacy" />
@@ -65,7 +65,7 @@ Simply clone the repository and serve the files locally:
 
 ```bash
 # Clone the repository
-git clone https://github.com/Misbah-37/omnitools-web.git
+git clone https://github.com/Misbah-37/tangent.git
 
 # Navigate to directory
 cd omnitools-web
