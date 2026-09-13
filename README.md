@@ -33,25 +33,29 @@ Most utility websites quietly upload your sensitive photos, contracts, and finan
 
 ## 🛠️ The Toolkit
 
-### 1. 📄 PDF Suite (`pdf-converter.html`)
+### 1. 🛡️ PDF Redactor & Metadata Scrubber (`pdf-redactor.html`)
+- **Features:** Visually black out sensitive data (bank details, SSNs, signatures) with true burn-in raster flattening and purge hidden author/GPS metadata.
+- **Engine:** Client-side execution using [`pdfjs`](https://mozilla.github.io/pdf.js/) and [`pdf-lib`](https://pdf-lib.js.org/). Zero unredacted bytes leave your device.
+
+### 2. 📄 PDF Suite (`pdf-converter.html`)
 - **Features:** Merge multiple PDFs, split documents, extract page ranges, and perform structural compression.
 - **Engine:** Client-side execution using [`pdf-lib`](https://pdf-lib.js.org/) and [`pdf.js`](https://mozilla.github.io/pdf.js/). Your files never leave RAM.
 
-### 2. 📁 Desktop File Organizer (`file-organizer.html`)
+### 3. 📁 Desktop File Organizer (`file-organizer.html`)
 - **Features:** Native standalone Windows utility that sorts cluttered directories (e.g. `Downloads`, `Desktop`) into 12 distinct categories in seconds.
 - **Compiled with Nuitka:** Direct C-binary compilation with minimal heuristic profile.
-- **Integrity (SHA-256):** `fe54fa49bde4b8830c8c47b5b3b3c9cfa22fe5a625a2ed18ce71b72a4f7f0b72`
-- **VirusTotal:** [Verified Clean Report](https://www.virustotal.com/gui/file/fe54fa49bde4b8830c8c47b5b3b3c9cfa22fe5a625a2ed18ce71b72a4f7f0b72)
+- **Integrity (SHA-256):** `d9ed3365e1308b9b827baa434c2b5875ad871b84deb29ebc60bddf5e3f989f18`
+- **VirusTotal:** [Verified Clean Report](https://www.virustotal.com/gui/file/d9ed3365e1308b9b827baa434c2b5875ad871b84deb29ebc60bddf5e3f989f18)
 
-### 3. 🖼️ Photo Resizer (`photo-resizer.html`)
+### 4. 🖼️ Photo Resizer (`photo-resizer.html`)
 - **Features:** Scale dimensions, constrain proportions, adjust compression quality, and convert image formats (JPEG, PNG, WebP) in real time.
 - **Engine:** Hardware-accelerated HTML5 Canvas 2D rasterization.
 
-### 4. 📱 QR Code Generator (`qr-generator.html`)
+### 5. 📱 QR Code Generator (`qr-generator.html`)
 - **Features:** Generate high-density, error-corrected QR codes for URLs, Wi-Fi networks, and contact cards with custom colors and instant PNG downloads.
 - **Engine:** Lightweight client-side QR generation engine.
 
-### 5. ⌨️ Typing Speed Test (`typing-test.html`)
+### 6. ⌨️ Typing Speed Test (`typing-test.html`)
 - **Features:** Clean, distraction-free typing benchmark with real-time WPM, accuracy calculation, error highlighting, and difficulty tiers.
 - **Privacy:** Best scores saved locally via `localStorage`.
 
@@ -68,7 +72,7 @@ Simply clone the repository and serve the files locally:
 git clone https://github.com/Misbah-37/tangent.git
 
 # Navigate to directory
-cd omnitools-web
+cd tangent
 
 # Serve with Python
 python -m http.server 8000
