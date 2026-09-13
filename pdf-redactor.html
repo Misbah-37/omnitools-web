@@ -59,40 +59,46 @@
     .global-nav {
       position: sticky;
       top: 0;
+      left: 0;
       width: 100%;
-      padding: 16px 36px;
-      background-color: rgba(8, 9, 13, 0.88);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      padding: 18px 40px;
+      background-color: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid #222222;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      z-index: 1000;
+      box-sizing: border-box;
+      z-index: 2000;
     }
 
     .nav-brand {
-      font-size: 1.2rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
       text-decoration: none;
       color: #ffffff;
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
+    }
+
+    .nav-brand span {
+      color: #00d2ff;
     }
 
     .nav-links {
       display: flex;
+      gap: 28px;
       align-items: center;
-      gap: 24px;
       margin-left: auto;
     }
 
     .nav-links a {
-      color: #94a3b8;
+      color: #999999;
       text-decoration: none;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 500;
       transition: color 0.2s ease;
     }
@@ -562,13 +568,13 @@
 
     <!-- Navigation Links -->
     <div class="nav-links" id="navLinks">
-      <a href="pdf-converter.html">PDF Suite</a>
-      <a href="pdf-redactor.html" class="active">PDF Redactor</a>
-      <a href="file-organizer.html">File Organizer</a>
-      <a href="photo-resizer.html">Photo Resizer</a>
-      <a href="qr-generator.html">QR Generator</a>
-      <a href="typing-test.html">Typing Test</a>
-    </div>
+    <a href="pdf-redactor.html" class="active">PDF Redactor</a>
+    <a href="pdf-converter.html">PDF Suite</a>
+    <a href="file-organizer.html">File Organizer</a>
+    <a href="photo-resizer.html">Photo Resizer</a>
+    <a href="qr-generator.html">QR Generator</a>
+    <a href="typing-test.html">Typing Test</a>
+  </div>
   </nav>
 
   <div class="container">
